@@ -1,0 +1,4 @@
+enum StoryItem{
+  getConsultationOrGetCertificate,
+  passingTest
+}
