@@ -4,6 +4,7 @@ import 'package:eco_kg/feature/auth_feature/presentation/new_password/new_passwo
 import 'package:eco_kg/feature/auth_feature/presentation/sign_in/sign_in_screen.dart';
 import 'package:eco_kg/feature/auth_feature/presentation/verification/verification_screen.dart';
 import 'package:eco_kg/feature/home_feature/presentation/home_screen.dart';
+import 'package:eco_kg/feature/payment_feature/presentation/info_form_for_payment/info_form_for_payment.dart';
 import 'package:eco_kg/feature/payment_feature/presentation/payment_screen.dart';
 import 'package:eco_kg/feature/splash_feature/presentation/splash_screen.dart';
 import 'package:eco_kg/feature/test_feature/presentation/finish/finish_screen.dart';
@@ -40,5 +41,6 @@ class AppRouter extends _$AppRouter{
     AutoRoute(page: PaymentRoute.page),
     AutoRoute(page: UserCabinetRoute.page),
     AutoRoute(page: EditUserCabinetRoute.page),
+    AutoRoute(page: GetConsultDrawerRoute.page),
   ];
 }

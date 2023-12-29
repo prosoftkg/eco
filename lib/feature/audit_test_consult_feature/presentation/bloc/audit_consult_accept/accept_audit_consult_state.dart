@@ -26,6 +26,12 @@ class LoadedConfirmAuditConsultState extends AcceptAuditConsultState{
   List<Object> get props=>[];
 }
 
+class LoadedDenyAuditConsultState extends AcceptAuditConsultState{
+  const LoadedDenyAuditConsultState();
+  @override
+  List<Object> get props=>[];
+}
+
 class NewAuditConsultState extends AcceptAuditConsultState{
   const NewAuditConsultState();
   @override

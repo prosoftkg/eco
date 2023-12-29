@@ -22,13 +22,22 @@ class UserData {
     'От 400 до 800 кв.м',
     'От 800 кв.м и выше'
   ];
-  final storage = const FlutterSecureStorage();
+  static const storage = FlutterSecureStorage();
 
   static Future<void> userDataChange(UserDataForChange userDataForChange) async {
      UserData.name=userDataForChange.companyDirector;
     UserData.phone=userDataForChange.phone;
     UserData.companyName=userDataForChange.companyName;
     UserData.region=userDataForChange.region;
+
+     await storage.write(
+         key: 'fullName', value: userDataForChange.companyDirector);
+     await storage.write(
+         key: 'phone', value: UserData.phone=userDataForChange.phone);
+     await storage.write(
+         key: 'companyName', value: userDataForChange.companyName);
+     await storage.write(
+         key: 'region', value: userDataForChange.region);
   }
   void printAllData(){
     print('${UserData.email},${UserData.name},${UserData.companyName}');

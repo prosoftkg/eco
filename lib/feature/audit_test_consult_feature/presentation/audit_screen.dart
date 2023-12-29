@@ -48,7 +48,7 @@ class AuditScreen extends StatelessWidget {
             buildAuditTestItem(item,context,getIt<AcceptAuditTestBloc>(),getIt<TestBloc>()),
           space()])
         ],
-      ) : Center(child: Text('No product'));
+      ) : const Center(child: Text('No product'));
     }
     return const SizedBox();
   },
@@ -59,7 +59,35 @@ class AuditScreen extends StatelessWidget {
     return SizedBox(height: 22.h);
   }
   buildAuditTestItem(AuditTest auditTest,BuildContext context,AcceptAuditTestBloc myBloc,TestBloc testBloc){
+    return BlocBuilder<AcceptAuditTestBloc, AcceptAuditTestState>(
+      bloc: myBloc..add(CheckAcceptEvent(auditTestId: auditTest.id.toString())),
+      builder: (context, state) {
+        if (state is LoadingAcceptAuditTestState) {
     return Container(
+        margin: EdgeInsets.only(bottom: 22).r,
+        padding: const EdgeInsets.all(16).r,
+        decoration: BoxDecoration(
+          color: AppColors.colorWhite,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 28,
+              color: AppColors.color009D9B.withOpacity(0.08),
+              offset: const Offset(0, 12),
+            ),
+          ],
+        ),
+    child: Center(child: progressWidget()));
+        }
+
+        /*if(state is LoadedDenyAuditTestState){
+    BlocProvider.of<AuditBloc>(context)
+      ..add(const AuditTestListEvent());
+        }*/
+
+        if(state is AcceptedAuditTestState){
+    return Container(
+      margin: EdgeInsets.only(bottom: 22).r,
       padding: const EdgeInsets.all(16).r,
       decoration: BoxDecoration(
         color: AppColors.colorWhite,
@@ -72,20 +100,7 @@ class AuditScreen extends StatelessWidget {
           ),
         ],
       ),
-      child: BlocBuilder<AcceptAuditTestBloc, AcceptAuditTestState>(
-        bloc: myBloc..add(CheckAcceptEvent(auditTestId: auditTest.id.toString())),
-  builder: (context, state) {
-    if (state is LoadingAcceptAuditTestState) {
-      return Center(child: progressWidget());
-    }
-
-    if(state is LoadedDenyAuditTestState){
-      BlocProvider.of<AuditBloc>(context)
-        ..add(const AuditTestListEvent());
-    }
-
-    if(state is AcceptedAuditTestState){
-      return Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
@@ -149,7 +164,7 @@ class AuditScreen extends StatelessWidget {
 
               AutoRouter.of(context).push(const StartTestRoute());
               BlocProvider.of<TestBloc>(context)
-                ..add(GlobalAuditTestEvent(
+                .add(GlobalAuditTestEvent(
                     testEntity: state.testEntity,
                     categoryId: state.categoryId
                 ),);
@@ -179,10 +194,10 @@ class AuditScreen extends StatelessWidget {
                         ),);*/
                     },
                     child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 9).r,
-                      decoration: BoxDecoration(
+                      padding: const EdgeInsets.symmetric(vertical: 9).r,
+                      decoration: const BoxDecoration(
                           color: AppColors.color009D9B,
-                          borderRadius: const BorderRadius.all(Radius.circular(12)),
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -197,64 +212,79 @@ class AuditScreen extends StatelessWidget {
           },
           )
         ],
-      );
+      ),
+    );
 
-        /*Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Flexible(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(auditTest.participant!,
-                    style: AppTextStyles.clearSansMediumS14W500C009D9B),
-                SizedBox(height: 6.h),
-                SizedBox(
-                  child: Row(
-                    children: [
-                      Image.asset('assets/icon/location.png',width: 18.w,height: 18.h),
-                      SizedBox(width: 6.w),
-                      Text(auditTest.region!,
-                          style: AppTextStyles.clearSansS12C82F400),
-                    ],
-                  ),
-                )
-              ],
-            ),
+      /*Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Flexible(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(auditTest.participant!,
+                  style: AppTextStyles.clearSansMediumS14W500C009D9B),
+              SizedBox(height: 6.h),
+              SizedBox(
+                child: Row(
+                  children: [
+                    Image.asset('assets/icon/location.png',width: 18.w,height: 18.h),
+                    SizedBox(width: 6.w),
+                    Text(auditTest.region!,
+                        style: AppTextStyles.clearSansS12C82F400),
+                  ],
+                ),
+              )
+            ],
           ),
-          Flexible(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  child: Row(
-                    children: [
-                      Image.asset('assets/icon/sms.png',width: 18.w,height: 18.h),
-                      SizedBox(width: 6.w),
-                      Flexible(child: Text(auditTest.userEmail!,style: AppTextStyles.clearSansS12W400CBlack,)),
-                    ],
-                  ),
+        ),
+        Flexible(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                child: Row(
+                  children: [
+                    Image.asset('assets/icon/sms.png',width: 18.w,height: 18.h),
+                    SizedBox(width: 6.w),
+                    Flexible(child: Text(auditTest.userEmail!,style: AppTextStyles.clearSansS12W400CBlack,)),
+                  ],
                 ),
-                SizedBox(height: 6.h),
-                SizedBox(
-                  child: Row(
-                    children: [
-                      Image.asset('assets/icon/call.png',width: 18.w,height: 18.h),
-                      SizedBox(width: 6.w),
-                      Text(auditTest.phone != '' ? auditTest.phone! : 'Нету',
-                          style: AppTextStyles.clearSansS12W400CBlack),
-                    ],
-                  ),
+              ),
+              SizedBox(height: 6.h),
+              SizedBox(
+                child: Row(
+                  children: [
+                    Image.asset('assets/icon/call.png',width: 18.w,height: 18.h),
+                    SizedBox(width: 6.w),
+                    Text(auditTest.phone != '' ? auditTest.phone! : 'Нету',
+                        style: AppTextStyles.clearSansS12W400CBlack),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );*/
+        }
+
+        if(state is NewAuditTestState){
+    return Container(
+      margin: EdgeInsets.only(bottom: 22).r,
+      padding: const EdgeInsets.all(16).r,
+      decoration: BoxDecoration(
+        color: AppColors.colorWhite,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 28,
+            color: AppColors.color009D9B.withOpacity(0.08),
+            offset: const Offset(0, 12),
           ),
         ],
-      );*/
-    }
-
-    if(state is NewAuditTestState){
-      return Row(
+      ),
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -314,12 +344,12 @@ class AuditScreen extends StatelessWidget {
             ),
           ),
         ],
-      );
-    }
+      ),
+    );
+        }
 
-    return SizedBox();
-  },
-),
+        return const SizedBox();
+      },
     );
   }
 }

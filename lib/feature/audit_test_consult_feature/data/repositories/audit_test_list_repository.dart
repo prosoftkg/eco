@@ -58,6 +58,20 @@ class AuditRepositoryImpl implements AuditRepository{
   }
 
   @override
+  Future<Either<Failure,bool>> denyAuditConsultList(String consultId){
+    return _denyAuditConsultList(consultId);
+  }
+
+  Future<Either<Failure,bool>> _denyAuditConsultList(String consultId)async{
+    try{
+      final denyAuditConsult=await auditDataSource.denyAuditConsultList(consultId);
+      return Right(denyAuditConsult);
+    }on Failure catch(e){
+      return Left(ServerError(error: e));
+    }
+  }
+
+  @override
   Future<Either<Failure,bool>> confirmAuditConsultList(String testId){
     return _confirmAuditConsultList(testId);
   }
@@ -67,7 +81,7 @@ class AuditRepositoryImpl implements AuditRepository{
       final confirmAuditConsult=await auditDataSource.confirmAuditConsultList(testId);
       return Right(confirmAuditConsult);
     }on Failure catch(e){
-      throw Left(ServerError(error: e));
+      return Left(ServerError(error: e));
     }
   }
 

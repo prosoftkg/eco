@@ -1,4 +1,6 @@
 import 'package:eco_kg/core/auto_route/auto_route.dart';
+import 'package:eco_kg/core/style/app_colors.dart';
+import 'package:eco_kg/core/style/app_text_styles.dart';
 import 'package:eco_kg/feature/auth_feature/presentation/bloc/auth_bloc.dart';
 import 'package:eco_kg/feature/splash_feature/presentation/bloc/language_bloc.dart';
 import 'package:eco_kg/feature/splash_feature/presentation/widget/button_with_icon.dart';
@@ -24,7 +26,7 @@ class SplashScreen extends StatelessWidget {
             AutoRouter.of(context).replace(const SignInRoute());
           }
           return Padding(
-            padding: EdgeInsets.symmetric(vertical: 62.h,horizontal: 16.w),
+            padding: EdgeInsets.symmetric(vertical: 62,horizontal: 16).r,
             child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -52,10 +54,10 @@ class SplashScreen extends StatelessWidget {
                           Column(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.all(8.0).r,
                                 child: ListTile(
-                                  title: Text(items[i].name),
-                                  leading: Text(items[i].flag),
+                                  title: Center(child: Text(items[i].name,style: AppTextStyles.clearSansMediumS18W500C009D9B,)),
+                                  // leading: Text(items[i].flag),
                                   onTap: (){
                                     BlocProvider.of<LanguageBloc>(context).add(SelectLanguageEvent(lanCode: items[i].languageCode));
                                     BlocProvider.of<AuthBloc>(context).add(CheckAuthKeyEvent());

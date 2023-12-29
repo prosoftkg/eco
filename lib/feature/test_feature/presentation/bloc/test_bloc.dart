@@ -39,7 +39,7 @@ class TestBloc extends Bloc<TestEvent, TestState> {
   }
 
   _globalAuditTest(GlobalAuditTestEvent event,Emitter emit)async{
-    emit(LoadedTestState(testEntity: event.testEntity,categoryId: event.categoryId,testType: 'auditTest'));
+    emit(LoadedTestState(testEntity: event.testEntity,categoryId: event.categoryId,testType: 'auditTest',companyArea: ''));
   }
 
   _beginTest(BeginTestEvent event,Emitter emit)async{
@@ -49,7 +49,7 @@ class TestBloc extends Bloc<TestEvent, TestState> {
     either.fold((error) => emit(ErrorTestState(error: error)), (test){
       var userDataForChange=UserDataForChange(companyName: testInfo.companyName, companyDirector: testInfo.companyDirector, region: testInfo.region, phone: testInfo.phone);
       UserData.userDataChange(userDataForChange);
-      emit(LoadedTestState(testEntity: test,categoryId: event.testInfoForBegin.categoryId,testType: 'userTest'));
+      emit(LoadedTestState(testEntity: test,categoryId: event.testInfoForBegin.categoryId,testType: 'userTest',companyArea: event.testInfoForBegin.areaCompany));
     });
   }
 
@@ -57,7 +57,7 @@ class TestBloc extends Bloc<TestEvent, TestState> {
     emit(LoadingTestState());
     final either=await beginAuditTestUseCase.call(event.testId);
     either.fold((error) => emit(ErrorTestState(error: error)), (test){
-      emit(LoadedTestState(testEntity: test,categoryId: event.categoryId,testType:'auditTest'));
+      emit(LoadedTestState(testEntity: test,categoryId: event.categoryId,testType:'auditTest',companyArea: ''));
     });
   }
 
@@ -70,7 +70,6 @@ class TestBloc extends Bloc<TestEvent, TestState> {
   }
 
   _finishTest(FinishTestEvent event,Emitter emit)async{
-
     emit(LoadingTestState());
     final either=await finishTestUseCase.call(event.testInfoForNext);
     either.fold((error) => emit(ErrorTestState(error: error)), (test){
@@ -81,6 +80,6 @@ class TestBloc extends Bloc<TestEvent, TestState> {
   _resultTest(ResultTestEvent event,Emitter emit)async{
     emit(LoadingTestState());
     final String? email = await storage.read(key: 'email');
-    emit(LoadedResultTestState(finishTestEntity: event.finishTestEntity,email: email!,testId: event.testId, testType: event.tetsType));
+    emit(LoadedResultTestState(finishTestEntity: event.finishTestEntity,email: email!,testId: event.testId, testType: event.tetsType,companyArea: event.companyArea,catId: event.categoryId));
   }
 }

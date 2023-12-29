@@ -1,9 +1,10 @@
 import 'package:eco_kg/core/utils/utils.dart';
-import 'package:eco_kg/feature/story_feature/domain/entyties/itemSelect.dart';
+import 'package:eco_kg/feature/story_feature/domain/entities/itemSelect.dart';
 import 'package:flutter/material.dart';
-
-import '../../../core/style/app_colors.dart';
-import '../../../core/style/app_text_styles.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../core/style/app_colors.dart';
+import '../../../../core/style/app_text_styles.dart';
+import '../../../auth_feature/presentation/widgets/appBarLeadintBack.dart';
 
 class StoryScreen extends StatelessWidget {
   const StoryScreen({super.key});
@@ -13,9 +14,15 @@ class StoryScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(context.text.history),
+        leading: InkWell(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child: appBarLeading(context)),
+        leadingWidth: 100,
       ),
       body: ListView(
-        padding: EdgeInsets.symmetric(vertical: 32, horizontal: 16),
+        padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16).r,
         children: [
           item('Получение консультации', '14/11/2023',
               '''• экспресс-консультация по телефону (20 мин.)
@@ -36,10 +43,10 @@ class StoryScreen extends StatelessWidget {
       case StoryItem.getConsultationOrGetCertificate:
         {
           return Container(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16).r,
             decoration: BoxDecoration(
               color: AppColors.colorWhite,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(12).r,
               boxShadow: [
                 BoxShadow(
                   blurRadius: 28,
@@ -67,21 +74,20 @@ class StoryScreen extends StatelessWidget {
                     Text(date, style: AppTextStyles.clearSansS12C82F400)
                   ],
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 10.h),
                 Text(subtitle,
                     style: AppTextStyles.clearSansLightS12CBlackF300),
               ],
             ),
           );
         }
-        break;
       case StoryItem.passingTest:
         {
           return Container(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16).r,
             decoration: BoxDecoration(
               color: AppColors.colorWhite,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(12).r,
               boxShadow: [
                 BoxShadow(
                   blurRadius: 28,
@@ -109,26 +115,26 @@ class StoryScreen extends StatelessWidget {
                     Text(date, style: AppTextStyles.clearSansS12C82F400)
                   ],
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 10.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SizedBox(
                       child: Row(
                         children: [
-                          Image.asset('assets/icon/pdf.png',width: 24,height: 24),
-                          SizedBox(width: 12),
+                          Image.asset('assets/icon/pdf.png',width: 24.w,height: 24.h),
+                          SizedBox(width: 12.w),
                           Text(subtitle,
                               style: AppTextStyles.clearSansLightS12CBlackF300),
                         ],
                       ),
                     ),
                     Container(
-                      width: 56,
-                      height: 22,
+                      width: 56.w,
+                      height: 22.h,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
-                        border: Border.all(width: 1,color: AppColors.color009D9B)
+                        borderRadius: BorderRadius.circular(6).r,
+                        border: Border.all(width: 1.w,color: AppColors.color009D9B)
                       ),
                       child: Center(child: Text('Скачать',style: AppTextStyles.clearSansS12C009D9BF400)),
                     )
@@ -138,11 +144,10 @@ class StoryScreen extends StatelessWidget {
             ),
           );
         }
-        break;
     }
   }
 
   space() {
-    return SizedBox(height: 22);
+    return SizedBox(height: 22.w);
   }
 }

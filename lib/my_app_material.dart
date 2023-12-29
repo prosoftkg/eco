@@ -1,8 +1,10 @@
 import 'package:eco_kg/core/servise_locator/servise_locator.dart';
 import 'package:eco_kg/feature/library_feature/presentation/library/bloc/library_bloc.dart';
 import 'package:eco_kg/feature/splash_feature/presentation/bloc/language_bloc.dart';
+import 'package:eco_kg/feature/story_feature/presentation/bloc/story_bloc.dart';
 import 'package:eco_kg/feature/user_cabinet_feature/presentation/bloc/userCabinetBloc/user_cabinet_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,6 +26,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return ScreenUtilInit(
       designSize: const Size(390, 844),
       minTextAdapt: true,
@@ -60,6 +66,9 @@ class MyApp extends StatelessWidget {
             ),
             BlocProvider(
               create: (context) => getIt<UserDataBloc>(),
+            ),
+            BlocProvider(
+              create: (context) => getIt<StoryBloc>(),
             ),
           ],
           child: BlocBuilder<LanguageBloc, LanguageState>(

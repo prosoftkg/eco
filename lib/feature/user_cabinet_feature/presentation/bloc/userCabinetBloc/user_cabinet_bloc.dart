@@ -24,7 +24,7 @@ class UserCabinetBloc extends Bloc<UserCabinetEvent, UserCabinetState> {
             (active) {
           if (active == true){
             UserData.userDataChange(UserDataForChange(companyName: UserData.companyName ?? '', companyDirector: event.userDataForEdit.name, region: UserData.region ?? '', phone: event.userDataForEdit.phone));
-            Fluttertoast.showToast(
+            /*Fluttertoast.showToast(
                 msg: "Данные изменены",
                 toastLength: Toast.LENGTH_SHORT,
                 gravity: ToastGravity.CENTER,
@@ -32,7 +32,7 @@ class UserCabinetBloc extends Bloc<UserCabinetEvent, UserCabinetState> {
                 backgroundColor: Colors.red,
                 textColor: Colors.white,
                 fontSize: 16.0
-            );
+            );*/
             emit(SuccessfullyEditUserDataState());
           }
           else if(active==false) {

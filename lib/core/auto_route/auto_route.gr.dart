@@ -107,6 +107,12 @@ abstract class _$AppRouter extends RootStackRouter{
           child: EditScreen()
       );
     },
+    GetConsultDrawerRoute.name: (routeData){
+      return AutoRoutePage<dynamic>(
+          routeData: routeData,
+          child: InfoFormForPayment()
+      );
+    },
   };
 }
 
@@ -273,5 +279,15 @@ class EditUserCabinetRoute extends PageRouteInfo<void> {
     initialChildren: children,
   );
   static const String name = 'EditUserCabinetRoute';
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+class GetConsultDrawerRoute extends PageRouteInfo<void> {
+  const GetConsultDrawerRoute({List<PageRouteInfo>? children})
+      : super(
+    GetConsultDrawerRoute.name,
+    initialChildren: children,
+  );
+  static const String name = 'GetConsultDrawerRoute';
   static const PageInfo<void> page = PageInfo<void>(name);
 }

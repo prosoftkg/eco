@@ -1,3 +1,4 @@
+import 'package:eco_kg/core/error_journal/error_journal.dart';
 import 'package:eco_kg/feature/payment_feature/domain/entities/payment_entity.dart';
 import 'package:eco_kg/feature/test_feature/domain/entities/beginTestEntity.dart';
 import 'package:eco_kg/feature/test_feature/domain/entities/nextQuestionEntity.dart';
@@ -44,7 +45,8 @@ class PaymentDataSource implements IPaymentDataSource {
       'type': paymentInfoEntity.paymentType,
       'name': fullName,
       'email': email,
-      'phone': phone
+      'phone': phone,
+      'sum' : paymentInfoEntity.sum
     };
     print(json);
 
@@ -59,7 +61,7 @@ class PaymentDataSource implements IPaymentDataSource {
       print('error not found');
       print(response.statusCode);
       print(response.body);
-      throw Exception(response.reasonPhrase);
+      throw ServerError(error: response.reasonPhrase!);
     }
   }
 }

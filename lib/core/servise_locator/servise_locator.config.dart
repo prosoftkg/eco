@@ -9,6 +9,10 @@ import 'package:eco_kg/feature/library_feature/domain/repository/repository.dart
 import 'package:eco_kg/feature/library_feature/domain/use_case/libraryIUseCase.dart';
 import 'package:eco_kg/feature/library_feature/domain/use_case/removeHistory.dart';
 import 'package:eco_kg/feature/splash_feature/presentation/bloc/language_bloc.dart';
+import 'package:eco_kg/feature/story_feature/data/data_source/story_server.dart';
+import 'package:eco_kg/feature/story_feature/domain/repository/repository.dart';
+import 'package:eco_kg/feature/story_feature/domain/use_case/audit_story_use_case.dart';
+import 'package:eco_kg/feature/story_feature/presentation/bloc/story_bloc.dart';
 import 'package:eco_kg/feature/test_feature/domain/use_case/begin_test_use_case.dart';
 import 'package:eco_kg/feature/user_cabinet_feature/data/data_source/user_cabinet_server.dart';
 import 'package:eco_kg/feature/user_cabinet_feature/domain/repository/repository.dart';
@@ -22,6 +26,7 @@ import '../../feature/audit_test_consult_feature/data/repositories/audit_test_li
 import '../../feature/audit_test_consult_feature/domain/repository/repository.dart';
 import '../../feature/audit_test_consult_feature/domain/use_case/audit_consult_list_use_case.dart';
 import '../../feature/audit_test_consult_feature/domain/use_case/audit_test_list_use_case.dart';
+import '../../feature/audit_test_consult_feature/domain/use_case/denyAuditConsult.dart';
 import '../../feature/audit_test_consult_feature/presentation/bloc/audit_accept_bloc/accept_audit_test_bloc.dart';
 import '../../feature/audit_test_consult_feature/presentation/bloc/audit_bloc/audit_bloc.dart';
 import '../../feature/audit_test_consult_feature/presentation/bloc/audit_consult_accept/accept_audit_consult_bloc.dart';
@@ -38,6 +43,7 @@ import '../../feature/payment_feature/data/repositories/payment_repository.dart'
 import '../../feature/payment_feature/domain/repository/repository.dart';
 import '../../feature/payment_feature/domain/use_case/payment_use_case.dart';
 import '../../feature/payment_feature/presentation/bloc/payment_bloc.dart';
+import '../../feature/story_feature/data/repositories/story_repository.dart';
 import '../../feature/test_feature/data/data_source/test_server.dart';
 import '../../feature/test_feature/data/repositories/begin_test_repository.dart';
 import '../../feature/test_feature/domain/repository/repository.dart';
@@ -134,12 +140,16 @@ extension GetItInjectableX on _i1.GetIt {
     gh.factory<ConfirmAuditConsultUseCase>(
             () => ConfirmAuditConsultUseCase(auditTestListRepository: gh<AuditRepository>()));
 
+    gh.factory<DenyAuditConsultUseCase>(
+            () => DenyAuditConsultUseCase(auditTestListRepository: gh<AuditRepository>()));
+
     gh.factory<AcceptAuditTestBloc>(() => AcceptAuditTestBloc(
       denyAuditTestUseCase: gh<DenyAuditTestUseCase>()
     ));
 
     gh.factory<AcceptAuditConsultBloc>(() => AcceptAuditConsultBloc(
-        confirmAuditConsultUseCase: gh<ConfirmAuditConsultUseCase>()
+        confirmAuditConsultUseCase: gh<ConfirmAuditConsultUseCase>(),
+      denyAuditConsultUseCase: gh<DenyAuditConsultUseCase>()
     ));
 
 
@@ -166,6 +176,18 @@ extension GetItInjectableX on _i1.GetIt {
     ));
 
     gh.factory<UserDataBloc>(() => UserDataBloc());
+
+
+    gh.factory<StoryDataSource>(() => StoryDataSource());
+    gh.factory<StoryRepository>(
+            () => StoryRepositoryImpl(storyDataSource: gh<StoryDataSource>()));
+
+    gh.factory<AuditStoryUseCase>(
+            () => AuditStoryUseCase(storyRepository: gh<StoryRepository>()));
+
+    gh.factory<StoryBloc>(() => StoryBloc(
+      auditStoryUseCase: gh<AuditStoryUseCase>(),
+    ));
 
     return this;
   }

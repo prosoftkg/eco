@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 Widget bottomBackgroungImage(BuildContext context){
   return Positioned(
     bottom: 32.h,

@@ -22,7 +22,7 @@ class AuditTest extends Equatable {
   final dynamic score;
   final dynamic auditScore;
   final int? paymentStatus;
-  final dynamic auditorId;
+  final int? auditorId;
   final dynamic auditDate;
   final dynamic paymentDate;
   final int? categoryId;

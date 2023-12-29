@@ -17,7 +17,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   WebViewPlusController? _controller;
   int pageCounter=0;
   String? url;
-
+  double webProgress=0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,22 +30,38 @@ class _PaymentScreenState extends State<PaymentScreen> {
             url=state.paymentEntity.paymentUrl;
           }
           return SafeArea(
-            child: WebViewPlus(
-              javascriptMode: JavascriptMode.unrestricted,
-              gestureNavigationEnabled: true,
-              onWebViewCreated: (controller) {
-                _controller = controller;
-              },
-              initialUrl: url,
-              navigationDelegate: (NavigationRequest request) {
-                pageCounter++;
-                print(pageCounter);
-                if (pageCounter == 1) {
-                  AutoRouter.of(context).pop();
-                  return NavigationDecision.prevent;
-                }
-                return NavigationDecision.navigate;
-              },
+            child: Stack(
+              children: [
+                WebViewPlus(
+                  javascriptMode: JavascriptMode.unrestricted,
+                  gestureNavigationEnabled: true,
+                  onWebViewCreated: (controller) {
+                    _controller = controller;
+                  },
+                  onProgress: (progress){
+                    setState(() {
+                      this.webProgress=progress/100;
+                    });
+                  },
+                  initialUrl: url,
+                  navigationDelegate: (NavigationRequest request) {
+                    pageCounter++;
+                    print(pageCounter);
+                    if (pageCounter == 1) {
+                      AutoRouter.of(context).pop();
+                      return NavigationDecision.prevent;
+                    }
+                    return NavigationDecision.navigate;
+                  },
+                ),
+                if(webProgress<1)
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  color: Colors.white,
+                  child: Center(child: progressWidget()),
+                ),
+              ]
             ),
           );
         },

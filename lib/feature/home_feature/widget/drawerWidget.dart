@@ -1,5 +1,7 @@
 import 'package:eco_kg/core/utils/utils.dart';
+import 'package:eco_kg/feature/about_project_feature/presentation/about_project.dart';
 import 'package:eco_kg/feature/audit_test_consult_feature/presentation/audit_consultation/audit_consultation_screen.dart';
+import 'package:eco_kg/feature/doc_feature/presentation/doc/select_document/select_doc.dart';
 import 'package:eco_kg/feature/home_feature/domain/entities/userEnum.dart';
 import 'package:eco_kg/feature/terms_of_use_feature/presentation/terms_of_use.dart';
 import 'package:flutter/material.dart';
@@ -8,12 +10,13 @@ import '../../../core/auto_route/auto_route.dart';
 import '../../../core/style/app_colors.dart';
 import '../../../core/style/app_text_styles.dart';
 import '../../../core/utils/alertDialog.dart';
-import '../../audit_story/presentation/audit_story.dart';
+import '../../payment_feature/presentation/info_form_for_payment/info_form_for_payment.dart';
+import '../../story_feature/presentation/audit_story/audit_story.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../certificates/presentation/certificates_screen.dart';
 import '../../consultation_feature/presentation/consultation_screen.dart';
 import '../../get_certificate/presentation/get_certificate_screen.dart';
-import '../../story_feature/presentation/story_screen.dart';
+import '../../story_feature/presentation/user_story/story_screen.dart';
 import '../../user_cabinet_feature/presentation/bloc/userDataBloc/user_data_bloc.dart';
 import '../../widgets/showModelBottomSheet.dart';
 import '../domain/entities/drawerEnum.dart';
@@ -32,13 +35,13 @@ Widget drawerBuild(BuildContext context,UserEnum userEnum){
             AutoRouter.of(context).push(const UserCabinetRoute());
           } break;
           case DrawerSelect.getConsultation: {
-            Navigator.of(context).push(MaterialPageRoute(builder:(context)=>ConsultationScreen(testId: '1')));
+            AutoRouter.of(context).push(const GetConsultDrawerRoute());
           }break;
           case DrawerSelect.library: {
             AutoRouter.of(context).push(const LibraryRoute());
           }break;
           case DrawerSelect.getCertificate: {
-            Navigator.of(context).push(MaterialPageRoute(builder:(context)=>const GetCertificatScreen()));
+            Navigator.of(context).push(MaterialPageRoute(builder:(context)=> SelectDoc()/*GetCertificatScreen(testId: '',sum: '',)*/));
           }break;
           case DrawerSelect.story: {
             Navigator.of(context).push(MaterialPageRoute(builder:(context)=>userEnum==UserEnum.auditor? const AuditStoryScreen() : const StoryScreen()));
@@ -53,6 +56,9 @@ Widget drawerBuild(BuildContext context,UserEnum userEnum){
             AutoRouter.of(context).push(const AuditRoute());
             // Navigator.of(context).push(MaterialPageRoute(builder:(context)=>const AuditScreen()));
           }break;
+          case DrawerSelect.aboutProject:{
+            Navigator.of(context).push(MaterialPageRoute(builder:(context)=>const AboutProject()));
+          }break;
           case DrawerSelect.language: {
             callShowModelBottomSheet(context);
           }break;
@@ -60,15 +66,16 @@ Widget drawerBuild(BuildContext context,UserEnum userEnum){
             Navigator.of(context).push(MaterialPageRoute(builder:(context)=>const TermsOfUse()));
           }break;
           case DrawerSelect.exit: {
-            await storage.delete(key: 'authKey');
+
             var dialog = CustomAlertDialog(
               title: "Выход",
               message: "Вы действительно хотите выйти?",
-              onPostivePressed: () {
+              onPostivePressed: () async{
+                await storage.delete(key: 'authKey');
                 AutoRouter.of(context).replaceAll([const SignInRoute()]);
               },
               positiveBtnText: 'Да',
-              negativeBtnText: 'Нет', onNegativePressed: (){},);
+              negativeBtnText: 'Нет', onNegativePressed: (){});
             showDialog(
                 context: context,
                 builder: (BuildContext context) => dialog);
@@ -231,7 +238,7 @@ Widget drawerBuild(BuildContext context,UserEnum userEnum){
                                   SizedBox(height: 16.h),
                                   buildMenu('user.png',context.text.user_cabinet,context,DrawerSelect.userCabinet),
                                   buildMenu('message-search.png',context.text.get_consultation,context,DrawerSelect.getConsultation),
-                                  buildMenu('medal-star.png',context.text.get_certificate,context,DrawerSelect.getCertificate),
+                                  // buildMenu('medal-star.png',context.text.get_certificate,context,DrawerSelect.getCertificate),
                                   buildMenu('clock.png',context.text.history,context,DrawerSelect.story),
                                   buildMenu('medal.png',context.text.certificates,context,DrawerSelect.certificates),
                                   buildMenu('book.png',context.text.library,context,DrawerSelect.library),

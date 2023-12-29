@@ -159,10 +159,8 @@ class _LibraryDetailScreenState extends State<LibraryDetailScreen> {
                         .withOpacity(0.4),
                   ),
                   child: Text(
-                    'Гостиница/отель/Гостевой дом'
-                    /*library.typeList.first
-                                                              .titleEn ?? '',*/
-                    ,
+                    // 'Гостиница/отель/Гостевой дом'
+                    getTypeList(widget.detailLibrary.typeList),
                     style: AppTextStyles
                         .clearSansS11clWhiteW700,
                     textAlign: TextAlign.center,

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:eco_kg/core/error_journal/error_journal.dart';
 import 'package:injectable/injectable.dart';
 import 'package:eco_kg/core/constants/api_constants.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -106,11 +107,11 @@ class AuditDataSource implements IAuditDataSource {
     }
   }
 
-  Future<bool> confirmAuditConsultList(String testId) async {
+  Future<bool> denyAuditConsultList(String consultId) async {
     var uri = Uri(
       scheme: scheme,
       host: ip,
-      path: 'api/user/consultation-confirm',
+      path: 'api/test/deny-consultation',
     );
 
 
@@ -119,7 +120,7 @@ class AuditDataSource implements IAuditDataSource {
     print('server $authKey');
 
     var json={
-      'test_id': testId
+      'consultation_id': consultId
     };
 
     var response = await http.post(uri,body:json,headers: {'Authorization': 'Bearer $authKey'});
@@ -134,6 +135,36 @@ class AuditDataSource implements IAuditDataSource {
       print(response.statusCode);
       print(response.body);
       throw Exception(response.reasonPhrase);
+    }
+  }
+
+  Future<bool> confirmAuditConsultList(String testId) async {
+    var uri = Uri(
+      scheme: scheme,
+      host: ip,
+      path: 'api/user/consultation-confirm',
+    );
+
+    print('api/user/consultation-confirm');
+    final String? authKey = await storage.read(key: 'authKey');
+    print('server $authKey');
+
+    var json={
+      'consultation_id': testId
+    };
+
+    var response = await http.post(uri,body:json,headers: {'Authorization': 'Bearer $authKey'});
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      print(response.statusCode);
+      print(response.body);
+      final jsonData = jsonDecode(response.body);
+      return jsonData['result'];
+    } else {
+      //throw exception and catch it in UI
+      print('error not found');
+      print(response.statusCode);
+      print(response.body);
+      throw ServerError(error:response.reasonPhrase ?? 'Вышла ошибка');
     }
   }
 }

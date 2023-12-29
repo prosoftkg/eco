@@ -60,10 +60,6 @@ class TermsOfUse extends StatelessWidget {
 ''';
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          context.text.terms_of_use,
-          style: AppTextStyles.clearSansMediumTextStyle16,
-        ),
         automaticallyImplyLeading: false,
         leading: InkWell(
             onTap: () {
@@ -75,6 +71,11 @@ class TermsOfUse extends StatelessWidget {
       body: ListView(
         padding: EdgeInsets.symmetric(vertical: 32,horizontal: 16).r,
         children: [
+          Text(
+            context.text.terms_of_use,
+            style: AppTextStyles.clearSansMediumTextStyle16,
+          ),
+          SizedBox(height: 32.h),
           Text(terms_of_use)
         ]
       ),

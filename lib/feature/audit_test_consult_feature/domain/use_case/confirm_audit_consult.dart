@@ -13,6 +13,6 @@ class ConfirmAuditConsultUseCase extends UseCase<bool,String>{
 
   @override
   Future<Either<Failure, bool>> call(String testId) async{
-    return await auditTestListRepository.denyAuditTestList(testId);
+    return await auditTestListRepository.confirmAuditConsultList(testId);
   }
 }

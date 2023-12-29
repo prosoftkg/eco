@@ -5,6 +5,7 @@ import 'package:eco_kg/feature/splash_feature/presentation/widget/button_with_ic
 import 'package:eco_kg/feature/test_feature/domain/entities/finishTestEntity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/utils/utils.dart';
 import '../../../get_certificate/presentation/get_certificate_screen.dart';
 import '../../../home_feature/widget/bottom_background_image.dart';
 import '../bloc/test_bloc.dart';
@@ -17,6 +18,8 @@ class ResultScreen extends StatelessWidget {
   String email='';
   String? testId;
   String? testType;
+  String? categoryId;
+  String? companyArea;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,6 +37,8 @@ class ResultScreen extends StatelessWidget {
           email=state.email;
           testId=state.testId;
           testType=state.testType;
+          categoryId=state.catId;
+          companyArea=state.companyArea;
         }
         return Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -103,7 +108,7 @@ class ResultScreen extends StatelessWidget {
       return Column(
         children: [
           InkWell(child: buttonWithIcon('Получить консультацию', 'message-search.png'),onTap: (){
-            Navigator.of(context).push(MaterialPageRoute(builder:(context)=>ConsultationScreen(testId: testId!)));
+            Navigator.of(context).push(MaterialPageRoute(builder:(context)=>ConsultationScreen(testId: testId!,sum: sumConsult(categoryId!,companyArea!))));
           },),
           SizedBox(height: 32.h),
           InkWell(child: button(text: 'Пройти тест повторно'),onTap: (){
@@ -116,7 +121,7 @@ class ResultScreen extends StatelessWidget {
       children: [
         InkWell(child: button(text: testTypeTemp=='auditTest' ? 'Вернуться':'Пройти сертификацию'),onTap: (){
           testTypeTemp=='auditTest'? AutoRouter.of(context).pop() :
-          Navigator.of(context).push(MaterialPageRoute(builder:(context)=>const GetCertificatScreen()));
+          Navigator.of(context).push(MaterialPageRoute(builder:(context)=> GetCertificatScreen(testId: testId!,sum: sumCertificate(categoryId!,companyArea!))));
         },)
       ],
     );

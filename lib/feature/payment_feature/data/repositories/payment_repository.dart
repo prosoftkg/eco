@@ -23,7 +23,8 @@ class PaymentRepositoryImpl implements PaymentRepository{
       final library=await paymentDataSource.payment(paymentInfoEntity);
       return Right(library);
     }on Failure catch(e){
-      throw Left(ServerError(error: e));
+      print('error exeption');
+      return Left(ServerError(error: e));
     }
   }
 

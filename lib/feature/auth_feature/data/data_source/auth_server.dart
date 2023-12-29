@@ -46,7 +46,7 @@ class AuthSourse implements IAuthSourse {
       UserData.email=await storage.read(key: 'email');
       UserData.phone=await storage.read(key: 'phone');
       UserData.region=await storage.read(key: 'region');
-      UserData.companyName=await storage.read(key: 'company_name');
+      UserData.companyName=await storage.read(key: 'companyName');
     }
     return password != null;
   }

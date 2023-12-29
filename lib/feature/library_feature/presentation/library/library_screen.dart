@@ -185,8 +185,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                                     .withOpacity(0.4),
                                               ),
                                               child: Text(
-                                                library.typeList.first
-                                                              .title ?? '',
+                                                getTypeList(library.typeList),
                                                 style: AppTextStyles
                                                     .clearSansS11clWhiteW700,
                                               ),

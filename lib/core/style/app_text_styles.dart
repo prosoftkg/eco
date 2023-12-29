@@ -46,6 +46,8 @@ class AppTextStyles {
   TextStyle(color: AppColors.color009D9B, fontSize: 12.sp, fontWeight: FontWeight.w400,fontFamily: 'ClearSans');
   static TextStyle clearSansMediumS14W500C009D9B =
   TextStyle(color: AppColors.color009D9B, fontSize: 14.sp, fontWeight: FontWeight.w500,fontFamily: 'ClearSansMedium');
+  static TextStyle clearSansMediumS18W500C009D9B =
+  TextStyle(color: AppColors.color009D9B, fontSize: 18.sp, fontWeight: FontWeight.w500,fontFamily: 'ClearSansMedium');
   static TextStyle clearSansS12W400CBlack =
   TextStyle(color: AppColors.colorBlack, fontSize: 12.sp, fontWeight: FontWeight.w400,fontFamily: 'ClearSans');
   static TextStyle clearSansMediumS12W500CWhite =

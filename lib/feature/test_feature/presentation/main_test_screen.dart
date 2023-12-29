@@ -37,7 +37,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
   TextEditingController phoneController = TextEditingController();
 
   Test? testInfo;
-  String selectedLocation = "Marker 1";
+  String? selectedLocation;
 
   @override
   void dispose() {
@@ -160,7 +160,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
                                               region: regionController.text,
                                               phone: phoneController.text,
                                               testType: 'userType',
-                                              areaCompany: testInfo!.testNo < 3 ? (UserData.areaCompanyFirst.indexOf(selectedLocation)+1).toString() : (UserData.areaCompanySecond.indexOf(selectedLocation)+4).toString()),
+                                              areaCompany: testInfo!.testNo < 3 ? (UserData.areaCompanyFirst.indexOf(selectedLocation!)+1).toString() : (UserData.areaCompanySecond.indexOf(selectedLocation!)+4).toString()),
                                         ),
                                       );
                                     },
@@ -189,7 +189,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
                                         region: regionController.text,
                                         phone: phoneController.text,
                                         testType: 'userType',
-                                    areaCompany: testInfo!.testNo < 3 ? (UserData.areaCompanyFirst.indexOf(selectedLocation)+1).toString() : (UserData.areaCompanySecond.indexOf(selectedLocation)+4).toString());
+                                    areaCompany: testInfo!.testNo < 3 ? (UserData.areaCompanyFirst.indexOf(selectedLocation!)+1).toString() : (UserData.areaCompanySecond.indexOf(selectedLocation!)+4).toString());
                                     BlocProvider.of<TestBloc>(context).add(
                                         BeginTestEvent(
                                             testInfoForBegin: tempTestInfo));
@@ -232,7 +232,6 @@ class _MainTestScreenState extends State<MainTestScreen> {
   }
 
   dropDownFieldTemplate(List<String> dropDownList) {
-    selectedLocation=dropDownList.first;
     return DropdownButtonFormField<String>(
       style: AppTextStyles.clearSansS16W400CBlack,
       decoration: InputDecoration(
@@ -243,7 +242,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(12).r,
         ),
-        hintText: 'Выберите площадь',
+        hintText: 'Площадь предприятия',
         hintStyle: AppTextStyles.hintStyle,
       ),
       dropdownColor: AppColors.colorWhite,
@@ -259,6 +258,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
           selectedLocation = value!;
         });
       },
+      validator: (area) => area==null ? 'Выберите площадь' : null,
     );
   }
 

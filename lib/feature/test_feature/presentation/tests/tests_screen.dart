@@ -8,12 +8,14 @@ import 'package:number_paginator/number_paginator.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/auto_route/auto_route.dart';
 import '../../../../core/style/app_text_styles.dart';
+import '../../../../core/utils/alertDialog.dart';
 import '../../../auth_feature/presentation/widgets/appBarLeadintBack.dart';
 import '../../../home_feature/widget/bottom_background_image.dart';
 import '../../../splash_feature/presentation/bloc/language_bloc.dart';
 import '../../../widgets/progressWidget.dart';
 import '../bloc/test_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class TestsScreen extends StatefulWidget {
   const TestsScreen({super.key});
@@ -31,6 +33,7 @@ class _TestsScreenState extends State<TestsScreen> {
   String currentOptionId = '';
   var answers;
   String? categoryId = '';
+  String company_area='';
   String? question = '';
   String? testId = '';
   String? mId = '';
@@ -46,6 +49,17 @@ class _TestsScreenState extends State<TestsScreen> {
         ),
         leading: InkWell(
             onTap: () {
+              /*var dialog = CustomAlertDialog(
+                  title: "Выход из теста",
+                  message: "Вы действительно хотите выйти из теста?",
+                  onPostivePressed: () {
+                    AutoRouter.of(context).pop();
+                  },
+                  positiveBtnText: 'Да',
+                  negativeBtnText: 'Нет', onNegativePressed: (){});
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => dialog);*/
               AutoRouter.of(context).pop();
             },
             child: appBarLeading(context)),
@@ -68,13 +82,14 @@ class _TestsScreenState extends State<TestsScreen> {
             question = lan == ''
                 ? state.testEntity.question!
                 : lan == 'en'
-                ? state.testEntity.questionEn!
-                : state.testEntity.questionKy!;
+                ? state.testEntity.questionEn ?? ''
+                : state.testEntity.questionKy ?? '';
             categoryId = state.categoryId;
             testType=state.testType;
             testId = state.testEntity.testId.toString();
             mId = state.testEntity.mid.toString();
             currentPage = state.testEntity.number;
+            company_area=state.companyArea;
           }
           if (state is LoadedNextTestState) {
             if (stateLan.lanCode != 'ru') {
@@ -83,8 +98,8 @@ class _TestsScreenState extends State<TestsScreen> {
             question = lan == ''
                 ? state.nextTestEntity.question!
                 : lan == 'en'
-                ? state.nextTestEntity.questionEn!
-                : state.nextTestEntity.questionKy!;
+                ? state.nextTestEntity.questionEn ?? ''
+                : state.nextTestEntity.questionKy ?? '';
 
             answers = state.nextTestEntity.answer;
             mId = state.nextTestEntity.mid.toString();
@@ -95,7 +110,7 @@ class _TestsScreenState extends State<TestsScreen> {
           }
           if(state is LoadedFinishTestState){
             BlocProvider.of<TestBloc>(context)
-                .add(ResultTestEvent(finishTestEntity: state.finishTestEntity,testId: state.testId,tetsType: testType!));
+                .add(ResultTestEvent(finishTestEntity: state.finishTestEntity,testId: state.testId,tetsType: testType!,companyArea: company_area,categoryId: categoryId!));
           }
           if(state is ErrorTestState){
             return Stack(
@@ -141,8 +156,8 @@ class _TestsScreenState extends State<TestsScreen> {
                               title: Text(lan == ''
                                   ? item.title!
                                   : lan == 'en'
-                                  ? item.titleEn!
-                                  : item.titleKy!
+                                  ? item.titleEn ?? ''
+                                  : item.titleKy ?? ''
                                 ,
                                 style: AppTextStyles.clearSansS14CBlackF400,
                               ),

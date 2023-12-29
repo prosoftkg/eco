@@ -20,8 +20,15 @@ class OnTapConfirmEvent extends AcceptAuditConsultEvent{
 
 
 class CheckConsultAcceptEvent extends AcceptAuditConsultEvent{
-  final String auditTestId;
-  const CheckConsultAcceptEvent({required this.auditTestId});
+  final String auditId;
+  const CheckConsultAcceptEvent({required this.auditId});
   @override
-  List<Object> get props=>[auditTestId];
+  List<Object> get props=>[auditId];
+}
+
+class OnTapDenyConsultEvent extends AcceptAuditConsultEvent{
+  final String consultId;
+  const OnTapDenyConsultEvent({required this.consultId});
+  @override
+  List<Object> get props=>[consultId];
 }

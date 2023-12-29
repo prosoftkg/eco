@@ -22,12 +22,13 @@ class LoadedInfoTestState extends TestState{
 }
 
 class LoadedTestState extends TestState{
+  final String companyArea;
   final String categoryId;
   final BeginTestEntity testEntity;
   final String testType;
-  const LoadedTestState({required this.testEntity,required this.categoryId,required this.testType});
+  const LoadedTestState({required this.testEntity,required this.categoryId,required this.testType,required this.companyArea});
   @override
-  List<Object> get props=>[testEntity,categoryId];
+  List<Object> get props=>[testEntity,categoryId,companyArea,testType];
 }
 
 class LoadedNextTestState extends TestState{
@@ -51,9 +52,11 @@ class LoadedResultTestState extends TestState{
   final String email;
   final String testType;
   final String testId;
-  const LoadedResultTestState({required this.finishTestEntity,required this.email,required this.testId,required this.testType});
+  final String catId;
+  final String companyArea;
+  const LoadedResultTestState({required this.finishTestEntity,required this.email,required this.testId,required this.testType,required this.companyArea,required this.catId});
   @override
-  List<Object> get props=>[finishTestEntity];
+  List<Object> get props=>[finishTestEntity,email,testType,testId,catId,companyArea];
 }
 
 class ErrorTestState extends TestState{

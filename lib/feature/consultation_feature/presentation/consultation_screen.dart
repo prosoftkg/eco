@@ -7,19 +7,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/auto_route/auto_route.dart';
+import '../../auth_feature/presentation/widgets/appBarLeadintBack.dart';
 import '../../payment_feature/presentation/bloc/payment_bloc.dart';
 import 'package:auto_route/auto_route.dart';
 
 class ConsultationScreen extends StatelessWidget {
   final String testId;
+  final String sum;
 
-  const ConsultationScreen({super.key, required this.testId});
+  const ConsultationScreen({super.key, required this.testId,required this.sum});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(context.text.get_consultation),
+        leading: InkWell(
+            onTap: () {
+              AutoRouter.of(context).pop();
+            },
+            child: appBarLeading(context)),
+        leadingWidth: 100,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 62),
@@ -48,7 +56,7 @@ class ConsultationScreen extends StatelessWidget {
                 return InkWell(onTap: () {
                   BlocProvider.of<PaymentBloc>(context)
                     .add(LoadPaymentEvent(paymentInfoEntity: PaymentInfoEntity(
-                        testId: testId, paymentType: '1')));
+                        testId: testId, paymentType: '2',sum: sum)));
                 }, child: button(text: context.text.pay));
               },
             )

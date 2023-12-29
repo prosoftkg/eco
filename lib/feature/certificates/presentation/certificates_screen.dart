@@ -1,8 +1,9 @@
 import 'package:eco_kg/core/utils/utils.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/style/app_colors.dart';
 import '../../../core/style/app_text_styles.dart';
+import '../../auth_feature/presentation/widgets/appBarLeadintBack.dart';
 
 class CertificatesScreen extends StatelessWidget {
   const CertificatesScreen({super.key});
@@ -12,9 +13,16 @@ class CertificatesScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(context.text.certificates),
+        automaticallyImplyLeading: false,
+        leading: InkWell(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child: appBarLeading(context)),
+        leadingWidth: 100.w,
       ),
       body: ListView(
-        padding: EdgeInsets.symmetric(vertical: 32,horizontal: 16),
+        padding: EdgeInsets.symmetric(vertical: 32,horizontal: 16).r,
         children: [
           certificateItem('Сертификат маркировки Бронза','''• ECO KG: bronze
 • дата получения: 14/11/2023''','Bronze','Bronze ECO KG Certificate'),
@@ -32,14 +40,14 @@ class CertificatesScreen extends StatelessWidget {
     );
   }
   space() {
-    return SizedBox(height: 32);
+    return SizedBox(height: 32.h);
   }
   certificateItem(String title, String subtitle, String certificate,String pdfTitle){
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16).r,
       decoration: BoxDecoration(
         color: AppColors.colorWhite,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12).r,
         boxShadow: [
           BoxShadow(
             blurRadius: 28,
@@ -59,34 +67,33 @@ class CertificatesScreen extends StatelessWidget {
                 children: [
                   Text(title,
                       style: AppTextStyles.clearSansMediumS14CBlackF500),
-                  SizedBox(height: 10),
+                  SizedBox(height: 10.h),
                   Text(subtitle,
                       style: AppTextStyles.clearSansLightS12CBlackF300),
                 ],
               ),
-              Image.asset('assets/icon/certificate${certificate}.png',width: 62,height: 65),
+              Image.asset('assets/icon/certificate${certificate}.png',width: 62.w,height: 65.h),
             ],
           ),
-          SizedBox(height: 22),
+          SizedBox(height: 22.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
                 child: Row(
                   children: [
-                    Image.asset('assets/icon/pdf.png',width: 24,height: 24),
-                    SizedBox(width: 12),
+                    Image.asset('assets/icon/pdf.png',width: 24.w,height: 24.h),
+                    SizedBox(width: 12.w),
                     Text(pdfTitle,
                         style: AppTextStyles.clearSansLightS12CBlackF300),
                   ],
                 ),
               ),
               Container(
-                width: 56,
-                height: 22,
+                padding: EdgeInsets.symmetric(horizontal: 6,vertical: 3).r,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6),
-                    border: Border.all(width: 1,color: AppColors.color009D9B)
+                    borderRadius: BorderRadius.circular(6).r,
+                    border: Border.all(width: 1.w,color: AppColors.color009D9B)
                 ),
                 child: Center(child: Text('Скачать',style: AppTextStyles.clearSansS12C009D9BF400)),
               )

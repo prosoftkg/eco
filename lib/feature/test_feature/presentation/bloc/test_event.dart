@@ -54,7 +54,9 @@ class ResultTestEvent extends TestEvent{
   final FinishTestEntity finishTestEntity;
   final String testId;
   final String tetsType;
-  const ResultTestEvent({required this.finishTestEntity,required this.testId,required this.tetsType});
+  final String companyArea;
+  final String categoryId;
+  const ResultTestEvent({required this.finishTestEntity,required this.testId,required this.tetsType,required this.companyArea,required this.categoryId});
   @override
   List<Object> get props=>[finishTestEntity];
 }

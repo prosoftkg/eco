@@ -5,7 +5,7 @@ part 'language_event.dart';
 part 'language_state.dart';
 
 class LanguageBloc extends Bloc<LanguageEvent, LanguageState> {
-  LanguageBloc() : super(LanguageInitial(lanCode: 'system')) {
+  LanguageBloc() : super(LanguageInitial(lanCode: 'ru')) {
     on<SelectLanguageEvent>(_selectLanguage);
   }
 

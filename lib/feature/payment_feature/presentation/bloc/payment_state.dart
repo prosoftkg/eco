@@ -21,6 +21,13 @@ class LoadedPaymentState extends PaymentState{
   List<Object> get props=>[paymentEntity];
 }
 
+class LoadedUrlPaymentState extends PaymentState{
+  final PaymentEntity paymentEntity;
+  const LoadedUrlPaymentState({required this.paymentEntity});
+  @override
+  List<Object> get props=>[paymentEntity];
+}
+
 class FinishPageState extends PaymentState{
   const FinishPageState();
   @override

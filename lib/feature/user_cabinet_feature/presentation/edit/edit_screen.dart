@@ -6,6 +6,7 @@ import 'package:eco_kg/feature/user_cabinet_feature/domain/entities/userData.dar
 import 'package:eco_kg/feature/widgets/progressWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../core/servise_locator/servise_locator.dart';
 import '../../../../core/style/app_colors.dart';
 import '../../../../core/style/app_text_styles.dart';
 import '../../../auth_feature/presentation/widgets/appBarLeadintBack.dart';
@@ -43,6 +44,8 @@ class _EditScreenState extends State<EditScreen> {
     // TODO: implement dispose
     super.dispose();
   }
+
+  var myBloc=getIt<UserCabinetBloc>();
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +94,7 @@ class _EditScreenState extends State<EditScreen> {
               ],
             ),
             BlocBuilder<UserCabinetBloc, UserCabinetState>(
+              bloc: myBloc,
               builder: (context, state) {
                 if (state is LoadingUserCabinetState) {
                   return Center(child: progressWidget());
@@ -101,6 +105,7 @@ class _EditScreenState extends State<EditScreen> {
                     name: name.text,
                     phone: phone.text,
                   )));
+                  AutoRouter.of(context).pop();
                 }
                 return InkWell(
                   onTap: () {
@@ -109,8 +114,7 @@ class _EditScreenState extends State<EditScreen> {
                         name: name.text,
                         phone: phone.text,
                       );
-                      BlocProvider.of<UserCabinetBloc>(context)
-                          .add(EditUserDataEvent(userDataForEdit: userDataForEdit));
+                      myBloc.add(EditUserDataEvent(userDataForEdit: userDataForEdit));
                     }
                   },
                   child: button(text: context.text.save),
