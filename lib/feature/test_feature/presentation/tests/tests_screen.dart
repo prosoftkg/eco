@@ -8,14 +8,12 @@ import 'package:number_paginator/number_paginator.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/auto_route/auto_route.dart';
 import '../../../../core/style/app_text_styles.dart';
-import '../../../../core/utils/alertDialog.dart';
 import '../../../auth_feature/presentation/widgets/appBarLeadintBack.dart';
 import '../../../home_feature/widget/bottom_background_image.dart';
 import '../../../splash_feature/presentation/bloc/language_bloc.dart';
 import '../../../widgets/progressWidget.dart';
 import '../bloc/test_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class TestsScreen extends StatefulWidget {
   const TestsScreen({super.key});
@@ -193,6 +191,7 @@ class _TestsScreenState extends State<TestsScreen> {
                           testType: testType!
                         );
                         currentOptionId='';
+                        currentOption='';
                         currentPage!=numberofPages ? BlocProvider.of<TestBloc>(context).add(
                             NextTestEvent(testInfoForNext: tempTestInfo)) :
                         BlocProvider.of<TestBloc>(context).add(

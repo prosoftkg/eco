@@ -16,6 +16,7 @@ import 'package:eco_kg/feature/story_feature/presentation/bloc/story_bloc.dart';
 import 'package:eco_kg/feature/test_feature/domain/use_case/begin_test_use_case.dart';
 import 'package:eco_kg/feature/user_cabinet_feature/data/data_source/user_cabinet_server.dart';
 import 'package:eco_kg/feature/user_cabinet_feature/domain/repository/repository.dart';
+import 'package:eco_kg/feature/user_cabinet_feature/domain/use_case/delete_profile_use_case.dart';
 import 'package:eco_kg/feature/user_cabinet_feature/domain/use_case/edit_user_data_use_case.dart';
 import 'package:eco_kg/feature/user_cabinet_feature/presentation/bloc/userCabinetBloc/user_cabinet_bloc.dart';
 import 'package:eco_kg/feature/user_cabinet_feature/presentation/bloc/userDataBloc/user_data_bloc.dart';
@@ -171,8 +172,12 @@ extension GetItInjectableX on _i1.GetIt {
     gh.factory<EditUserDataUseCase>(
             () => EditUserDataUseCase(userCabinetRepository: gh<UserCabinetRepository>()));
 
+    gh.factory<DeleteProfileUseCase>(
+            () => DeleteProfileUseCase(userCabinetRepository: gh<UserCabinetRepository>()));
+
     gh.factory<UserCabinetBloc>(() => UserCabinetBloc(
       editUserDataUseCase: gh<EditUserDataUseCase>(),
+      deleteProfileUseCase: gh<DeleteProfileUseCase>()
     ));
 
     gh.factory<UserDataBloc>(() => UserDataBloc());

@@ -14,3 +14,10 @@ class EditUserDataEvent extends UserCabinetEvent {
   @override
   List<Object?> get props => [userDataForEdit];
 }
+
+class DeleteProfileEvent extends UserCabinetEvent {
+  const DeleteProfileEvent();
+
+  @override
+  List<Object?> get props => [];
+}

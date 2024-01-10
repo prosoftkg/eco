@@ -8,10 +8,7 @@ class LanguageBloc extends Bloc<LanguageEvent, LanguageState> {
   LanguageBloc() : super(LanguageInitial(lanCode: 'ru')) {
     on<SelectLanguageEvent>(_selectLanguage);
   }
-
   _selectLanguage(SelectLanguageEvent event, Emitter emit){
     emit(LanguageState(lanCode: event.lanCode));
   }
-
-
 }

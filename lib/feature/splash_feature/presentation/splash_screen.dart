@@ -11,6 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../core/utils/user.dart';
+import '../../user_cabinet_feature/domain/entities/userData.dart';
+import '../../user_cabinet_feature/presentation/bloc/userDataBloc/user_data_bloc.dart';
+
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
@@ -20,6 +24,11 @@ class SplashScreen extends StatelessWidget {
       body: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
           if(state is CheckAuthKeyState){
+            BlocProvider.of<UserDataBloc>(context)
+                .add(ChangeUserDataEvent(userDataForEdit: UserDataForEdit(
+              name: UserData.name ?? '',
+              phone: UserData.phone ?? '',
+            )));
             AutoRouter.of(context).replace(const HomeRoute());
           }
           if(state is BadAuthKeyState){

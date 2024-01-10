@@ -64,6 +64,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
     return Stack(
       children: [
         Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: AppBar(
             title: Text(
               context.text.test,
@@ -82,125 +83,120 @@ class _MainTestScreenState extends State<MainTestScreen> {
               if (stateGlobal is LoadedInfoTestState) {
                 testInfo = stateGlobal.infoTest;
               }
-              return SingleChildScrollView(
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height.h - 32.h,
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        left: 16.0, right: 16.0, top: 32, bottom: 124)
-                        .r,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              return Padding(
+                padding:  EdgeInsets.only(
+                    left: 16.0.w, right: 16.0.w, top: 32.h, bottom: 124.h)
+                    .r,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
                       children: [
-                        Column(
+                        Row(
                           children: [
-                            Row(
-                              children: [
-                                testIconWidget(
-                                    testInfo!.backColor, testInfo!.iconPath),
-                                SizedBox(width: 16.w),
-                                Flexible(
-                                  child: SizedBox(
-                                      child: Text(testInfo!.testTitle,
-                                          style: AppTextStyles
-                                              .clearSansMediumTextStyle18)),
-                                ),
-                              ],
-                            ),
-                            Form(
-                              key: _formKey,
-                              child: Column(
-                                children: [
-                                  SizedBox(height: 40.h),
-                                  companyFieldTemplate(
-                                      hintText: 'Название предприятия'),
-                                  SizedBox(height: 16.h),
-                                  nameFieldTemplate(
-                                      hintText: 'Руководитель компании ФИО'),
-                                  SizedBox(height: 16.h),
-                                  regionFieldTemplate(hintText: 'Регион'),
-                                  SizedBox(height: 16.h),
-                                  phoneFieldTemplate(hintText: '996700123456'),
-                                  SizedBox(height: 16.h),
-                                  dropDownFieldTemplate(testInfo!.testNo <3 ? UserData.areaCompanyFirst : UserData.areaCompanySecond)
-                                ],
-                              ),
+                            testIconWidget(
+                                testInfo!.backColor, testInfo!.iconPath),
+                            SizedBox(width: 16.w),
+                            Flexible(
+                              child: SizedBox(
+                                  child: Text(testInfo!.testTitle,
+                                      style: AppTextStyles
+                                          .clearSansMediumTextStyle18)),
                             ),
                           ],
                         ),
-                        BlocBuilder<TestBloc, TestState>(
-                          builder: (context, state) {
-                            if (state is LoadingTestState) {
-                              return Center(child: progressWidget());
-                            }
-                            if (state is LoadedTestState) {
-                              BlocProvider.of<UserDataBloc>(context).add(
-                                ChangeUserDataEvent(
-                                    userDataForEdit: UserDataForEdit(
-                                        name: fullNameController.text,
-                                        phone: phoneController.text)),
-                              );
-                              AutoRouter.of(context)
-                                  .replace(const StartTestRoute());
-                            }
-                            if (state is ErrorTestState) {
-                              return Column(
-                                children: [
-                                  InkWell(
-                                    onTap: () {
-                                      BlocProvider.of<TestBloc>(context).add(
-                                        BeginTestEvent(
-                                          testInfoForBegin: TestInfoForBegin(
-                                              companyName:
-                                              companyNameController.text,
-                                              companyDirector:
-                                              fullNameController.text,
-                                              categoryId:
-                                              testInfo!.testNo.toString(),
-                                              region: regionController.text,
-                                              phone: phoneController.text,
-                                              testType: 'userType',
-                                              areaCompany: testInfo!.testNo < 3 ? (UserData.areaCompanyFirst.indexOf(selectedLocation!)+1).toString() : (UserData.areaCompanySecond.indexOf(selectedLocation!)+4).toString()),
-                                        ),
-                                      );
-                                    },
-                                    child: button(text: 'Начать'),
-                                  ),
-                                  SizedBox(height: 10.h),
-                                  Center(
-                                    child: Text(state.error.toString()),
-                                  ),
-                                ],
-                              );
-                            }
-                            return InkWell(
-                                onTap: () {
-                                  if (_formKey.currentState!.validate()) {
-                                    UserData.name = fullNameController.text;
-                                    UserData.companyName =
-                                        companyNameController.text;
-                                    UserData.phone = phoneController.text;
-                                    UserData.region = regionController.text;
-                                    var tempTestInfo = TestInfoForBegin(
-                                        companyName: companyNameController.text,
-                                        companyDirector:
-                                        fullNameController.text,
-                                        categoryId: testInfo!.testNo.toString(),
-                                        region: regionController.text,
-                                        phone: phoneController.text,
-                                        testType: 'userType',
-                                    areaCompany: testInfo!.testNo < 3 ? (UserData.areaCompanyFirst.indexOf(selectedLocation!)+1).toString() : (UserData.areaCompanySecond.indexOf(selectedLocation!)+4).toString());
-                                    BlocProvider.of<TestBloc>(context).add(
-                                        BeginTestEvent(
-                                            testInfoForBegin: tempTestInfo));
-                                  }
-                                },
-                                child: button(text: 'Начать'));
-                          },
-                        )
+                        Form(
+                          key: _formKey,
+                          child: Column(
+                            children: [
+                              SizedBox(height: 40.h),
+                              companyFieldTemplate(
+                                  hintText: 'Название предприятия'),
+                              SizedBox(height: 16.h),
+                              nameFieldTemplate(
+                                  hintText: 'Руководитель компании ФИО'),
+                              SizedBox(height: 16.h),
+                              regionFieldTemplate(hintText: 'Регион'),
+                              SizedBox(height: 16.h),
+                              phoneFieldTemplate(hintText: '996700123456'),
+                              SizedBox(height: 16.h),
+                              dropDownFieldTemplate(testInfo!.testNo <3 ? UserData.areaCompanyFirst : UserData.areaCompanySecond)
+                            ],
+                          ),
+                        ),
                       ],
                     ),
-                  ),
+                    BlocBuilder<TestBloc, TestState>(
+                      builder: (context, state) {
+                        if (state is LoadingTestState) {
+                          return Center(child: progressWidget());
+                        }
+                        if (state is LoadedTestState) {
+                          BlocProvider.of<UserDataBloc>(context).add(
+                            ChangeUserDataEvent(
+                                userDataForEdit: UserDataForEdit(
+                                    name: fullNameController.text,
+                                    phone: phoneController.text)),
+                          );
+                          AutoRouter.of(context)
+                              .replace(const StartTestRoute());
+                        }
+                        if (state is ErrorTestState) {
+                          return Column(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  BlocProvider.of<TestBloc>(context).add(
+                                    BeginTestEvent(
+                                      testInfoForBegin: TestInfoForBegin(
+                                          companyName:
+                                          companyNameController.text,
+                                          companyDirector:
+                                          fullNameController.text,
+                                          categoryId:
+                                          testInfo!.testNo.toString(),
+                                          region: regionController.text,
+                                          phone: phoneController.text,
+                                          testType: 'userType',
+                                          areaCompany: testInfo!.testNo < 3 ? (UserData.areaCompanyFirst.indexOf(selectedLocation!)+1).toString() : (UserData.areaCompanySecond.indexOf(selectedLocation!)+4).toString()),
+                                    ),
+                                  );
+                                },
+                                child: button(text: 'Начать'),
+                              ),
+                              SizedBox(height: 10.h),
+                              Center(
+                                child: Text(state.error.toString()),
+                              ),
+                            ],
+                          );
+                        }
+                        return InkWell(
+                            onTap: () {
+                              if (_formKey.currentState!.validate()) {
+                                UserData.name = fullNameController.text;
+                                UserData.companyName =
+                                    companyNameController.text;
+                                UserData.phone = phoneController.text;
+                                UserData.region = regionController.text;
+                                var tempTestInfo = TestInfoForBegin(
+                                    companyName: companyNameController.text,
+                                    companyDirector:
+                                    fullNameController.text,
+                                    categoryId: testInfo!.testNo.toString(),
+                                    region: regionController.text,
+                                    phone: phoneController.text,
+                                    testType: 'userType',
+                                areaCompany: testInfo!.testNo < 3 ? (UserData.areaCompanyFirst.indexOf(selectedLocation!)+1).toString() : (UserData.areaCompanySecond.indexOf(selectedLocation!)+4).toString());
+                                BlocProvider.of<TestBloc>(context).add(
+                                    BeginTestEvent(
+                                        testInfoForBegin: tempTestInfo));
+                              }
+                            },
+                            child: button(text: 'Начать'));
+                      },
+                    )
+                  ],
                 ),
               );
             },

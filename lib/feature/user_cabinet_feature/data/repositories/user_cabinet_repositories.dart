@@ -25,4 +25,18 @@ class UserCabinetRepositoryImpl implements UserCabinetRepository{
     }
   }
 
+  @override
+  Future<Either<Failure, bool>> deleteProfile() {
+    return _deleteProfile();
+  }
+
+  Future<Either<Failure,bool>> _deleteProfile() async{
+    try{
+      final deleteProfile=await userCabinetDataSource.deleteProfile();
+      return Right(deleteProfile);
+    }on Failure catch(e){
+      throw Left(ServerError(error: e));
+    }
+  }
+
 }

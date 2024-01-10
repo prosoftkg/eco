@@ -27,7 +27,7 @@ class HomeScreen extends StatelessWidget {
       Test(testNo: 4,testTitle: context.text.test4,iconPath: 'assets/icon/homeScreenIcon4.png',backColor: AppColors.color9B51E0.withOpacity(0.1)),
     ];
     return Scaffold(
-        drawer: drawerBuild(context,UserData.userRole),
+        drawer: DrawerBuild(),
         appBar: AppBar(
           title: Text(context.text.home),
         ),

@@ -118,7 +118,7 @@ class _DocState extends State<Doc> {
       pw.Page(
         build: (pw.Context context) {
           return pw.Container(
-            padding: pw.EdgeInsets.all(20),
+            padding: const pw.EdgeInsets.all(20),
             child: pw.Column(
               crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [

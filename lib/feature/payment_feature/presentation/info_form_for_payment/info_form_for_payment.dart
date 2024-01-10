@@ -66,6 +66,7 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
       context.text.test4
     ];
     return Scaffold(
+        resizeToAvoidBottomInset: false,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: InkWell(
@@ -75,71 +76,66 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
             child: appBarLeading(context)),
         leadingWidth: 100.w,
       ),
-      body: SingleChildScrollView(
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height.h - 32.h,
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    left: 16.0, right: 16.0, top: 32, bottom: 124)
-                    .r,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      children: [
-                        Form(
-                          key: _formKey,
-                          child: Column(
-                            children: [
-                              SizedBox(height: 40.h),
-                              categoryDropDownTemplate(categoryList),
-                              SizedBox(height: 16.h),
-                              companyFieldTemplate(
-                                  hintText: 'Название предприятия'),
-                              SizedBox(height: 16.h),
-                              nameFieldTemplate(
-                                  hintText: 'Руководитель компании ФИО'),
-                              SizedBox(height: 16.h),
-                              regionFieldTemplate(hintText: 'Регион'),
-                              SizedBox(height: 16.h),
-                              phoneFieldTemplate(hintText: '996700123456'),
-                              SizedBox(height: 16.h),
-                              testNo!=null ? dropDownFieldTemplate(testNo! < 3 ? UserData.areaCompanyFirst : UserData.areaCompanySecond) : SizedBox(),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                        InkWell(
-                            onTap: () {
-                              if (_formKey.currentState!.validate()) {
-                                UserData.name = fullNameController.text;
-                                UserData.companyName =
-                                    companyNameController.text;
-                                UserData.phone = phoneController.text;
-                                UserData.region = regionController.text;
-                                var companyAreaId=testNo! < 3 ? (UserData.areaCompanyFirst.indexOf(selectedCompanyArea!)+1).toString() : (UserData.areaCompanySecond.indexOf(selectedCompanyArea!)+4).toString();
-                                Navigator.of(context).push(MaterialPageRoute(builder:(context)=>ConsultationScreen(testId: '0',sum: sumConsult(testNo.toString(), companyAreaId),)));
-                                /*var tempTestInfo = TestInfoForBegin(
-                                    companyName: companyNameController.text,
-                                    companyDirector:
-                                    fullNameController.text,
-                                    categoryId: testInfo!.testNo.toString(),
-                                    region: regionController.text,
-                                    phone: phoneController.text,
-                                    testType: 'userType',
-                                    areaCompany: testInfo!.testNo < 3 ? (UserData.areaCompanyFirst.indexOf(selectedLocation!)+1).toString() : (UserData.areaCompanySecond.indexOf(selectedLocation!)+4).toString());*/
-                                /*BlocProvider.of<TestBloc>(context).add(
-                                    BeginTestEvent(
-                                        testInfoForBegin: tempTestInfo));*/
-                              }
-                            },
-                            child: button(text: 'Получить')),
-                  ],
+      body: Padding(
+        padding: const EdgeInsets.only(
+            left: 16.0, right: 16.0, top: 32, bottom: 124)
+            .r,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: [
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      SizedBox(height: 40.h),
+                      categoryDropDownTemplate(categoryList),
+                      SizedBox(height: 16.h),
+                      companyFieldTemplate(
+                          hintText: 'Название предприятия'),
+                      SizedBox(height: 16.h),
+                      nameFieldTemplate(
+                          hintText: 'Руководитель компании ФИО'),
+                      SizedBox(height: 16.h),
+                      regionFieldTemplate(hintText: 'Регион'),
+                      SizedBox(height: 16.h),
+                      phoneFieldTemplate(hintText: '996700123456'),
+                      SizedBox(height: 16.h),
+                      testNo!=null ? dropDownFieldTemplate(testNo! < 3 ? UserData.areaCompanyFirst : UserData.areaCompanySecond) : SizedBox(),
+                    ],
+                  ),
                 ),
-              ),
+              ],
             ),
-          )
+                InkWell(
+                    onTap: () {
+                      if (_formKey.currentState!.validate()) {
+                        UserData.name = fullNameController.text;
+                        UserData.companyName =
+                            companyNameController.text;
+                        UserData.phone = phoneController.text;
+                        UserData.region = regionController.text;
+                        var companyAreaId=testNo! < 3 ? (UserData.areaCompanyFirst.indexOf(selectedCompanyArea!)+1).toString() : (UserData.areaCompanySecond.indexOf(selectedCompanyArea!)+4).toString();
+                        Navigator.of(context).push(MaterialPageRoute(builder:(context)=>ConsultationScreen(testId: '0',sum: sumConsult(testNo.toString(), companyAreaId),)));
+                        /*var tempTestInfo = TestInfoForBegin(
+                            companyName: companyNameController.text,
+                            companyDirector:
+                            fullNameController.text,
+                            categoryId: testInfo!.testNo.toString(),
+                            region: regionController.text,
+                            phone: phoneController.text,
+                            testType: 'userType',
+                            areaCompany: testInfo!.testNo < 3 ? (UserData.areaCompanyFirst.indexOf(selectedLocation!)+1).toString() : (UserData.areaCompanySecond.indexOf(selectedLocation!)+4).toString());*/
+                        /*BlocProvider.of<TestBloc>(context).add(
+                            BeginTestEvent(
+                                testInfoForBegin: tempTestInfo));*/
+                      }
+                    },
+                    child: button(text: 'Получить')),
+          ],
+        ),
+      )
     );
   }
   companyFieldTemplate({required String hintText}) {

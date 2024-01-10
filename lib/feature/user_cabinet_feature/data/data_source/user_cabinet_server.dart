@@ -45,5 +45,32 @@ class UserCabinetDataSource implements IUserCabinetDataSource {
     }
   }
 
+
+  @override
+  Future<bool> deleteProfile() async {
+    var uri = Uri(
+      scheme: scheme,
+      host: ip,
+      path: 'api/user/delete-profile',
+    );
+
+    final String? authKey = await storage.read(key: 'authKey');
+    print('server $authKey');
+
+
+    var response = await http.post(uri,headers: {'Authorization': 'Bearer $authKey'});
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      print(response.statusCode);
+      print(response.body);
+      return true;
+    } else {
+      //throw exception and catch it in UI
+      print('error not found');
+      print(response.statusCode);
+      print(response.body);
+      throw Exception(response.reasonPhrase);
+    }
+  }
+
 }
 

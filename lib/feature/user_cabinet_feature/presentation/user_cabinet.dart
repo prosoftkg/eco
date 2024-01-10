@@ -1,9 +1,12 @@
 import 'package:eco_kg/core/auto_route/auto_route.dart';
+import 'package:eco_kg/core/servise_locator/servise_locator.dart';
 import 'package:eco_kg/core/style/app_colors.dart';
 import 'package:eco_kg/core/style/app_text_styles.dart';
 import 'package:eco_kg/core/utils/utils.dart';
 import 'package:eco_kg/feature/home_feature/domain/entities/userEnum.dart';
 import 'package:eco_kg/feature/splash_feature/presentation/widget/button_with_icon.dart';
+import 'package:eco_kg/feature/user_cabinet_feature/presentation/bloc/userCabinetBloc/user_cabinet_bloc.dart';
+import 'package:eco_kg/feature/widgets/progressWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/utils/user.dart';
@@ -17,6 +20,7 @@ class UserCabinetScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final deleteBloc=getIt<UserCabinetBloc>();
     return Scaffold(
       appBar: AppBar(
         title: Text(UserData.userRole==UserEnum.applicant? context.text.applicants_cabinet : context.text.auditors_cabinet),
@@ -48,7 +52,22 @@ class UserCabinetScreen extends StatelessWidget {
 ),
             ),
 
-            buttonWithIcon(context.text.delete_profile,'trash.png')
+            BlocBuilder<UserCabinetBloc, UserCabinetState>(
+              bloc: deleteBloc,
+  builder: (context, state) {
+    if(state is LoadingUserCabinetState){
+      return Center(child: progressWidget());
+    }
+    if(state is SuccessfullyDeleteProfileState){
+      AutoRouter.of(context).replaceAll([SignInRoute()]);
+    }
+    return InkWell(onTap:(){
+
+      AutoRouter.of(context).replaceAll([SignInRoute()]);
+              // deleteBloc.add(DeleteProfileEvent());
+            },child: buttonWithIcon(context.text.delete_profile,'trash.png'));
+  },
+)
           ],
         ),
       )

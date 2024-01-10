@@ -19,6 +19,11 @@ class SuccessfullyEditUserDataState extends UserCabinetState {
   List<Object?> get props => [];
 }
 
+class SuccessfullyDeleteProfileState extends UserCabinetState {
+  @override
+  List<Object?> get props => [];
+}
+
 class ErrorUserCabinetState extends UserCabinetState {
   final Object error;
   const ErrorUserCabinetState({
