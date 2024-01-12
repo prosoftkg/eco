@@ -31,37 +31,37 @@ class _PaymentScreenState extends State<PaymentScreen> {
           }
           return SafeArea(
             child: Stack(
-              children: [
-                WebViewPlus(
-                  javascriptMode: JavascriptMode.unrestricted,
-                  gestureNavigationEnabled: true,
-                  onWebViewCreated: (controller) {
-                    _controller = controller;
-                  },
-                  onProgress: (progress){
-                    setState(() {
-                      this.webProgress=progress/100;
-                    });
-                  },
-                  initialUrl: url,
-                  navigationDelegate: (NavigationRequest request) {
-                    pageCounter++;
-                    print(pageCounter);
-                    if (pageCounter == 1) {
-                      AutoRouter.of(context).pop();
-                      return NavigationDecision.prevent;
-                    }
-                    return NavigationDecision.navigate;
-                  },
-                ),
-                if(webProgress<1)
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  color: Colors.white,
-                  child: Center(child: progressWidget()),
-                ),
-              ]
+                children: [
+                  WebViewPlus(
+                    javascriptMode: JavascriptMode.unrestricted,
+                    gestureNavigationEnabled: true,
+                    onWebViewCreated: (controller) {
+                      _controller = controller;
+                    },
+                    onProgress: (progress){
+                      setState(() {
+                        this.webProgress=progress/100;
+                      });
+                    },
+                    initialUrl: url,
+                    navigationDelegate: (NavigationRequest request) {
+                      pageCounter++;
+                      print(pageCounter);
+                      if (pageCounter == 1) {
+                        AutoRouter.of(context).pop();
+                        return NavigationDecision.prevent;
+                      }
+                      return NavigationDecision.navigate;
+                    },
+                  ),
+                  if(webProgress<1)
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      color: Colors.white,
+                      child: Center(child: progressWidget()),
+                    ),
+                ]
             ),
           );
         },

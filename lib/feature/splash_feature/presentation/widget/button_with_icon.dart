@@ -4,7 +4,7 @@ import '../../../../core/style/app_colors.dart';
 import '../../../../core/style/app_text_styles.dart';
 
 Widget buttonWithIcon(String buttonText,String icon){
-  return Ink(
+  return Container(
     width: 358.w,
     height: 52.h,
     decoration: BoxDecoration(

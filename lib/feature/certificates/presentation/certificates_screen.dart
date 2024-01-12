@@ -3,7 +3,6 @@ import 'package:eco_kg/core/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:open_file/open_file.dart';
 import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:intl/intl.dart';
@@ -127,13 +126,13 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
   }
 
   downloadDocument() async {
-    final pw.Document pdf = pw.Document();
+    /*final pw.Document pdf = pw.Document();
     await generatesPdfAcceptWork(pdf);
 
     final output = await getTemporaryDirectory();
     final file = File('${output.path}/statements.pdf');
     var created = await file.writeAsBytes(await pdf.save());
-    await OpenFile.open(created.path);
+    await File.fromRawPath(created.path);*/
   }
 
   generatesPdfAcceptWork(pw.Document pdf) async {

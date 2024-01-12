@@ -2,11 +2,9 @@ import 'dart:io';
 import 'package:eco_kg/core/style/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 
 class Doc extends StatefulWidget {
@@ -27,7 +25,7 @@ class _DocState extends State<Doc> {
   final String nameDoc;
   _DocState(this.nameDoc);
   Future<void> downloadDocument() async {
-    final pw.Document pdf = pw.Document();
+    /*final pw.Document pdf = pw.Document();
     switch (nameDoc) {
       case 'Заявление об увольнении':
         await generatesPdfDismissal(pdf);
@@ -40,7 +38,7 @@ class _DocState extends State<Doc> {
     final output = await getTemporaryDirectory();
     final file = File('${output.path}/statements.pdf');
     var created = await file.writeAsBytes(await pdf.save());
-    await OpenFile.open(created.path);
+    await OpenFile.open(created.path);*/
   }
 
   Future<void> generatesPdfDismissal(pw.Document pdf) async {

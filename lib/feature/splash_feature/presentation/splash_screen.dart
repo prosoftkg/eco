@@ -70,7 +70,7 @@ class SplashScreen extends StatelessWidget {
                                   onTap: (){
                                     BlocProvider.of<LanguageBloc>(context).add(SelectLanguageEvent(lanCode: items[i].languageCode));
                                     BlocProvider.of<AuthBloc>(context).add(CheckAuthKeyEvent());
-                                    Navigator.pop(context);
+                                    AutoRouter.of(context).pop;
                                   },
                                 ),
                               ),
@@ -84,7 +84,24 @@ class SplashScreen extends StatelessWidget {
                 );
 
               },
-              child: buttonWithIcon(context.text.select_language, 'global.png'),
+              child: Container(
+                width: 358.w,
+                height: 52.h,
+                decoration: BoxDecoration(
+                    color: AppColors.colorEDF0F2,
+                    borderRadius: const BorderRadius.all(Radius.circular(12)),
+                    border: Border.all(width: 1,color: AppColors.color009D9B)
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset('assets/icon/global.png', height: 24.h, width: 24.w),
+                    SizedBox(width: 10.w),
+                    Text(context.text.select_language,style: AppTextStyles.clearSansMediumTextStyle16)
+                  ],
+                ),
+              )
+              // buttonWithIcon(context.text.select_language, 'global.png'),
             )
                     ],
                   ),

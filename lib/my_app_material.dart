@@ -72,9 +72,9 @@ class MyApp extends StatelessWidget {
             ),
           ],
           child: BlocBuilder<LanguageBloc, LanguageState>(
+            bloc: getIt<LanguageBloc>(),
             builder: (context, state) {
               return MaterialApp.router(
-                builder: FToastBuilder(),
                   locale: Locale(state.lanCode),
                   localizationsDelegates: AppLocalizations.localizationsDelegates,
                   supportedLocales: AppLocalizations.supportedLocales,

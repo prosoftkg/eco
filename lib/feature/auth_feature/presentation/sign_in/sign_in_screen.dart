@@ -39,7 +39,7 @@ class SignInScreen extends StatelessWidget {
             child: emailFieldTemplate(hintText: context.text.email),
           ),
            SizedBox(height: 8.h),
-          Row(
+          /*Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               InkWell(
@@ -49,7 +49,7 @@ class SignInScreen extends StatelessWidget {
                   child: Text(context.text.forgot_password,
                       style: AppTextStyles.linkTextStyle)),
             ],
-          ),
+          ),*/
            SizedBox(height: 20.h),
           BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
@@ -79,7 +79,7 @@ class SignInScreen extends StatelessWidget {
               }, child: button(text: context.text.continue_word));
             },
           ),
-           SizedBox(height: 200.h),
+           /*SizedBox(height: 200.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -93,7 +93,7 @@ class SignInScreen extends StatelessWidget {
                     style: AppTextStyles.linkTextStyle),
               )
             ],
-          ),
+          ),*/
         ],
       ),
     );
