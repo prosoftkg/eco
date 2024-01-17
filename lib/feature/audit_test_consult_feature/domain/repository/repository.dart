@@ -6,6 +6,7 @@ abstract interface class AuditRepository{
   Future<Either<Failure,List<AuditTest>>> auditTestList();
   Future<Either<Failure,List<AuditTest>>> auditConsultList();
   Future<Either<Failure,bool>> denyAuditTestList(String testId);
+  Future<Either<Failure,bool>> acceptAuditTestList(String testId);
   Future<Either<Failure,bool>> denyAuditConsultList(String consultId);
   Future<Either<Failure,bool>> confirmAuditConsultList(String testId);
 }

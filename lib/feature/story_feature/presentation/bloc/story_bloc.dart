@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:eco_kg/feature/story_feature/domain/entities/audit_story_entity.dart';
+import 'package:eco_kg/feature/story_feature/domain/entities/user_story_entity.dart';
+import 'package:eco_kg/feature/story_feature/domain/use_case/user_story_use_case.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -12,14 +14,23 @@ part 'story_state.dart';
 
 class StoryBloc extends Bloc<StoryEvent, StoryState> {
   final AuditStoryUseCase auditStoryUseCase;
-  StoryBloc({required this.auditStoryUseCase}) : super(StoryInitial()) {
+  final UserStoryUseCase userStoryUseCase;
+  StoryBloc({required this.auditStoryUseCase,required this.userStoryUseCase}) : super(StoryInitial()) {
     on<AuditStoryEvent>(_auditStory);
+    on<UserStoryEvent>(_userStory);
   }
   _auditStory(AuditStoryEvent event,Emitter emit)async{
-    emit(LoadingAuditStoryState());
+    emit(LoadingStoryState());
     final either=await auditStoryUseCase.call(NoParams());
-    either.fold((error) => emit(ErrorAuditStoryState(error: error)), (auditStory){
+    either.fold((error) => emit(ErrorStoryState(error: error)), (auditStory){
       emit(LoadedAuditStoryState(auditStoryEntity: auditStory));
+    });
+  }
+  _userStory(UserStoryEvent event,Emitter emit)async{
+    emit(LoadingStoryState());
+    final either=await userStoryUseCase.call(NoParams());
+    either.fold((error) => emit(ErrorStoryState(error: error)), (userStory){
+      emit(LoadedUserStoryState(userHistoryEntity: userStory));
     });
   }
 }

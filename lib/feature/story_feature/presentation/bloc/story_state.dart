@@ -9,7 +9,7 @@ class StoryInitial extends StoryState {
   List<Object> get props => [];
 }
 
-class LoadingAuditStoryState extends StoryState{
+class LoadingStoryState extends StoryState{
   @override
   List<Object> get props=>[];
 }
@@ -21,9 +21,16 @@ class LoadedAuditStoryState extends StoryState{
   List<Object> get props=>[auditStoryEntity];
 }
 
-class ErrorAuditStoryState extends StoryState{
+class LoadedUserStoryState extends StoryState{
+  final UserHistoryEntity userHistoryEntity;
+  const LoadedUserStoryState({required this.userHistoryEntity});
+  @override
+  List<Object> get props=>[userHistoryEntity];
+}
+
+class ErrorStoryState extends StoryState{
   final Object error;
-  const ErrorAuditStoryState({required this.error});
+  const ErrorStoryState({required this.error});
   @override
   List<Object> get props=>[error];
 }

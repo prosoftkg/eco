@@ -1,4 +1,5 @@
 import 'package:eco_kg/core/error_journal/error_journal.dart';
+import 'package:eco_kg/feature/payment_feature/domain/entities/getCertificateInfoEntity.dart';
 import 'package:eco_kg/feature/payment_feature/domain/entities/payment_entity.dart';
 import 'package:eco_kg/feature/test_feature/domain/entities/beginTestEntity.dart';
 import 'package:eco_kg/feature/test_feature/domain/entities/nextQuestionEntity.dart';
@@ -56,6 +57,53 @@ class PaymentDataSource implements IPaymentDataSource {
       print(response.statusCode);
       print(response.body);
       return PaymentEntity.fromJson(jsonDecode(response.body));
+    } else {
+      //throw exception and catch it in UI
+      print('error not found');
+      print(response.statusCode);
+      print(response.body);
+      throw ServerError(error: response.reasonPhrase!);
+    }
+  }
+
+  @override
+  Future<bool> getCertificate(GetCertificateInfoEntity getCertificateInfoEntity) async {
+    var uri = Uri(
+      scheme: scheme,
+      host: ip,
+      path: 'api/test/get-cert',
+    );
+
+    final String? authKey = await storage.read(key: 'authKey');
+    final String? email = await storage.read(key: 'email');
+    print('server $authKey');
+
+    /*var json = {
+      'test_id': paymentInfoEntity.testId,
+      'type': paymentInfoEntity.paymentType,
+      'name': fullName,
+      'email': email,
+      'phone': phone
+    };*/
+
+    var json = {
+      'test_id': getCertificateInfoEntity.testId,
+      'company_name' : getCertificateInfoEntity.companyName,
+      'type': getCertificateInfoEntity.paymentType,
+      'company_director': getCertificateInfoEntity.companyDirector,
+      'region' : getCertificateInfoEntity.region,
+      'category_id' : getCertificateInfoEntity.categoryId,
+      'company_area' : getCertificateInfoEntity.area,
+      'phone': getCertificateInfoEntity.phone,
+    };
+    print(json);
+
+    var response = await http
+        .post(uri, body: json, headers: {'Authorization': 'Bearer $authKey'});
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      print(response.statusCode);
+      print(response.body);
+      return true;
     } else {
       //throw exception and catch it in UI
       print('error not found');

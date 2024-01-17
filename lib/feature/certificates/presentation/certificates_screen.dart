@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:eco_kg/core/utils/utils.dart';
+import 'package:eco_kg/feature/story_feature/domain/use_case/user_certificate_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -11,6 +12,10 @@ import '../../../core/style/app_colors.dart';
 import '../../../core/style/app_text_styles.dart';
 import '../../auth_feature/presentation/widgets/appBarLeadintBack.dart';
 import '../../doc_feature/presentation/doc/do_doc.dart';
+import '../../story_feature/domain/entities/user_certificate_entity.dart';
+import '../../widgets/progressWidget.dart';
+import 'bloc/user_certificate_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CertificatesScreen extends StatefulWidget {
   const CertificatesScreen({super.key});
@@ -22,6 +27,7 @@ class CertificatesScreen extends StatefulWidget {
 class _CertificatesScreenState extends State<CertificatesScreen> {
   @override
   Widget build(BuildContext context) {
+    List<UserCertificate> userCertificate=[];
     return Scaffold(
       appBar: AppBar(
         title: Text(context.text.certificates),
@@ -33,23 +39,55 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
             child: appBarLeading(context)),
         leadingWidth: 100.w,
       ),
-      body: ListView(
+      body: BlocBuilder<UserCertificateBloc, UserCertificateState>(
+        bloc: BlocProvider.of<UserCertificateBloc>(context)..add(LoadUserCertificateEvent()),
+  builder: (context, state) {
+    if (state is LoadingUserCertificateState) {
+      return Center(child: progressWidget());
+    }
+    if(state is LoadedUserCertificateState){
+      userCertificate=state.userCertificate;
+      // story.sort((a, b) => (a.audiDate ?? '').compareTo(b.auditDate ?? ''));
+    }
+    return ListView(
         padding: EdgeInsets.symmetric(vertical: 32,horizontal: 16).r,
         children: [
-          certificateItem('Сертификат маркировки Бронза','''• ECO KG: bronze
-• дата получения: 14/11/2023''','Bronze','Bronze ECO KG Certificate',context),
-          space(),
-          certificateItem('Сертификат маркировки Серебро','''• ECO KG: silver
+          for(var temp in userCertificate)
+            Column(
+              children: [
+                certificateItem('Сертификат маркировки Бронза','''• ECO KG: bronze
+• дата получения: 14/11/2023''',getCertificate(temp.score ?? 0),'Bronze ECO KG Certificate',context),
+                space(),
+              ],
+            ),
+
+          /*certificateItem('Сертификат маркировки Серебро','''• ECO KG: silver
 • дата получения: 14/11/2023''','Silver','Silver ECO KG Certificate',context),
           space(),
           certificateItem('Сертификат маркировки Золото','''• ECO KG: gold
 • дата получения: 14/11/2023''','Gold','Gold ECO KG Certificate',context),
           space(),
           certificateItem('Сертификат маркировки Платина','''• ECO KG: platinum
-• дата получения: 14/11/2023''','Platinum','Platinum ECO KG Certificate',context),
+• дата получения: 14/11/2023''','Platinum','Platinum ECO KG Certificate',context),*/
         ],
-      ),
+      );
+  },
+),
     );
+  }
+
+  getCertificate(int score){
+    if(score > 73 && score<83) {
+      return 'Gold.png';
+    } else if(score > 64 && score<74) {
+      return 'Silver.png';
+    } else if(score > 57 && score<65) {
+      return 'Bronze.png';
+    } else if(score > 82 && score<101) {
+      return 'Platinum';
+    }else{
+      return '';
+    }
   }
 
   space() {
@@ -107,7 +145,7 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
                 onTap: () {
                   // downloadDocument;
                   print('download');
-                  Navigator.of(context).push(MaterialPageRoute(builder:(context)=>  Doc(nameDoc: 'Заявление о принятии на работу',)/*GetCertificatScreen(testId: '',sum: '',)*/));
+                  // Navigator.of(context).push(MaterialPageRoute(builder:(context)=>  Doc(nameDoc: 'Заявление о принятии на работу',)/*GetCertificatScreen(testId: '',sum: '',)*/));
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 6,vertical: 3).r,

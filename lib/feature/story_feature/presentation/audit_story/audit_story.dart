@@ -31,12 +31,12 @@ class AuditStoryScreen extends StatelessWidget {
       body: BlocBuilder<StoryBloc, StoryState>(
         bloc: auditStory,
         builder: (context, state) {
-          if (state is LoadingAuditStoryState) {
+          if (state is LoadingStoryState) {
             return Center(child: progressWidget());
           }
           if(state is LoadedAuditStoryState){
             story=[...state.auditStoryEntity.test, ...state.auditStoryEntity.consultation];
-            story.sort((a, b) => (a.auditDate ?? '').compareTo(b.auditDate ?? ''));
+            story.sort((a, b) => (a.audiDate ?? '').compareTo(b.auditDate ?? ''));
           }
           return ListView(
             padding: EdgeInsets.symmetric(vertical: 32, horizontal: 16),

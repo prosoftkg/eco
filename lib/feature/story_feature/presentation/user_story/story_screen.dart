@@ -1,16 +1,28 @@
 import 'package:eco_kg/core/utils/utils.dart';
 import 'package:eco_kg/feature/story_feature/domain/entities/itemSelect.dart';
+import 'package:eco_kg/feature/story_feature/domain/entities/user_story_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/style/app_colors.dart';
 import '../../../../core/style/app_text_styles.dart';
 import '../../../auth_feature/presentation/widgets/appBarLeadintBack.dart';
+import '../../../widgets/progressWidget.dart';
+import '../bloc/story_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StoryScreen extends StatelessWidget {
   const StoryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final userStory = context.read<StoryBloc>()..add(UserStoryEvent());
+    List<dynamic> story=[];
+    List<String> testList= [
+       'санаторно-курортные учреждения',
+      'предприятия туризма',
+      'предприятия общепита',
+      'комбинированный тест'
+    ];
     return Scaffold(
       appBar: AppBar(
         title: Text(context.text.history),
@@ -21,20 +33,40 @@ class StoryScreen extends StatelessWidget {
             child: appBarLeading(context)),
         leadingWidth: 100,
       ),
-      body: ListView(
+      body: BlocBuilder<StoryBloc, StoryState>(
+        bloc: userStory,
+  builder: (context, state) {
+    if (state is LoadingStoryState) {
+      return Center(child: progressWidget());
+    }
+    if(state is LoadedUserStoryState){
+      story=[...state.userHistoryEntity.test, ...state.userHistoryEntity.consultation, ...state.userHistoryEntity.application];
+      // story.sort((a, b) => (a.audiDate ?? '').compareTo(b.auditDate ?? ''));
+    }
+    return ListView(
         padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16).r,
         children: [
-          item('Получение консультации', '14/11/2023',
-              '''• экспресс-консультация по телефону (20 мин.)
+          for(var temp in story)
+            Column(
+              children: [
+                if(temp is Consultation)
+                item('Получение консультации', '14/11/2023',
+                    '''• экспресс-консультация по телефону (20 мин.)
 • оплачено онлайн''',StoryItem.getConsultationOrGetCertificate),
-          space(),
-          item('Заявка на сертификацию', '10/11/2023',
-              '''• оплачено онлайн''',StoryItem.getConsultationOrGetCertificate),
-          space(),
-          item('Прохождение теста', '05/11/2023',
-              '''Тест для предприятий туризма''',StoryItem.passingTest),
+                if(temp is Application)
+                item('Заявка на сертификацию', '10/11/2023',
+                    '''• оплачено онлайн''',StoryItem.getConsultationOrGetCertificate),
+                if(temp is TestUser)
+                item('Прохождение теста', temp.paymentDate ?? '05/11/2023',
+                    '''Тест для ${testList[temp.categoryId!-1]}''',StoryItem.passingTest),
+                space(),
+              ],
+            ),
+
         ],
-      ),
+      );
+  },
+),
     );
   }
 
@@ -124,8 +156,11 @@ class StoryScreen extends StatelessWidget {
                         children: [
                           Image.asset('assets/icon/pdf.png',width: 24.w,height: 24.h),
                           SizedBox(width: 12.w),
-                          Text(subtitle,
-                              style: AppTextStyles.clearSansLightS12CBlackF300),
+                          Container(
+                            width: 200.w,
+                            child: Text(subtitle,
+                                style: AppTextStyles.clearSansLightS12CBlackF300),
+                          ),
                         ],
                       ),
                     ),

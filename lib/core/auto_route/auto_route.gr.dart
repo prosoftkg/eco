@@ -113,6 +113,18 @@ abstract class _$AppRouter extends RootStackRouter{
           child: InfoFormForPayment()
       );
     },
+    GetCertificateDrawerRoute.name: (routeData){
+      return AutoRoutePage<dynamic>(
+          routeData: routeData,
+          child: InfoFormCertificateForPayment()
+      );
+    },
+    PaymentGetCertificateRoute.name: (routeData){
+      return AutoRoutePage<dynamic>(
+          routeData: routeData,
+          child: GetCertificatScreen()
+      );
+    },
   };
 }
 
@@ -289,5 +301,25 @@ class GetConsultDrawerRoute extends PageRouteInfo<void> {
     initialChildren: children,
   );
   static const String name = 'GetConsultDrawerRoute';
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+class GetCertificateDrawerRoute extends PageRouteInfo<void> {
+  const GetCertificateDrawerRoute({List<PageRouteInfo>? children})
+      : super(
+    GetCertificateDrawerRoute.name,
+    initialChildren: children,
+  );
+  static const String name = 'GetCertificateDrawerRoute';
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+class PaymentGetCertificateRoute extends PageRouteInfo<void> {
+  const PaymentGetCertificateRoute({List<PageRouteInfo>? children})
+      : super(
+    PaymentGetCertificateRoute.name,
+    initialChildren: children,
+  );
+  static const String name = 'PaymentGetCertificateRoute';
   static const PageInfo<void> page = PageInfo<void>(name);
 }

@@ -1,3 +1,4 @@
+import 'package:eco_kg/feature/payment_feature/domain/entities/getCertificateInfoEntity.dart';
 import 'package:eco_kg/feature/payment_feature/domain/entities/paymentInfoEntity.dart';
 import 'package:eco_kg/feature/payment_feature/domain/entities/payment_entity.dart';
 import 'package:injectable/injectable.dart';
@@ -22,6 +23,21 @@ class PaymentRepositoryImpl implements PaymentRepository{
     try{
       final library=await paymentDataSource.payment(paymentInfoEntity);
       return Right(library);
+    }on Failure catch(e){
+      print('error exeption');
+      return Left(ServerError(error: e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> getCertificate(GetCertificateInfoEntity getCertificateInfoEntity) {
+    return _getCertificate(getCertificateInfoEntity);
+  }
+
+  Future<Either<Failure,bool>> _getCertificate(GetCertificateInfoEntity getCertificateInfoEntity) async{
+    try{
+      final ans=await paymentDataSource.getCertificate(getCertificateInfoEntity);
+      return Right(ans);
     }on Failure catch(e){
       print('error exeption');
       return Left(ServerError(error: e));

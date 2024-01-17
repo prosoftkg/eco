@@ -3,6 +3,7 @@ import 'package:eco_kg/feature/audit_test_consult_feature/domain/use_case/denyAu
 import 'package:eco_kg/feature/auth_feature/domain/use_case/checkConfirmationCode.dart';
 import 'package:eco_kg/feature/auth_feature/domain/use_case/read_auth_key.dart';
 import 'package:eco_kg/feature/auth_feature/domain/use_case/sign_in.dart';
+import 'package:eco_kg/feature/get_certificate/presentation/bloc/get_data_from_get_certificate_bloc.dart';
 import 'package:eco_kg/feature/library_feature/data/data_source/library_server.dart';
 import 'package:eco_kg/feature/library_feature/data/repositories/library_repository.dart';
 import 'package:eco_kg/feature/library_feature/domain/repository/repository.dart';
@@ -25,6 +26,7 @@ import 'package:injectable/injectable.dart' as _i2;
 import '../../feature/audit_test_consult_feature/data/data_source/audit_server.dart';
 import '../../feature/audit_test_consult_feature/data/repositories/audit_test_list_repository.dart';
 import '../../feature/audit_test_consult_feature/domain/repository/repository.dart';
+import '../../feature/audit_test_consult_feature/domain/use_case/accept_audit_test_use_case.dart';
 import '../../feature/audit_test_consult_feature/domain/use_case/audit_consult_list_use_case.dart';
 import '../../feature/audit_test_consult_feature/domain/use_case/audit_test_list_use_case.dart';
 import '../../feature/audit_test_consult_feature/domain/use_case/denyAuditConsult.dart';
@@ -35,6 +37,7 @@ import '../../feature/auth_feature/data/data_source/auth_server.dart';
 import '../../feature/auth_feature/data/repositories/auth_repository.dart';
 import '../../feature/auth_feature/domain/repository/repository.dart';
 import '../../feature/auth_feature/presentation/bloc/auth_bloc.dart';
+import '../../feature/certificates/presentation/bloc/user_certificate_bloc.dart';
 import '../../feature/library_feature/domain/use_case/historyUseCase.dart';
 import '../../feature/library_feature/domain/use_case/paramUseCase.dart';
 import '../../feature/library_feature/presentation/filter/bloc/filter_bloc.dart';
@@ -42,9 +45,13 @@ import '../../feature/library_feature/presentation/library/bloc/library_bloc.dar
 import '../../feature/payment_feature/data/data_source/payment_server.dart';
 import '../../feature/payment_feature/data/repositories/payment_repository.dart';
 import '../../feature/payment_feature/domain/repository/repository.dart';
+import '../../feature/payment_feature/domain/use_case/get_certificate_use_case.dart';
 import '../../feature/payment_feature/domain/use_case/payment_use_case.dart';
 import '../../feature/payment_feature/presentation/bloc/payment_bloc.dart';
+import '../../feature/payment_feature/presentation/info_form_for_payment/bloc/get_certificate_bloc.dart';
 import '../../feature/story_feature/data/repositories/story_repository.dart';
+import '../../feature/story_feature/domain/use_case/user_certificate_use_case.dart';
+import '../../feature/story_feature/domain/use_case/user_story_use_case.dart';
 import '../../feature/test_feature/data/data_source/test_server.dart';
 import '../../feature/test_feature/data/repositories/begin_test_repository.dart';
 import '../../feature/test_feature/domain/repository/repository.dart';
@@ -138,6 +145,9 @@ extension GetItInjectableX on _i1.GetIt {
     gh.factory<DenyAuditTestUseCase>(
             () => DenyAuditTestUseCase(auditTestListRepository: gh<AuditRepository>()));
 
+    gh.factory<AcceptAuditTestUseCase>(
+            () => AcceptAuditTestUseCase(auditTestListRepository: gh<AuditRepository>()));
+
     gh.factory<ConfirmAuditConsultUseCase>(
             () => ConfirmAuditConsultUseCase(auditTestListRepository: gh<AuditRepository>()));
 
@@ -145,7 +155,8 @@ extension GetItInjectableX on _i1.GetIt {
             () => DenyAuditConsultUseCase(auditTestListRepository: gh<AuditRepository>()));
 
     gh.factory<AcceptAuditTestBloc>(() => AcceptAuditTestBloc(
-      denyAuditTestUseCase: gh<DenyAuditTestUseCase>()
+      denyAuditTestUseCase: gh<DenyAuditTestUseCase>(),
+          acceptAuditTestUseCase: gh<AcceptAuditTestUseCase>()
     ));
 
     gh.factory<AcceptAuditConsultBloc>(() => AcceptAuditConsultBloc(
@@ -182,7 +193,6 @@ extension GetItInjectableX on _i1.GetIt {
 
     gh.factory<UserDataBloc>(() => UserDataBloc());
 
-
     gh.factory<StoryDataSource>(() => StoryDataSource());
     gh.factory<StoryRepository>(
             () => StoryRepositoryImpl(storyDataSource: gh<StoryDataSource>()));
@@ -190,8 +200,28 @@ extension GetItInjectableX on _i1.GetIt {
     gh.factory<AuditStoryUseCase>(
             () => AuditStoryUseCase(storyRepository: gh<StoryRepository>()));
 
+    gh.factory<UserStoryUseCase>(
+            () => UserStoryUseCase(storyRepository: gh<StoryRepository>()));
+
+    gh.factory<UserCertificateUseCase>(
+            () => UserCertificateUseCase(storyRepository: gh<StoryRepository>()));
+
+    gh.factory<GetCertificateUseCase>(
+            () => GetCertificateUseCase(paymentRepository: gh<PaymentRepository>()));
+
     gh.factory<StoryBloc>(() => StoryBloc(
       auditStoryUseCase: gh<AuditStoryUseCase>(),
+      userStoryUseCase: gh<UserStoryUseCase>(),
+    ));
+
+    gh.factory<UserCertificateBloc>(() => UserCertificateBloc(
+       userCertificateUseCase: gh<UserCertificateUseCase>(),
+    ));
+
+    gh.factory<GetCertificateBloc>(() => GetCertificateBloc(
+      getCertificateUseCase: gh<GetCertificateUseCase>(),
+    ));
+    gh.factory<GetDataFromGetCertificateBloc>(() => GetDataFromGetCertificateBloc(
     ));
 
     return this;

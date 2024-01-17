@@ -170,7 +170,7 @@ class _DrawerBuildState extends State<DrawerBuild> {
                                           SizedBox(height: 16.h),
                                           buildMenu('user.png',context.text.user_cabinet,DrawerSelect.userCabinet,context),
                                           buildMenu('message-search.png',context.text.get_consultation,DrawerSelect.getConsultation,context),
-                                          // buildMenu('medal-star.png',context.text.get_certificate,context,DrawerSelect.getCertificate),
+                                          buildMenu('medal-star.png',context.text.get_certificate,DrawerSelect.getCertificate,context),
                                           buildMenu('clock.png',context.text.history,DrawerSelect.story,context),
                                           buildMenu('medal.png',context.text.certificates,DrawerSelect.certificates,context),
                                           buildMenu('book.png',context.text.library,DrawerSelect.library,context),
@@ -224,7 +224,8 @@ class _DrawerBuildState extends State<DrawerBuild> {
             AutoRouter.of(context).push(const LibraryRoute());
           }break;
           case DrawerSelect.getCertificate: {
-            Navigator.of(context).push(MaterialPageRoute(builder:(context)=> SelectDoc()/*GetCertificatScreen(testId: '',sum: '',)*/));
+            AutoRouter.of(context).push(const GetCertificateDrawerRoute());
+            // Navigator.of(context).push(MaterialPageRoute(builder:(context)=> SelectDoc()/*GetCertificatScreen(testId: '',sum: '',)*/));
           }break;
           case DrawerSelect.story: {
             Navigator.of(context).push(MaterialPageRoute(builder:(context)=>UserData.userRole==UserEnum.auditor? const AuditStoryScreen() : const StoryScreen()));

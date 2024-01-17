@@ -1,6 +1,8 @@
+import 'package:eco_kg/core/auto_route/auto_route.dart';
 import 'package:eco_kg/core/style/app_text_styles.dart';
 import 'package:eco_kg/feature/auth_feature/presentation/widgets/button.dart';
 import 'package:eco_kg/feature/consultation_feature/presentation/consultation_screen.dart';
+import 'package:eco_kg/feature/get_certificate/presentation/bloc/get_data_from_get_certificate_bloc.dart';
 import 'package:eco_kg/feature/splash_feature/presentation/widget/button_with_icon.dart';
 import 'package:eco_kg/feature/test_feature/domain/entities/finishTestEntity.dart';
 import 'package:flutter/material.dart';
@@ -121,7 +123,9 @@ class ResultScreen extends StatelessWidget {
       children: [
         InkWell(child: button(text: testTypeTemp=='auditTest' ? 'Вернуться':'Пройти сертификацию'),onTap: (){
           testTypeTemp=='auditTest'? AutoRouter.of(context).pop() :
-          Navigator.of(context).push(MaterialPageRoute(builder:(context)=> GetCertificatScreen(testId: testId!,sum: sumCertificate(categoryId!,companyArea!))));
+          BlocProvider.of<GetDataFromGetCertificateBloc>(context).add(LoadGetDataFromGetCertificate(sum: sumCertificate(categoryId!,companyArea!),testId: testId!));
+          AutoRouter.of(context).replace(PaymentGetCertificateRoute());
+          // Navigator.of(context).push(MaterialPageRoute(builder:(context)=> GetCertificatScreen(testId: testId!,sum: sumCertificate(categoryId!,companyArea!))));
         },)
       ],
     );

@@ -3,6 +3,7 @@ import 'package:eco_kg/feature/auth_feature/presentation/forgot_password/forgot_
 import 'package:eco_kg/feature/auth_feature/presentation/new_password/new_password_screen.dart';
 import 'package:eco_kg/feature/auth_feature/presentation/sign_in/sign_in_screen.dart';
 import 'package:eco_kg/feature/auth_feature/presentation/verification/verification_screen.dart';
+import 'package:eco_kg/feature/get_certificate/presentation/get_certificate_screen.dart';
 import 'package:eco_kg/feature/home_feature/presentation/home_screen.dart';
 import 'package:eco_kg/feature/payment_feature/presentation/info_form_for_payment/info_form_for_payment.dart';
 import 'package:eco_kg/feature/payment_feature/presentation/payment_screen.dart';
@@ -17,6 +18,7 @@ import '../../feature/audit_test_consult_feature/presentation/audit_screen.dart'
 import '../../feature/auth_feature/presentation/new_password/success_screen.dart';
 import '../../feature/auth_feature/presentation/sign_up/sign_up_screen.dart';
 import '../../feature/library_feature/presentation/library/library_screen.dart';
+import '../../feature/payment_feature/presentation/info_form_certificate_for_payment/info_form_certificate_for_payment.dart';
 import '../../feature/test_feature/presentation/result/result_screen.dart';
 part 'auto_route.gr.dart';
 
@@ -42,5 +44,7 @@ class AppRouter extends _$AppRouter{
     AutoRoute(page: UserCabinetRoute.page),
     AutoRoute(page: EditUserCabinetRoute.page),
     AutoRoute(page: GetConsultDrawerRoute.page),
+    AutoRoute(page: GetCertificateDrawerRoute.page),
+    AutoRoute(page: PaymentGetCertificateRoute.page),
   ];
 }

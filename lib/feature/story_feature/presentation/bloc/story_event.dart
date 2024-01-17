@@ -10,3 +10,9 @@ class AuditStoryEvent extends StoryEvent{
   @override
   List<Object> get props=>[];
 }
+
+class UserStoryEvent extends StoryEvent{
+  const UserStoryEvent();
+  @override
+  List<Object> get props=>[];
+}

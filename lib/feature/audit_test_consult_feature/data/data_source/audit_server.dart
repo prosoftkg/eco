@@ -107,6 +107,37 @@ class AuditDataSource implements IAuditDataSource {
     }
   }
 
+  Future<bool> acceptAuditTestList(String testId) async {
+    var uri = Uri(
+      scheme: scheme,
+      host: ip,
+      path: 'api/test/accept-test',
+    );
+
+
+
+    final String? authKey = await storage.read(key: 'authKey');
+    print('server $authKey');
+
+    var json={
+      'test_id': testId
+    };
+
+    var response = await http.post(uri,body:json,headers: {'Authorization': 'Bearer $authKey'});
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      print(response.statusCode);
+      print(response.body);
+      final jsonData = jsonDecode(response.body);
+      return jsonData['result'];
+    } else {
+      //throw exception and catch it in UI
+      print('error not found');
+      print(response.statusCode);
+      print(response.body);
+      throw Exception(response.reasonPhrase);
+    }
+  }
+
   Future<bool> denyAuditConsultList(String consultId) async {
     var uri = Uri(
       scheme: scheme,

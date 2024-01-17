@@ -58,6 +58,20 @@ class AuditRepositoryImpl implements AuditRepository{
   }
 
   @override
+  Future<Either<Failure,bool>> acceptAuditTestList(String testId){
+    return _acceptAuditTestList(testId);
+  }
+
+  Future<Either<Failure,bool>> _acceptAuditTestList(String testId)async{
+    try{
+      final acceptAuditTest=await auditDataSource.acceptAuditTestList(testId);
+      return Right(acceptAuditTest);
+    }on Failure catch(e){
+      throw Left(ServerError(error: e));
+    }
+  }
+
+  @override
   Future<Either<Failure,bool>> denyAuditConsultList(String consultId){
     return _denyAuditConsultList(consultId);
   }
