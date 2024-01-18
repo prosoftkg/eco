@@ -125,6 +125,12 @@ abstract class _$AppRouter extends RootStackRouter{
           child: GetCertificatScreen()
       );
     },
+    PaymentGetConsultationRoute.name: (routeData){
+      return AutoRoutePage<dynamic>(
+          routeData: routeData,
+          child: ConsultationScreen()
+      );
+    },
   };
 }
 
@@ -321,5 +327,15 @@ class PaymentGetCertificateRoute extends PageRouteInfo<void> {
     initialChildren: children,
   );
   static const String name = 'PaymentGetCertificateRoute';
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+class PaymentGetConsultationRoute extends PageRouteInfo<void> {
+  const PaymentGetConsultationRoute({List<PageRouteInfo>? children})
+      : super(
+    PaymentGetConsultationRoute.name,
+    initialChildren: children,
+  );
+  static const String name = 'PaymentGetConsultationRoute';
   static const PageInfo<void> page = PageInfo<void>(name);
 }

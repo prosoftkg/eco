@@ -9,6 +9,7 @@ import 'package:eco_kg/feature/library_feature/data/repositories/library_reposit
 import 'package:eco_kg/feature/library_feature/domain/repository/repository.dart';
 import 'package:eco_kg/feature/library_feature/domain/use_case/libraryIUseCase.dart';
 import 'package:eco_kg/feature/library_feature/domain/use_case/removeHistory.dart';
+import 'package:eco_kg/feature/payment_feature/presentation/blocGetData/get_data_from_payment_bloc.dart';
 import 'package:eco_kg/feature/splash_feature/presentation/bloc/language_bloc.dart';
 import 'package:eco_kg/feature/story_feature/data/data_source/story_server.dart';
 import 'package:eco_kg/feature/story_feature/domain/repository/repository.dart';
@@ -38,6 +39,7 @@ import '../../feature/auth_feature/data/repositories/auth_repository.dart';
 import '../../feature/auth_feature/domain/repository/repository.dart';
 import '../../feature/auth_feature/presentation/bloc/auth_bloc.dart';
 import '../../feature/certificates/presentation/bloc/user_certificate_bloc.dart';
+import '../../feature/consultation_feature/presentation/bloc/get_data_from_get_consultation_bloc.dart';
 import '../../feature/library_feature/domain/use_case/historyUseCase.dart';
 import '../../feature/library_feature/domain/use_case/paramUseCase.dart';
 import '../../feature/library_feature/presentation/filter/bloc/filter_bloc.dart';
@@ -46,8 +48,10 @@ import '../../feature/payment_feature/data/data_source/payment_server.dart';
 import '../../feature/payment_feature/data/repositories/payment_repository.dart';
 import '../../feature/payment_feature/domain/repository/repository.dart';
 import '../../feature/payment_feature/domain/use_case/get_certificate_use_case.dart';
+import '../../feature/payment_feature/domain/use_case/get_consultation_use_case.dart';
 import '../../feature/payment_feature/domain/use_case/payment_use_case.dart';
 import '../../feature/payment_feature/presentation/bloc/payment_bloc.dart';
+import '../../feature/payment_feature/presentation/info_form_certificate_for_payment/bloc/get_certificate_bloc.dart';
 import '../../feature/payment_feature/presentation/info_form_for_payment/bloc/get_certificate_bloc.dart';
 import '../../feature/story_feature/data/repositories/story_repository.dart';
 import '../../feature/story_feature/domain/use_case/user_certificate_use_case.dart';
@@ -209,6 +213,9 @@ extension GetItInjectableX on _i1.GetIt {
     gh.factory<GetCertificateUseCase>(
             () => GetCertificateUseCase(paymentRepository: gh<PaymentRepository>()));
 
+    gh.factory<GetConsultationUseCase>(
+            () => GetConsultationUseCase(paymentRepository: gh<PaymentRepository>()));
+
     gh.factory<StoryBloc>(() => StoryBloc(
       auditStoryUseCase: gh<AuditStoryUseCase>(),
       userStoryUseCase: gh<UserStoryUseCase>(),
@@ -222,6 +229,15 @@ extension GetItInjectableX on _i1.GetIt {
       getCertificateUseCase: gh<GetCertificateUseCase>(),
     ));
     gh.factory<GetDataFromGetCertificateBloc>(() => GetDataFromGetCertificateBloc(
+    ));
+
+    gh.factory<GetConsultationBloc>(() => GetConsultationBloc(
+      getConsultationUseCase: gh<GetConsultationUseCase>(),
+    ));
+    gh.factory<GetDataFromGetConsultationBloc>(() => GetDataFromGetConsultationBloc(
+    ));
+
+    gh.factory<GetDataFromPaymentBloc>(() => GetDataFromPaymentBloc(
     ));
 
     return this;

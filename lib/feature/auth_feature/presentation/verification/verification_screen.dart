@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
 import '../../../../core/auto_route/auto_route.dart';
+import '../../../../core/servise_locator/servise_locator.dart';
 import '../../../../core/style/app_text_styles.dart';
 import '../../../../core/utils/user.dart';
 import '../../../user_cabinet_feature/domain/entities/userData.dart';
@@ -25,7 +26,8 @@ class VerificationScreen extends StatefulWidget {
 class _VerificationScreenState extends State<VerificationScreen> {
   bool _onEditing = true;
   String _code = '';
-
+  var myBloc=getIt<AuthBloc>();
+  var email;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,6 +84,9 @@ class _VerificationScreenState extends State<VerificationScreen> {
               if (state is LoadingAuthState) {
                 return Center(child: progressWidget());
               }
+              if (state is SuccessfullySignInState) {
+                email=state.email;
+              }
               if (state is SuccessfullyCheckCodeState) {
                 BlocProvider.of<UserDataBloc>(context)
                     .add(ChangeUserDataEvent(userDataForEdit: UserDataForEdit(
@@ -90,14 +95,14 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 )));
                 AutoRouter.of(context).replaceAll([const HomeRoute()]);
               }
-              if(state is ErrorAuthState){
+              if (state is ErrorAuthState) {
                 return Column(
                   children: [
                     InkWell(onTap: () {
-                  if (_code.length == 4)
-                    BlocProvider.of<AuthBloc>(context)
-                        .add(CheckConfirmationCodeEvent(code: _code!));
-                }, child: button(text: context.text.apply)),
+                      if (_code.length == 4)
+                        BlocProvider.of<AuthBloc>(context)
+                            .add(CheckConfirmationCodeEvent(code: _code!));
+                    }, child: button(text: context.text.apply)),
                     SizedBox(height: 20.h),
                     Center(child: Text(state.error.toString()),),
                   ],
@@ -116,10 +121,20 @@ class _VerificationScreenState extends State<VerificationScreen> {
             children: [
               Text('${context.text.smsNot} ',
                   style: AppTextStyles.clearSansMediumTextStyle16),
-              InkWell(
-                onTap: () {},
-                child: Text(context.text.send_code_again,
-                    style: AppTextStyles.linkTextStyle),
+              BlocBuilder<AuthBloc, AuthState>(
+                bloc: myBloc,
+                builder: (context, state) {
+                  if (state is LoadingAuthState) {
+                    return Center(child: progressWidget());
+                  }
+                  return InkWell(
+                    onTap: () {
+                      myBloc.add(SignInEvent(email: email));
+                    },
+                    child: Text(context.text.send_code_again,
+                        style: AppTextStyles.linkTextStyle),
+                  );
+                },
               )
             ],
           ),

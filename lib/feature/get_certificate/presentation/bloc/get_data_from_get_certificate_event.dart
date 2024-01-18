@@ -5,9 +5,8 @@ abstract class GetDataFromGetCertificateEvent extends Equatable {
 }
 
 class LoadGetDataFromGetCertificate extends GetDataFromGetCertificateEvent{
-  final String sum;
-  final String testId;
-  const LoadGetDataFromGetCertificate({required this.sum,required this.testId});
+  final PaymentInfoEntity paymentInfoEntity;
+  const LoadGetDataFromGetCertificate({required this.paymentInfoEntity});
   @override
-  List<Object> get props=>[sum];
+  List<Object> get props=>[paymentInfoEntity];
 }

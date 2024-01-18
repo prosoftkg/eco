@@ -15,8 +15,11 @@ class LoadingAuthState extends AuthState {
 }
 
 class SuccessfullySignInState extends AuthState {
+  final String email;
+
+  SuccessfullySignInState({required this.email});
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [email];
 }
 
 class SuccessfullyCheckCodeState extends AuthState {

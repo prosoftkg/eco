@@ -44,4 +44,19 @@ class PaymentRepositoryImpl implements PaymentRepository{
     }
   }
 
+  @override
+  Future<Either<Failure, bool>> getConsultation(GetCertificateInfoEntity getCertificateInfoEntity) {
+    return _getCertificate(getCertificateInfoEntity);
+  }
+
+  Future<Either<Failure,bool>> _getConsultation(GetCertificateInfoEntity getCertificateInfoEntity) async{
+    try{
+      final ans=await paymentDataSource.getConsultation(getCertificateInfoEntity);
+      return Right(ans);
+    }on Failure catch(e){
+      print('error exeption');
+      return Left(ServerError(error: e));
+    }
+  }
+
 }

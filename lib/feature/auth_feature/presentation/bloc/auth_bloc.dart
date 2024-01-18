@@ -32,7 +32,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           .fold((error) => emit(const ErrorAuthState(error: 'Ваши данные не верны')),
               (active) {
         if (active == true){
-          emit(SuccessfullySignInState());
+          emit(SuccessfullySignInState(email: email));
         }
         else if(active==false) {
           emit(const ErrorAuthState(error: 'Ваши данные не верны'));

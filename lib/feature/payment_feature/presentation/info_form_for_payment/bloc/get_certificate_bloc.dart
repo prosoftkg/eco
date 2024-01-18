@@ -6,20 +6,21 @@ import 'package:eco_kg/feature/payment_feature/domain/use_case/get_certificate_u
 import 'package:equatable/equatable.dart';
 
 import '../../../../../core/use_case/use_case.dart';
+import '../../../domain/use_case/get_consultation_use_case.dart';
 
 part 'get_certificate_event.dart';
 part 'get_certificate_state.dart';
 
-class GetCertificateBloc extends Bloc<GetCertificateEvent, GetCertificateState> {
-  final GetCertificateUseCase getCertificateUseCase;
-  GetCertificateBloc({required this.getCertificateUseCase}) : super(GetCertificateInitial()) {
-    on<LoadGetCertificateEvent>(_getCertificate);
+class GetConsultationBloc extends Bloc<GetConsultationEvent, GetConsultationState> {
+  final GetConsultationUseCase getConsultationUseCase;
+  GetConsultationBloc({required this.getConsultationUseCase}) : super(GetConsultationInitial()) {
+    on<LoadGetConsultationEvent>(_getConsultation);
   }
-  _getCertificate(LoadGetCertificateEvent event,Emitter emit)async{
-    emit(LoadingGetCertificateState());
-    final either=await getCertificateUseCase.call(event.getCertificateInfoEntity);
-    either.fold((error) => emit(ErrorGetCertificateState(error: error)), (getCertificate){
-      emit(LoadedGetCertificateState());
+  _getConsultation(LoadGetConsultationEvent event,Emitter emit)async{
+    emit(LoadingGetConsultationState());
+    final either=await getConsultationUseCase.call(event.getCertificateInfoEntity);
+    either.fold((error) => emit(ErrorGetConsultationState(error: error)), (getConsultation){
+      emit(LoadedGetConsultationState());
     });
   }
 }

@@ -46,7 +46,7 @@ class AuditScreen extends StatelessWidget {
             /*state.acceptList.contains(item.id!.toString()) ?
             buildAcceptedItem(item.participant!,item.userEmail!,item.region!,item.phone!):*/
             buildAuditTestItem(item,context,getIt<AcceptAuditTestBloc>(),getIt<TestBloc>()),
-          space()])
+          ])
         ],
       ) : const Center(child: Text('No product'));
     }

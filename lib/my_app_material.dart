@@ -2,6 +2,7 @@ import 'package:eco_kg/core/servise_locator/servise_locator.dart';
 import 'package:eco_kg/feature/certificates/presentation/bloc/user_certificate_bloc.dart';
 import 'package:eco_kg/feature/get_certificate/presentation/bloc/get_data_from_get_certificate_bloc.dart';
 import 'package:eco_kg/feature/library_feature/presentation/library/bloc/library_bloc.dart';
+import 'package:eco_kg/feature/payment_feature/presentation/blocGetData/get_data_from_payment_bloc.dart';
 import 'package:eco_kg/feature/splash_feature/presentation/bloc/language_bloc.dart';
 import 'package:eco_kg/feature/story_feature/presentation/bloc/story_bloc.dart';
 import 'package:eco_kg/feature/user_cabinet_feature/presentation/bloc/userCabinetBloc/user_cabinet_bloc.dart';
@@ -15,8 +16,10 @@ import 'core/style/theme.dart';
 import 'feature/audit_test_consult_feature/presentation/bloc/audit_accept_bloc/accept_audit_test_bloc.dart';
 import 'feature/audit_test_consult_feature/presentation/bloc/audit_bloc/audit_bloc.dart';
 import 'feature/auth_feature/presentation/bloc/auth_bloc.dart';
+import 'feature/consultation_feature/presentation/bloc/get_data_from_get_consultation_bloc.dart';
 import 'feature/library_feature/presentation/filter/bloc/filter_bloc.dart';
 import 'feature/payment_feature/presentation/bloc/payment_bloc.dart';
+import 'feature/payment_feature/presentation/info_form_certificate_for_payment/bloc/get_certificate_bloc.dart';
 import 'feature/payment_feature/presentation/info_form_for_payment/bloc/get_certificate_bloc.dart';
 import 'feature/test_feature/presentation/bloc/test_bloc.dart';
 import 'feature/user_cabinet_feature/presentation/bloc/userDataBloc/user_data_bloc.dart';
@@ -80,6 +83,15 @@ class MyApp extends StatelessWidget {
               ),
               BlocProvider(
                 create: (context) => getIt<GetDataFromGetCertificateBloc>(),
+              ),
+              BlocProvider(
+                create: (context) => getIt<GetConsultationBloc>(),
+              ),
+              BlocProvider(
+                create: (context) => getIt<GetDataFromGetConsultationBloc>(),
+              ),
+              BlocProvider(
+                create: (context) => getIt<GetDataFromPaymentBloc>(),
               ),
             ],
             child: BlocBuilder<LanguageBloc, LanguageState>(

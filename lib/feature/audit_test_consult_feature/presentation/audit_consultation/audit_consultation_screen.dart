@@ -1,4 +1,5 @@
 import 'package:eco_kg/core/utils/utils.dart';
+import 'package:eco_kg/feature/audit_test_consult_feature/domain/entities/audit_consult_list_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/servise_locator/servise_locator.dart';
@@ -57,7 +58,7 @@ class AuditConsultationScreen extends StatelessWidget {
   space(){
     return SizedBox(height: 22.h);
   }
-  buildAuditTestItem(AuditTest consult,BuildContext context,AcceptAuditConsultBloc myBloc){
+  buildAuditTestItem(AuditConsult consult,BuildContext context,AcceptAuditConsultBloc myBloc){
     print('we here ${consult.auditorId.toString()}');
     return Column(
       children: [

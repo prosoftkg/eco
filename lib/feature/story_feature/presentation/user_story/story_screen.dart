@@ -41,23 +41,23 @@ class StoryScreen extends StatelessWidget {
     }
     if(state is LoadedUserStoryState){
       story=[...state.userHistoryEntity.test, ...state.userHistoryEntity.consultation, ...state.userHistoryEntity.application];
-      // story.sort((a, b) => (a.audiDate ?? '').compareTo(b.auditDate ?? ''));
+      story.sort((a, b) => (a.createDate ?? '').compareTo(b.createDate ?? ''));
     }
     return ListView(
         padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16).r,
         children: [
-          for(var temp in story)
+          for(var temp in story.reversed)
             Column(
               children: [
                 if(temp is Consultation)
-                item('Получение консультации', '14/11/2023',
+                item('Получение консультации', '${temp.createDate!.day}/${temp.createDate!.month}/${temp.createDate!.year}',
                     '''• экспресс-консультация по телефону (20 мин.)
 • оплачено онлайн''',StoryItem.getConsultationOrGetCertificate),
                 if(temp is Application)
-                item('Заявка на сертификацию', '10/11/2023',
+                item('Заявка на сертификацию', '${temp.createDate!.day}/${temp.createDate!.month}/${temp.createDate!.year}',
                     '''• оплачено онлайн''',StoryItem.getConsultationOrGetCertificate),
                 if(temp is TestUser)
-                item('Прохождение теста', temp.paymentDate ?? '05/11/2023',
+                item('Прохождение теста', '${temp.createDate!.day}/${temp.createDate!.month}/${temp.createDate!.year}',
                     '''Тест для ${testList[temp.categoryId!-1]}''',StoryItem.passingTest),
                 space(),
               ],

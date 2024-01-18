@@ -1,29 +1,29 @@
 part of 'get_certificate_bloc.dart';
 
-abstract class GetCertificateState extends Equatable {
-  const GetCertificateState();
+abstract class GetConsultationState extends Equatable {
+  const GetConsultationState();
 }
 
-class GetCertificateInitial extends GetCertificateState {
+class GetConsultationInitial extends GetConsultationState {
   @override
   List<Object> get props => [];
 }
 
 
-class LoadingGetCertificateState extends GetCertificateState{
+class LoadingGetConsultationState extends GetConsultationState{
   @override
   List<Object> get props=>[];
 }
 
-class LoadedGetCertificateState extends GetCertificateState{
-  const LoadedGetCertificateState();
+class LoadedGetConsultationState extends GetConsultationState{
+  const LoadedGetConsultationState();
   @override
   List<Object> get props=>[];
 }
 
-class ErrorGetCertificateState extends GetCertificateState{
+class ErrorGetConsultationState extends GetConsultationState{
   final Object error;
-  const ErrorGetCertificateState({required this.error});
+  const ErrorGetConsultationState({required this.error});
   @override
   List<Object> get props=>[error];
 }

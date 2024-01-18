@@ -36,7 +36,7 @@ class AuditStoryScreen extends StatelessWidget {
           }
           if(state is LoadedAuditStoryState){
             story=[...state.auditStoryEntity.test, ...state.auditStoryEntity.consultation];
-            story.sort((a, b) => (a.audiDate ?? '').compareTo(b.auditDate ?? ''));
+            story.sort((a, b) => (a.auditDate ?? DateTime.now()).compareTo(b.auditDate ?? DateTime.now()));
           }
           return ListView(
             padding: EdgeInsets.symmetric(vertical: 32, horizontal: 16),
@@ -45,9 +45,9 @@ class AuditStoryScreen extends StatelessWidget {
                 Column(children: [
                   temp is Consultation ?
                   item('Проведение консультации', '${temp.auditDate!.day}/${temp.auditDate!.month}/${temp.auditDate!.year}',
-                      temp.userCompany!, temp.userRegion!):
+                      temp.userCompany!, temp.userRegion!) :
 
-                  itemTest('Проведение аудита', '${temp.auditDate.day}/${temp.auditDate.month}/${temp.auditDate.year}' /*'05/11/2023'*/, temp.userCompany!, temp.userRegion!,'Тест, ${categoryType(temp.categoryId, context)}'),
+                  itemTest('Проведение аудита', temp.auditDate!=null ? '${temp.auditDate.day}/${temp.auditDate.month}/${temp.auditDate.year}' : '' /*'05/11/2023'*/, temp.userCompany!, temp.userRegion!,'Тест, ${categoryType(temp.categoryId, context)}'),
 
                   space(),
                 ])
@@ -106,6 +106,7 @@ class AuditStoryScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(companyName,
                         style: AppTextStyles.clearSansLightS12CBlackF300),
@@ -147,6 +148,7 @@ class AuditStoryScreen extends StatelessWidget {
                     style: AppTextStyles.clearSansLightS12CBlackF300),
                 Text(region,
                     style: AppTextStyles.clearSansLightS12CBlackF300),
+                SizedBox(height: 5.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

@@ -21,7 +21,11 @@ class AcceptAuditTestBloc extends Bloc<AcceptAuditTestEvent, AcceptAuditTestStat
 
   _acceptAuditTest(OnTapAcceptEvent event,Emitter emit)async{
     emit(LoadingAcceptAuditTestState());
-    final String? accepted = await storage.read(key: 'acceptedAuditTestList');
+    final either=await acceptAuditTestUseCase.call(event.auditTestId);
+    either.fold((error) => emit(ErrorAcceptAuditTestState(error: error)), (auditConsult){
+      emit(const AcceptedAuditTestState());
+    });
+    /*final String? accepted = await storage.read(key: 'acceptedAuditTestList');
     Set<String> acceptedList={};
     if(accepted!=null){
       acceptedList=accepted.split(',').toSet();
@@ -29,8 +33,8 @@ class AcceptAuditTestBloc extends Bloc<AcceptAuditTestEvent, AcceptAuditTestStat
     acceptedList.remove('');
     acceptedList.add(event.auditTestId);
     await storage.write(
-        key: 'acceptedAuditTestList', value: acceptedList.toString().replaceAll('{','').replaceAll('}', '').replaceAll(' ', ''));
-    emit(const AcceptedAuditTestState());
+        key: 'acceptedAuditTestList', value: acceptedList.toString().replaceAll('{','').replaceAll('}', '').replaceAll(' ', ''));*/
+
   }
 
   _denyAuditTest(OnTapDenyEvent event,Emitter emit)async{
