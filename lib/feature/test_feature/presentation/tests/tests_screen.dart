@@ -37,6 +37,7 @@ class _TestsScreenState extends State<TestsScreen> {
   String? mId = '';
   String? testType='';
   var lan = '';
+  Set<String> id_arr={};
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,6 +76,7 @@ class _TestsScreenState extends State<TestsScreen> {
             if (stateLan.lanCode != 'ru') {
               lan = stateLan.lanCode;
             }
+            id_arr.add(state.testEntity.mid.toString());
             numberofPages = int.parse(state.testEntity.count!);
             answers = state.testEntity.answer;
             question = lan == ''
@@ -93,6 +95,7 @@ class _TestsScreenState extends State<TestsScreen> {
             if (stateLan.lanCode != 'ru') {
               lan = stateLan.lanCode;
             }
+            id_arr.add(state.nextTestEntity.mid.toString());
             question = lan == ''
                 ? state.nextTestEntity.question!
                 : lan == 'en'
@@ -182,13 +185,15 @@ class _TestsScreenState extends State<TestsScreen> {
                         child: currentPage==numberofPages?button(text: 'Завершить'):button(text: 'Далее')),
                     onTap: () {
                       if (currentOptionId != '') {
+                        print(id_arr.toString() +' id_arr');
                         var tempTestInfo = TestInfoForNext(
                             test_id: testId!,
                             question_id: mId!,
                             answer_id: currentOptionId,
                             category_id: categoryId!,
                             number: currentPage.toString(),
-                          testType: testType!
+                          testType: testType!,
+                          id_arr: id_arr.toList()
                         );
                         currentOptionId='';
                         currentOption='';
