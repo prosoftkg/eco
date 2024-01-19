@@ -104,7 +104,7 @@ class TestDataSource implements ITestDataSource {
       'number' : testInfoForNext.number,
       'answer_id' : testInfoForNext.answer_id,
       'category_id' : testInfoForNext.category_id,
-      'id_arr' : testInfoForNext.id_arr.toString().replaceAll('[', '').replaceAll(']', '')
+      'id_arr' : testInfoForNext.id_arr.toString().replaceAll('[', '').replaceAll(']', '').replaceAll(' ', '')
     };
 
     /*Map<String, String> map = Map.fromIterable(
@@ -147,7 +147,8 @@ class TestDataSource implements ITestDataSource {
       'question_id' : testInfoForNext.question_id,
       'number' : testInfoForNext.number,
       'answer_id' : testInfoForNext.answer_id,
-      'category_id' : testInfoForNext.category_id
+      'category_id' : testInfoForNext.category_id,
+      'id_arr' : testInfoForNext.id_arr.toString().replaceAll('[', '').replaceAll(']', '').replaceAll(' ', '')
     };
     print(json);
 
