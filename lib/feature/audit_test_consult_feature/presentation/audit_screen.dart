@@ -42,11 +42,7 @@ class AuditScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 32).r,
         children: [
           for(var item in state.auditTestList)
-          Column(children:[
-            /*state.acceptList.contains(item.id!.toString()) ?
-            buildAcceptedItem(item.participant!,item.userEmail!,item.region!,item.phone!):*/
-            buildAuditTestItem(item,context,getIt<AcceptAuditTestBloc>(),getIt<TestBloc>()),
-          ])
+          buildAuditTestItem(item,context,getIt<AcceptAuditTestBloc>(),getIt<TestBloc>())
         ],
       ) : const Center(child: Text('No product'));
     }
@@ -60,7 +56,7 @@ class AuditScreen extends StatelessWidget {
   }
   buildAuditTestItem(AuditTest auditTest,BuildContext context,AcceptAuditTestBloc myBloc,TestBloc testBloc){
     return BlocBuilder<AcceptAuditTestBloc, AcceptAuditTestState>(
-      bloc: myBloc..add(CheckAcceptEvent(auditTestId: auditTest.id.toString())),
+      bloc: myBloc..add(CheckAcceptEvent(auditId: auditTest.auditorId.toString())),
       builder: (context, state) {
         if (state is LoadingAcceptAuditTestState) {
     return Container(

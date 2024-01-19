@@ -55,7 +55,7 @@ class AcceptAuditTestBloc extends Bloc<AcceptAuditTestEvent, AcceptAuditTestStat
 
   _checkAccept(CheckAcceptEvent event,Emitter emit)async{
     emit(LoadingAcceptAuditTestState());
-    final String? accepted = await storage.read(key: 'acceptedAuditTestList');
+    /*final String? accepted = await storage.read(key: 'acceptedAuditTestList');
     Set<String> acceptedList={};
     if(accepted!=null){
       acceptedList=accepted.split(',').toSet();
@@ -63,6 +63,11 @@ class AcceptAuditTestBloc extends Bloc<AcceptAuditTestEvent, AcceptAuditTestStat
     print(acceptedList.toString());
     acceptedList.remove('');
     if(acceptedList.contains(event.auditTestId)){
+      emit(const AcceptedAuditTestState());
+    }else{
+      emit(const NewAuditTestState());
+    }*/
+    if(event.auditId!='null'){
       emit(const AcceptedAuditTestState());
     }else{
       emit(const NewAuditTestState());
