@@ -44,19 +44,20 @@ class SplashScreen extends StatelessWidget {
             });
 
 
-            return Center(
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 62, horizontal: 16).r,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const SizedBox(),
-                    Image.asset('assets/img/logo.png',
-                        height: 280.h, width: 280.w),
-                    const SizedBox()
-                  ],
-                ),
+            return Padding(
+              padding: EdgeInsets.symmetric(vertical: 62, horizontal: 16).r,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(),
+                  Image.asset('assets/img/logo.png',
+                      height: 280.h, width: 280.w),
+                  SizedBox(
+                    width: 358.w,
+                    height: 52.h,
+                  )
+                ],
               ),
             );
           }
@@ -150,19 +151,20 @@ class SplashScreen extends StatelessWidget {
               ),
             );
           }
-          return Center(
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 62, horizontal: 16).r,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(),
-                  Image.asset('assets/img/logo.png',
-                      height: 280.h, width: 280.w),
-                  const SizedBox()
-                ],
-              ),
+          return Padding(
+            padding: EdgeInsets.symmetric(vertical: 62, horizontal: 16).r,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(),
+                Image.asset('assets/img/logo.png',
+                    height: 280.h, width: 280.w),
+                 SizedBox(
+                  width: 358.w,
+                  height: 52.h,
+                )
+              ],
             ),
           );
         },
