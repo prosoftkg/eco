@@ -1,8 +1,10 @@
 import 'package:eco_kg/core/utils/utils.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:eco_kg/feature/story_feature/domain/entities/itemSelect.dart';
 import 'package:eco_kg/feature/story_feature/domain/entities/user_story_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../core/servise_locator/servise_locator.dart';
 import '../../../../core/style/app_colors.dart';
 import '../../../../core/style/app_text_styles.dart';
 import '../../../auth_feature/presentation/widgets/appBarLeadintBack.dart';
@@ -50,15 +52,15 @@ class StoryScreen extends StatelessWidget {
             Column(
               children: [
                 if(temp is Consultation)
-                item('Получение консультации', '${temp.createDate!.day}/${temp.createDate!.month}/${temp.createDate!.year}',
-                    '''• экспресс-консультация по телефону (20 мин.)
-• оплачено онлайн''',StoryItem.getConsultationOrGetCertificate),
+                item(context.text.getting_advice, '${temp.createDate!.day}/${temp.createDate!.month}/${temp.createDate!.year}',
+                    '''• ${context.text.express_consultation}
+• ${context.text.paid_online}''',StoryItem.getConsultationOrGetCertificate,temp.id.toString()),
                 if(temp is Application)
-                item('Заявка на сертификацию', '${temp.createDate!.day}/${temp.createDate!.month}/${temp.createDate!.year}',
-                    '''• оплачено онлайн''',StoryItem.getConsultationOrGetCertificate),
+                item(context.text.application_certification, '${temp.createDate!.day}/${temp.createDate!.month}/${temp.createDate!.year}',
+                    '''• ${context.text.paid_online}''',StoryItem.getConsultationOrGetCertificate,temp.id.toString()),
                 if(temp is TestUser)
-                item('Прохождение теста', '${temp.createDate!.day}/${temp.createDate!.month}/${temp.createDate!.year}',
-                    '''Тест для ${testList[temp.categoryId!-1]}''',StoryItem.passingTest),
+                item(context.text.passing_test, '${temp.createDate!.day}/${temp.createDate!.month}/${temp.createDate!.year}',
+                    '''${context.text.test_for} ${testList[temp.categoryId!-1]}''',StoryItem.passingTest,temp.id.toString()),
                 space(),
               ],
             ),
@@ -69,8 +71,10 @@ class StoryScreen extends StatelessWidget {
 ),
     );
   }
+  
 
-  item(String title, String date, String subtitle, StoryItem storyItem) {
+  item(String title, String date, String subtitle, StoryItem storyItem,String testId) {
+    var myBloc=getIt<StoryBloc>();
     switch (storyItem) {
       case StoryItem.getConsultationOrGetCertificate:
         {
@@ -164,15 +168,31 @@ class StoryScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Container(
-                      width: 56.w,
-                      height: 22.h,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6).r,
-                        border: Border.all(width: 1.w,color: AppColors.color009D9B)
+                    BlocBuilder<StoryBloc, StoryState>(
+                      bloc: myBloc,
+  builder: (context, state) {
+    if (state is LoadingStoryState) {
+      return Center(child: progressWidget());
+    }
+    if(state is DownloadedUserStoryState){
+      launchUrl(Uri.parse(state.urlForDownload));
+    }
+    return InkWell(
+                      onTap: (){
+                       myBloc.add(DowloadUserStoryEvent(test_id: testId));
+                      },
+                      child: Container(
+                        width: 56.w,
+                        height: 22.h,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6).r,
+                          border: Border.all(width: 1.w,color: AppColors.color009D9B)
+                        ),
+                        child: Center(child: Text(context.text.download,style: AppTextStyles.clearSansS12C009D9BF400)),
                       ),
-                      child: Center(child: Text('Скачать',style: AppTextStyles.clearSansS12C009D9BF400)),
-                    )
+                    );
+  },
+)
                   ],
                 ),
               ],

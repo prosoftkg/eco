@@ -63,9 +63,9 @@ class ResultScreen extends StatelessWidget {
                             width: 100.w),
                         SizedBox(height: 62.h),
                         Text(
-                          testType == 'auditTest'
+                          /*testType == 'auditTest'
                               ? 'Балл заявителя: ${finishTestEntity!.score!}'
-                              : 'Ваш балл: ${finishTestEntity!.score!}',
+                              : */'Ваш балл: ${finishTestEntity!.score!}',
                           style: AppTextStyles.clearSansMediumS22W500CBlack,
                         ),
                       ],
@@ -101,29 +101,28 @@ class ResultScreen extends StatelessWidget {
   }
 
   getCertificate() {
-    if (finishTestEntity!.score! > 73 && finishTestEntity!.score! < 83) {
+    if (finishTestEntity!.mark=='Золото') {
       return Column(
         children: [
           Image.asset('assets/icon/certificateGold.png',
               height: 100.h, width: 100.w),
         ],
       );
-    } else if (finishTestEntity!.score! > 64 && finishTestEntity!.score! < 74) {
+    } else if (finishTestEntity!.mark=='Серебро') {
       return Column(
         children: [
           Image.asset('assets/icon/certificateSilver.png',
               height: 100.h, width: 100.w),
         ],
       );
-    } else if (finishTestEntity!.score! > 57 && finishTestEntity!.score! < 65) {
+    } else if (finishTestEntity!.mark=='Бронза') {
       return Column(
         children: [
           Image.asset('assets/icon/certificateBronze.png',
               height: 100.h, width: 100.w),
         ],
       );
-    } else if (finishTestEntity!.score! > 82 &&
-        finishTestEntity!.score! < 101) {
+    } else if (finishTestEntity!.mark=='Платина') {
       return Column(
         children: [
           Image.asset('assets/icon/certificatePlatinum.png',
@@ -192,6 +191,7 @@ class ResultScreen extends StatelessWidget {
                           region: UserData.region!,
                           phone: UserData.phone!,
                           area: companyArea!)));
+              if(testTypeTemp != 'auditTest')
               AutoRouter.of(context).replace(PaymentGetCertificateRoute());
               // Navigator.of(context).push(MaterialPageRoute(builder:(context)=> GetCertificatScreen(testId: testId!,sum: sumCertificate(categoryId!,companyArea!))));
             },

@@ -153,7 +153,7 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
                       borderRadius: BorderRadius.circular(6).r,
                       border: Border.all(width: 1.w,color: AppColors.color009D9B)
                   ),
-                  child: Center(child: Text('Скачать',style: AppTextStyles.clearSansS12C009D9BF400)),
+                  child: Center(child: Text(context.text.download,style: AppTextStyles.clearSansS12C009D9BF400)),
                 ),
               )
             ],

@@ -14,6 +14,7 @@ import 'package:eco_kg/feature/splash_feature/presentation/bloc/language_bloc.da
 import 'package:eco_kg/feature/story_feature/data/data_source/story_server.dart';
 import 'package:eco_kg/feature/story_feature/domain/repository/repository.dart';
 import 'package:eco_kg/feature/story_feature/domain/use_case/audit_story_use_case.dart';
+import 'package:eco_kg/feature/story_feature/domain/use_case/download_user_story_use_case.dart';
 import 'package:eco_kg/feature/story_feature/presentation/bloc/story_bloc.dart';
 import 'package:eco_kg/feature/test_feature/domain/use_case/begin_test_use_case.dart';
 import 'package:eco_kg/feature/user_cabinet_feature/data/data_source/user_cabinet_server.dart';
@@ -209,6 +210,8 @@ extension GetItInjectableX on _i1.GetIt {
 
     gh.factory<UserCertificateUseCase>(
             () => UserCertificateUseCase(storyRepository: gh<StoryRepository>()));
+    gh.factory<DownloadUserStoryUseCase>(
+            () => DownloadUserStoryUseCase(storyRepository: gh<StoryRepository>()));
 
     gh.factory<GetCertificateUseCase>(
             () => GetCertificateUseCase(paymentRepository: gh<PaymentRepository>()));
@@ -216,9 +219,12 @@ extension GetItInjectableX on _i1.GetIt {
     gh.factory<GetConsultationUseCase>(
             () => GetConsultationUseCase(paymentRepository: gh<PaymentRepository>()));
 
+
+
     gh.factory<StoryBloc>(() => StoryBloc(
       auditStoryUseCase: gh<AuditStoryUseCase>(),
       userStoryUseCase: gh<UserStoryUseCase>(),
+      downloadUserStoryUseCase: gh<DownloadUserStoryUseCase>(),
     ));
 
     gh.factory<UserCertificateBloc>(() => UserCertificateBloc(

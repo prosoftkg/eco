@@ -1,14 +1,18 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 part 'language_event.dart';
 part 'language_state.dart';
 
 class LanguageBloc extends Bloc<LanguageEvent, LanguageState> {
+  final storage = const FlutterSecureStorage();
   LanguageBloc() : super(LanguageInitial(lanCode: 'ru')) {
     on<SelectLanguageEvent>(_selectLanguage);
   }
-  _selectLanguage(SelectLanguageEvent event, Emitter emit){
+  _selectLanguage(SelectLanguageEvent event, Emitter emit)async{
+    await storage.write(
+        key: 'selectLanguage', value: event.lanCode);
     emit(LanguageState(lanCode: event.lanCode));
   }
 }

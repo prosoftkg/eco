@@ -261,7 +261,7 @@ class AuditConsultationScreen extends StatelessWidget {
                                   color: AppColors.color009D9B,
                                   borderRadius: BorderRadius.circular(6)
                               ),
-                              child: Center(child: Text('Принять',style: AppTextStyles.clearSansMediumS12W500CWhite)),
+                              child: Center(child: Text(context.text.apply,style: AppTextStyles.clearSansMediumS12W500CWhite)),
                             ),
                           ),
                           SizedBox(width: 12.w),
@@ -279,7 +279,7 @@ class AuditConsultationScreen extends StatelessWidget {
                                   color: AppColors.colorFF0000,
                                   borderRadius: BorderRadius.circular(6)
                               ),
-                              child: Center(child: Text('Отклонить',style: AppTextStyles.clearSansMediumS12W500CWhite,)),
+                              child: Center(child: Text(context.text.deny,style: AppTextStyles.clearSansMediumS12W500CWhite,)),
                             ),
                           ),
                         ],

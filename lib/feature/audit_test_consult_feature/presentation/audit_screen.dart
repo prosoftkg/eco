@@ -200,7 +200,7 @@ class AuditScreen extends StatelessWidget {
                         children: [
                           Image.asset('assets/icon/card-edit.png', height: 24.h, width: 24.w),
                           SizedBox(width: 10.w),
-                          Text('Начать тест',style: AppTextStyles.buttonTextStyle)
+                          Text(context.text.begin_test,style: AppTextStyles.buttonTextStyle)
                         ],
                       ),
                     ),
@@ -317,7 +317,7 @@ class AuditScreen extends StatelessWidget {
                         color: AppColors.color009D9B,
                         borderRadius: BorderRadius.circular(6)
                     ),
-                    child: Center(child: Text('Принять',style: AppTextStyles.clearSansMediumS12W500CWhite)),
+                    child: Center(child: Text(context.text.apply,style: AppTextStyles.clearSansMediumS12W500CWhite)),
                   ),
                 ),
                 SizedBox(width: 12.w),
@@ -333,7 +333,7 @@ class AuditScreen extends StatelessWidget {
                         color: AppColors.colorFF0000,
                         borderRadius: BorderRadius.circular(6)
                     ),
-                    child: Center(child: Text('Отклонить',style: AppTextStyles.clearSansMediumS12W500CWhite,)),
+                    child: Center(child: Text(context.text.deny,style: AppTextStyles.clearSansMediumS12W500CWhite,)),
                   ),
                 ),
               ],

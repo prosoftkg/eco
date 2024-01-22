@@ -1,8 +1,10 @@
 import 'package:eco_kg/core/utils/utils.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:eco_kg/feature/story_feature/domain/entities/audit_story_entity.dart';
-import 'package:eco_kg/feature/story_feature/domain/entities/itemSelect.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/servise_locator/servise_locator.dart';
 import '../../../../core/style/app_colors.dart';
 import '../../../../core/style/app_text_styles.dart';
 import '../../../auth_feature/presentation/widgets/appBarLeadintBack.dart';
@@ -44,10 +46,10 @@ class AuditStoryScreen extends StatelessWidget {
               for(var temp in story.reversed)
                 Column(children: [
                   temp is Consultation ?
-                  item('Проведение консультации', '${temp.auditDate!.day}/${temp.auditDate!.month}/${temp.auditDate!.year}',
+                  item(context.text.conducting_consultation, '${temp.auditDate!.day}/${temp.auditDate!.month}/${temp.auditDate!.year}',
                       temp.userCompany!, temp.userRegion!) :
 
-                  itemTest('Проведение аудита', temp.auditDate!=null ? '${temp.auditDate.day}/${temp.auditDate.month}/${temp.auditDate.year}' : '' /*'05/11/2023'*/, temp.userCompany!, temp.userRegion!,'Тест, ${categoryType(temp.categoryId, context)}'),
+                  itemTest(context.text.conducting_audit, temp.auditDate!=null ? '${temp.auditDate.day}/${temp.auditDate.month}/${temp.auditDate.year}' : '' /*'05/11/2023'*/, temp.userCompany!, temp.userRegion!,'Тест, ${categoryType(temp.categoryId, context)}',context,temp.id.toString()),
 
                   space(),
                 ])
@@ -118,7 +120,8 @@ class AuditStoryScreen extends StatelessWidget {
             ),
           );
   }
-  itemTest(String title, String date, String companyName,String region,String test) {
+  itemTest(String title, String date, String companyName,String region,String test,BuildContext context,String testId) {
+    var myBloc=getIt<StoryBloc>();
           return Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
@@ -158,20 +161,38 @@ class AuditStoryScreen extends StatelessWidget {
                           Image.asset(
                               'assets/icon/pdf.png', width: 24, height: 24),
                           SizedBox(width: 12),
-                          Text(test,
-                              style: AppTextStyles.clearSansLightS12CBlackF300),
+                          Container(
+                            width: 200.w,
+                            child: Text(test,
+                                style: AppTextStyles.clearSansLightS12CBlackF300),
+                          ),
                         ],
                       ),
                     ),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 6,vertical: 3),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          border: Border.all(
-                              width: 1, color: AppColors.color009D9B)
-                      ),
-                      child: Center(child: Text('Скачать',
-                          style: AppTextStyles.clearSansS12C009D9BF400)),
+                    BlocBuilder<StoryBloc, StoryState>(
+                      bloc: myBloc,
+                      builder: (context, state) {
+                        if (state is LoadingStoryState) {
+                          return Center(child: progressWidget());
+                        }
+                        if(state is DownloadedUserStoryState){
+                          launchUrl(Uri.parse(state.urlForDownload));
+                        }
+                        return InkWell(
+                          onTap: (){
+                            myBloc.add(DowloadUserStoryEvent(test_id: testId));
+                          },
+                          child: Container(
+                            width: 56.w,
+                            height: 22.h,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6).r,
+                                border: Border.all(width: 1.w,color: AppColors.color009D9B)
+                            ),
+                            child: Center(child: Text(context.text.download,style: AppTextStyles.clearSansS12C009D9BF400)),
+                          ),
+                        );
+                      },
                     )
                   ],
                 ),

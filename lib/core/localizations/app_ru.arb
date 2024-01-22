@@ -69,7 +69,27 @@
     "test3" : "Предприятия общепита",
     "test4" : "Комбинированный тест",
     "filter" : "Фильтр",
-    "button_filter" : "Применить фильтр"
+    "button_filter" : "Применить фильтр",
+    "yes" : "Да",
+    "no" : "Нет",
+    "logout_from_app" : "Выход",
+    "logout_from_app_message": "Вы действительно хотите выйти?",
+    "logout_from_test" : "Выход из теста",
+    "logout_from_test_message": "Вы действительно хотите выйти из теста?",
+    "begin": "Начать",
+    "begin_test" : "Начать тест",
+    "apply" : "Принять",
+    "deny" : "Отклонить",
+    "download": "Скачать",
+    "conducting_audit" : "Проведение аудита",
+    "conducting_consultation": "Проведение консультации",
+    "getting_advice": "Получение консультации",
+    "express_consultation": "экспресс-консультация по телефону (20 мин.)",
+    "paid_online": "оплачено онлайн",
+    "application_certification": "Заявка на сертификацию",
+    "passing_test" : "Прохождение теста",
+    "test_for": "Тест для"
+
 
 
 }

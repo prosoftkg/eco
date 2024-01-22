@@ -252,14 +252,14 @@ class _DrawerBuildState extends State<DrawerBuild> {
           case DrawerSelect.exit: {
 
             var dialog = CustomAlertDialog(
-                title: "Выход",
-                message: "Вы действительно хотите выйти?",
+                title: context.text.logout_from_app,
+                message: context.text.logout_from_app_message,
                 onPostivePressed: () async{
                   await storage.delete(key: 'authKey');
                   AutoRouter.of(context).replaceAll([const SignInRoute()]);
                 },
-                positiveBtnText: 'Да',
-                negativeBtnText: 'Нет', onNegativePressed: (){});
+                positiveBtnText: context.text.yes,
+                negativeBtnText: context.text.no, onNegativePressed: (){});
             showDialog(
                 context: context,
                 builder: (BuildContext context) => dialog);

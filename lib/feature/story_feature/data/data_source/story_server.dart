@@ -64,6 +64,45 @@ class StoryDataSource implements IStoryDataSource {
     }
   }
 
+  Future<String> downloadUserStory(String testId) async {
+    var uri = Uri(
+      scheme: scheme,
+      host: ip,
+      path: 'api/test/generate-pdf',
+    );
+
+    final String? authKey = await storage.read(key: 'authKey');
+    final String? email = await storage.read(key: 'email');
+    print('server $authKey');
+
+    /*var json = {
+      'test_id': paymentInfoEntity.testId,
+      'type': paymentInfoEntity.paymentType,
+      'name': fullName,
+      'email': email,
+      'phone': phone
+    };*/
+
+    var json = {
+      'test_id': testId,
+    };
+    print(json);
+
+    var response = await http
+        .post(uri, body: json, headers: {'Authorization': 'Bearer $authKey'});
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      print(response.statusCode);
+      print(response.body);
+      return response.body;
+    } else {
+      //throw exception and catch it in UI
+      print('error not found');
+      print(response.statusCode);
+      print(response.body);
+      throw ServerError(error: response.reasonPhrase!);
+    }
+  }
+
   @override
   Future<List<UserCertificate>> userCertificate() async {
     var uri = Uri(

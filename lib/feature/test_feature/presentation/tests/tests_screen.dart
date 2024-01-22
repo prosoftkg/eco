@@ -8,6 +8,7 @@ import 'package:number_paginator/number_paginator.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/auto_route/auto_route.dart';
 import '../../../../core/style/app_text_styles.dart';
+import '../../../../core/utils/alertDialog.dart';
 import '../../../auth_feature/presentation/widgets/appBarLeadintBack.dart';
 import '../../../home_feature/widget/bottom_background_image.dart';
 import '../../../splash_feature/presentation/bloc/language_bloc.dart';
@@ -48,18 +49,18 @@ class _TestsScreenState extends State<TestsScreen> {
         ),
         leading: InkWell(
             onTap: () {
-              /*var dialog = CustomAlertDialog(
-                  title: "Выход из теста",
-                  message: "Вы действительно хотите выйти из теста?",
+              var dialog = CustomAlertDialog(
+                  title: context.text.logout_from_test,
+                  message: context.text.logout_from_test_message,
                   onPostivePressed: () {
-                    AutoRouter.of(context).pop();
+                    AutoRouter.of(context).replaceAll([HomeRoute()]);
                   },
-                  positiveBtnText: 'Да',
-                  negativeBtnText: 'Нет', onNegativePressed: (){});
+                  positiveBtnText: context.text.yes,
+                  negativeBtnText: context.text.no, onNegativePressed: (){});
               showDialog(
                   context: context,
-                  builder: (BuildContext context) => dialog);*/
-              AutoRouter.of(context).pop();
+                  builder: (BuildContext context) => dialog);
+              // AutoRouter.of(context).pop();
             },
             child: appBarLeading(context)),
         leadingWidth: 100.w,
