@@ -75,5 +75,3 @@ String sumCertificate(String categoryId,String companyArea){
     return '90000';
   }
 }
-
-String? language;

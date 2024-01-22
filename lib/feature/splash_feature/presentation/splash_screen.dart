@@ -10,121 +10,159 @@ import 'package:eco_kg/feature/splash_feature/domain/entity/language.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../core/servise_locator/servise_locator.dart';
 import '../../../core/utils/user.dart';
 import '../../user_cabinet_feature/domain/entities/userData.dart';
 import '../../user_cabinet_feature/presentation/bloc/userDataBloc/user_data_bloc.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
-  void initState(){
-    super.initState();
-    if(language!=null){
-      Future.delayed(Duration(seconds: 3), () {
-        BlocProvider.of<LanguageBloc>(context).add(SelectLanguageEvent(lanCode: language!));
-        BlocProvider.of<AuthBloc>(context).add(CheckAuthKeyEvent());
-      });
-    }
-
-  }
-  @override
   Widget build(BuildContext context) {
+    var myBloc = getIt<AuthBloc>();
     return Scaffold(
       body: BlocBuilder<AuthBloc, AuthState>(
+        bloc: myBloc..add(const CheckLanguageEvent()),
         builder: (context, state) {
-          print(language);
-          print(language==null);
-          if(state is CheckAuthKeyState){
-            BlocProvider.of<UserDataBloc>(context)
-                .add(ChangeUserDataEvent(userDataForEdit: UserDataForEdit(
+          if (state is CheckAuthKeyState) {
+            BlocProvider.of<UserDataBloc>(context).add(ChangeUserDataEvent(
+                userDataForEdit: UserDataForEdit(
               name: UserData.name ?? '',
               phone: UserData.phone ?? '',
             )));
             AutoRouter.of(context).replace(const HomeRoute());
           }
-          if(state is BadAuthKeyState){
+          if (state is BadAuthKeyState) {
             AutoRouter.of(context).replace(const SignInRoute());
+          }
+          if (state is CheckedLanguage) {
+            Future.delayed(Duration(seconds: 3), () {
+              BlocProvider.of<LanguageBloc>(context)
+                  .add(SelectLanguageEvent(lanCode: state.lanCode));
+              myBloc.add(CheckAuthKeyEvent());
+            });
+
+
+            return Center(
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 62, horizontal: 16).r,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(),
+                    Image.asset('assets/img/logo.png',
+                        height: 280.h, width: 280.w),
+                    const SizedBox()
+                  ],
+                ),
+              ),
+            );
+          }
+          if (state is NullLanguage) {
+            return Center(
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 62, horizontal: 16).r,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(),
+                    Image.asset('assets/img/logo.png',
+                        height: 280.h, width: 280.w),
+                    InkWell(
+                        onTap: () async {
+                          var items = Language.languageList();
+                          await showModalBottomSheet(
+                            barrierColor: Colors.transparent,
+                            backgroundColor: Colors.transparent,
+                            context: context,
+                            builder: (context) => Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border(top: BorderSide(width: 1.w))),
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    for (var i = 0; i < items.length; i++)
+                                      Column(
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.all(8.0).r,
+                                            child: ListTile(
+                                              title: Center(
+                                                  child: Text(
+                                                items[i].name,
+                                                style: AppTextStyles
+                                                    .clearSansMediumS18W500C009D9B,
+                                              )),
+                                              // leading: Text(items[i].flag),
+                                              onTap: () {
+                                                BlocProvider.of<LanguageBloc>(
+                                                        context)
+                                                    .add(SelectLanguageEvent(
+                                                        lanCode: items[i]
+                                                            .languageCode));
+                                                myBloc.add(CheckAuthKeyEvent());
+                                                AutoRouter.of(context).pop;
+                                              },
+                                            ),
+                                          ),
+                                          const Divider(
+                                            color: Colors.black,
+                                            height: 1,
+                                          )
+                                        ],
+                                      )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: 358.w,
+                          height: 52.h,
+                          decoration: BoxDecoration(
+                              color: AppColors.colorEDF0F2,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(12)),
+                              border: Border.all(
+                                  width: 1, color: AppColors.color009D9B)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset('assets/icon/global.png',
+                                  height: 24.h, width: 24.w),
+                              SizedBox(width: 10.w),
+                              Text(context.text.select_language,
+                                  style:
+                                      AppTextStyles.clearSansMediumTextStyle16)
+                            ],
+                          ),
+                        )
+                        // buttonWithIcon(context.text.select_language, 'global.png'),
+                        ),
+                  ],
+                ),
+              ),
+            );
           }
           return Center(
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 62,horizontal: 16).r,
+              padding: EdgeInsets.symmetric(vertical: 62, horizontal: 16).r,
               child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-              const SizedBox(),
-              Image.asset('assets/img/logo.png', height: 280.h, width: 280.w),
-              if(language==null)
-              InkWell(
-                onTap: () async{
-                  var items=Language.languageList();
-                  await showModalBottomSheet(
-                  barrierColor: Colors.transparent,
-                  backgroundColor: Colors.transparent,
-                  context: context,
-                  builder: (context) => Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border(
-                        top: BorderSide(width: 1.w)
-                      )
-                    ),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          for(var i=0;i<items.length;i++)
-                            Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0).r,
-                                  child: ListTile(
-                                    title: Center(child: Text(items[i].name,style: AppTextStyles.clearSansMediumS18W500C009D9B,)),
-                                    // leading: Text(items[i].flag),
-                                    onTap: (){
-                                      BlocProvider.of<LanguageBloc>(context).add(SelectLanguageEvent(lanCode: items[i].languageCode));
-                                      BlocProvider.of<AuthBloc>(context).add(CheckAuthKeyEvent());
-                                      AutoRouter.of(context).pop;
-                                    },
-                                  ),
-                                ),
-                                const Divider(color: Colors.black,height: 1,)
-                              ],
-                            )
-                        ],
-                      ),
-                    ),
-                  ),
-                  );
-
-                },
-                child: Container(
-                  width: 358.w,
-                  height: 52.h,
-                  decoration: BoxDecoration(
-                      color: AppColors.colorEDF0F2,
-                      borderRadius: const BorderRadius.all(Radius.circular(12)),
-                      border: Border.all(width: 1,color: AppColors.color009D9B)
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset('assets/icon/global.png', height: 24.h, width: 24.w),
-                      SizedBox(width: 10.w),
-                      Text(context.text.select_language,style: AppTextStyles.clearSansMediumTextStyle16)
-                    ],
-                  ),
-                )
-                // buttonWithIcon(context.text.select_language, 'global.png'),
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(),
+                  Image.asset('assets/img/logo.png',
+                      height: 280.h, width: 280.w),
+                  const SizedBox()
+                ],
               ),
-                        if(language!=null)
-                          const SizedBox()
-                      ],
-                    ),
             ),
           );
         },

@@ -133,10 +133,16 @@ class TestDataSource implements ITestDataSource {
   }
 
   Future<FinishTestEntity> finishTest(TestInfoForNext testInfoForNext) async {
+    String? path;
+    if(testInfoForNext.testType=='userTest'){
+      path='api/test/next-question';
+    }else{
+      path='api/test/auditor-next-question';
+    }
     var uri = Uri(
       scheme: scheme,
       host: ip,
-      path: 'api/test/next-question',
+      path: path,
     );
 
     final String? authKey = await storage.read(key: 'authKey');

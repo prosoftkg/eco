@@ -1,18 +1,14 @@
-import 'dart:io';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:eco_kg/core/utils/utils.dart';
-import 'package:eco_kg/feature/story_feature/domain/use_case/user_certificate_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pdf/widgets.dart' as pw;
 import 'package:flutter/services.dart';
-import 'package:pdf/pdf.dart';
-import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
+import '../../../core/servise_locator/servise_locator.dart';
 import '../../../core/style/app_colors.dart';
 import '../../../core/style/app_text_styles.dart';
 import '../../auth_feature/presentation/widgets/appBarLeadintBack.dart';
-import '../../doc_feature/presentation/doc/do_doc.dart';
 import '../../story_feature/domain/entities/user_certificate_entity.dart';
+import '../../story_feature/presentation/bloc/story_bloc.dart';
 import '../../widgets/progressWidget.dart';
 import 'bloc/user_certificate_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,8 +21,16 @@ class CertificatesScreen extends StatefulWidget {
 }
 
 class _CertificatesScreenState extends State<CertificatesScreen> {
+  var certificates={
+    'Платина' : 'Platinium',
+    'Золото' : 'Gold',
+    'Серебро' : 'Silver',
+    'Бронза' : 'Bronze',
+  };
+  var myBloc=getIt<StoryBloc>();
   @override
   Widget build(BuildContext context) {
+
     List<UserCertificate> userCertificate=[];
     return Scaffold(
       appBar: AppBar(
@@ -47,7 +51,7 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
     }
     if(state is LoadedUserCertificateState){
       userCertificate=state.userCertificate;
-      // story.sort((a, b) => (a.audiDate ?? '').compareTo(b.auditDate ?? ''));
+      userCertificate.sort((a, b) => (a.createDate!).compareTo(b.createDate!));
     }
     return ListView(
         padding: EdgeInsets.symmetric(vertical: 32,horizontal: 16).r,
@@ -55,8 +59,8 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
           for(var temp in userCertificate)
             Column(
               children: [
-                certificateItem('Сертификат маркировки Бронза','''• ECO KG: bronze
-• дата получения: 14/11/2023''',getCertificate(temp.score ?? 0),'Bronze ECO KG Certificate',context),
+                certificateItem('Сертификат маркировки ${temp.certificateType}','''• ECO KG: ${certificates[temp.certificateType]}
+• дата получения: ${temp.createDate!.day}/${temp.createDate!.month}/${temp.createDate!.year}''',getCertificate(temp.certificateType!),'${certificates[temp.certificateType]} ECO KG Certificate',context,temp.id.toString()),
                 space(),
               ],
             ),
@@ -76,14 +80,14 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
     );
   }
 
-  getCertificate(int score){
-    if(score > 73 && score<83) {
+  getCertificate(String certType){
+    if(certType=='Золото') {
       return 'Gold.png';
-    } else if(score > 64 && score<74) {
+    } else if(certType=='Серебро') {
       return 'Silver.png';
-    } else if(score > 57 && score<65) {
+    } else if(certType=='Бронза') {
       return 'Bronze.png';
-    } else if(score > 82 && score<101) {
+    } else if(certType=='Платина') {
       return 'Platinum';
     }else{
       return '';
@@ -94,7 +98,7 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
     return SizedBox(height: 32.h);
   }
 
-  certificateItem(String title, String subtitle, String certificate,String pdfTitle,BuildContext context){
+  certificateItem(String title, String subtitle, String certificate,String pdfTitle,BuildContext context,String testId){
     return Container(
       padding: const EdgeInsets.all(16).r,
       decoration: BoxDecoration(
@@ -141,11 +145,18 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
                   ],
                 ),
               ),
-              InkWell(
+              BlocBuilder<StoryBloc, StoryState>(
+                bloc: myBloc,
+  builder: (context, state) {
+    if (state is LoadingStoryState) {
+      return Center(child: progressWidget());
+    }
+    if(state is DownloadedUserStoryState){
+      launchUrl(Uri.parse(state.urlForDownload));
+    }
+    return InkWell(
                 onTap: () {
-                  // downloadDocument;
-                  print('download');
-                  // Navigator.of(context).push(MaterialPageRoute(builder:(context)=>  Doc(nameDoc: 'Заявление о принятии на работу',)/*GetCertificatScreen(testId: '',sum: '',)*/));
+                  myBloc.add(DowloadUserStoryEvent(test_id: testId));
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 6,vertical: 3).r,
@@ -155,76 +166,13 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
                   ),
                   child: Center(child: Text(context.text.download,style: AppTextStyles.clearSansS12C009D9BF400)),
                 ),
-              )
+              );
+  },
+)
             ],
           ),
         ],
       ),
     );
-  }
-
-  downloadDocument() async {
-    /*final pw.Document pdf = pw.Document();
-    await generatesPdfAcceptWork(pdf);
-
-    final output = await getTemporaryDirectory();
-    final file = File('${output.path}/statements.pdf');
-    var created = await file.writeAsBytes(await pdf.save());
-    await File.fromRawPath(created.path);*/
-  }
-
-  generatesPdfAcceptWork(pw.Document pdf) async {
-    final fontData = await rootBundle.load('assets/DejaVuSans.ttf');
-    print(fontData.lengthInBytes);
-    final font = pw.Font.ttf(fontData);
-    final titleStyle = pw.TextStyle(
-      fontWeight: pw.FontWeight.bold,
-      fontSize: 20,
-      color: PdfColors.black,
-      font: font,
-    );
-    final contentStyle = pw.TextStyle(
-      fontSize: 16,
-      color: PdfColors.black,
-      font: font,
-    );
-
-    pdf.addPage(
-      pw.Page(
-        build: (pw.Context context) {
-          return pw.Container(
-            padding: pw.EdgeInsets.all(20),
-            child: pw.Column(
-              crossAxisAlignment: pw.CrossAxisAlignment.start,
-              children: [
-                pw.Text(
-                  'ЗАЯВЛЕНИЕ О ПРИНЯТИИ НА РАБОТУ',
-                  style: titleStyle,
-                ),
-                pw.SizedBox(height: 20),
-                pw.Text(
-                  'Я, , прошу Вас, , принять в  на позицию .',
-                  style: contentStyle,
-                ),
-                pw.SizedBox(height: 20),
-                pw.Text(
-                  'Дата: ${DateFormat.yMd('en_US').format(DateTime.now())}',
-                  style: contentStyle,
-                ),
-                pw.SizedBox(height: 20),
-                pw.Text(
-                  'Подпись: ___________________',
-                  style: contentStyle,
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-    );
-
-    final output = await getTemporaryDirectory();
-    final file = File('${output.path}/заявление_об_увольнении.pdf');
-    await file.writeAsBytes(await pdf.save());
   }
 }

@@ -178,7 +178,7 @@ class _TestsScreenState extends State<TestsScreen> {
                 ),
               ),
               Positioned(
-                  bottom: 122.h,
+                  bottom: 90.h,
                   left: 16.h,
                   child: InkWell(
                     child: SizedBox(

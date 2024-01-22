@@ -32,6 +32,20 @@ class SuccessfullySignUpState extends AuthState {
   List<Object?> get props => [];
 }
 
+class CheckedLanguage extends AuthState {
+  @override
+  final String lanCode;
+  CheckedLanguage({required this.lanCode});
+  @override
+  List<Object?> get props => [lanCode];
+}
+
+class NullLanguage extends AuthState {
+  NullLanguage();
+  @override
+  List<Object?> get props => [];
+}
+
 class ErrorAuthState extends AuthState {
   final Object error;
   const ErrorAuthState({

@@ -29,3 +29,10 @@ class CheckAuthKeyEvent extends AuthEvent {
   List<Object?> get props => [];
 }
 
+class CheckLanguageEvent extends AuthEvent {
+  const CheckLanguageEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+

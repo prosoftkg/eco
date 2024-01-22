@@ -1,7 +1,6 @@
 import 'package:eco_kg/core/utils/utils.dart';
 import 'package:eco_kg/feature/about_project_feature/presentation/about_project.dart';
 import 'package:eco_kg/feature/audit_test_consult_feature/presentation/audit_consultation/audit_consultation_screen.dart';
-import 'package:eco_kg/feature/doc_feature/presentation/doc/select_document/select_doc.dart';
 import 'package:eco_kg/feature/home_feature/domain/entities/userEnum.dart';
 import 'package:eco_kg/feature/terms_of_use_feature/presentation/terms_of_use.dart';
 import 'package:flutter/material.dart';

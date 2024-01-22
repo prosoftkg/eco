@@ -13,3 +13,4 @@ class LanguageInitial extends LanguageState {
   @override
   List<Object> get props => [];
 }
+

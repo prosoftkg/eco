@@ -6,12 +6,14 @@ import 'package:flutter/material.dart';
 import '../../../../core/use_case/use_case.dart';
 import '../../domain/use_case/read_auth_key.dart';
 import '../../domain/use_case/sign_in.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 part 'auth_event.dart';
 
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
+  final storage = const FlutterSecureStorage();
   final SignIn signIn;
   final ReadAuthKey readAuthKey;
   final CheckConfirmationCode checkConfirmationCode;
@@ -21,6 +23,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<SignInEvent>(_signIn);
     on<CheckAuthKeyEvent>(_readAuthKeyEvent);
     on<CheckConfirmationCodeEvent>(_checkConfirmationCode);
+    on<CheckLanguageEvent>(_checkLanguage);
   }
 
   _signIn(SignInEvent event, Emitter emit) async {
@@ -80,6 +83,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           });
     } else {
       emit(const ErrorAuthState(error: 'Введите данные'));
+    }
+  }
+  _checkLanguage(CheckLanguageEvent event, Emitter emit)async{
+    String? lan=await storage.read(key: 'selectLanguage');
+    if(lan!=null){
+      print('checked');
+      emit(CheckedLanguage(lanCode: lan));
+    }else{
+      print('null');
+      emit(NullLanguage());
     }
   }
 }
