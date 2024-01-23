@@ -88,5 +88,7 @@
     "paid_online": "онлайн төлөнду",
     "application_certification": "Сертификацияга арыз",
     "passing_test" : "Тестти аткаруу",
-    "test_for": "Тест"
+    "test_for": "Тест",
+    "finish": "Бутуруу",
+    "next": "Кийинки"
 }

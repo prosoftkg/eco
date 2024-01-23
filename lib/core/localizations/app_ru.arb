@@ -88,8 +88,7 @@
     "paid_online": "оплачено онлайн",
     "application_certification": "Заявка на сертификацию",
     "passing_test" : "Прохождение теста",
-    "test_for": "Тест для"
-
-
-
+    "test_for": "Тест для",
+    "finish": "Завершить",
+    "next": "Далее"
 }

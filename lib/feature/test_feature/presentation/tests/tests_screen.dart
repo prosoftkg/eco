@@ -83,8 +83,8 @@ class _TestsScreenState extends State<TestsScreen> {
             question = lan == ''
                 ? state.testEntity.question!
                 : lan == 'en'
-                ? state.testEntity.questionEn ?? ''
-                : state.testEntity.questionKy ?? '';
+                ? (state.testEntity.questionEn=='' ? state.testEntity.question! : state.testEntity.questionEn)
+                : (state.testEntity.questionKy=='' ? state.testEntity.question! : state.testEntity.questionKy);
             categoryId = state.categoryId;
             testType=state.testType;
             testId = state.testEntity.testId.toString();
@@ -100,8 +100,8 @@ class _TestsScreenState extends State<TestsScreen> {
             question = lan == ''
                 ? state.nextTestEntity.question!
                 : lan == 'en'
-                ? state.nextTestEntity.questionEn ?? ''
-                : state.nextTestEntity.questionKy ?? '';
+                ? (state.nextTestEntity.questionEn=='' ? state.nextTestEntity.question! : state.nextTestEntity.questionEn)
+                : (state.nextTestEntity.questionKy=='' ? state.nextTestEntity.question! : state.nextTestEntity.questionKy);
 
             answers = state.nextTestEntity.answer;
             mId = state.nextTestEntity.mid.toString();
@@ -158,8 +158,8 @@ class _TestsScreenState extends State<TestsScreen> {
                               title: Text(lan == ''
                                   ? item.title!
                                   : lan == 'en'
-                                  ? item.titleEn ?? ''
-                                  : item.titleKy ?? ''
+                                  ? item.titleEn ?? item.title!
+                                  : item.titleKy ?? item.title!
                                 ,
                                 style: AppTextStyles.clearSansS14CBlackF400,
                               ),
@@ -183,7 +183,7 @@ class _TestsScreenState extends State<TestsScreen> {
                   child: InkWell(
                     child: SizedBox(
                         width: MediaQuery.of(context).size.width - 32,
-                        child: currentPage==numberofPages?button(text: 'Завершить'):button(text: 'Далее')),
+                        child: currentPage==numberofPages?button(text: context.text.finish):button(text: context.text.next)),
                     onTap: () {
                       if (currentOptionId != '') {
                         print(id_arr.toString() +' id_arr');
