@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:eco_kg/feature/widgets/progressWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter_plus/webview_flutter_plus.dart';
@@ -46,7 +48,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     navigationDelegate: (NavigationRequest request) {
                       pageCounter++;
                       print(pageCounter);
-                      if (pageCounter == 1) {
+                      if (pageCounter == 1 && Platform.isAndroid) {
+                        AutoRouter.of(context).pop();
+                        return NavigationDecision.prevent;
+                      }
+                      if (pageCounter == 3 && Platform.isIOS) {
                         AutoRouter.of(context).pop();
                         return NavigationDecision.prevent;
                       }
