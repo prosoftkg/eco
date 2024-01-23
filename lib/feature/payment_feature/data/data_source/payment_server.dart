@@ -44,9 +44,9 @@ class PaymentDataSource implements IPaymentDataSource {
     var json = {
       'test_id': paymentInfoEntity.testId,
       'type': paymentInfoEntity.paymentType,
-      'company_director': fullName,
+      'company_director': paymentInfoEntity.companyDirector,
       'email': email,
-      'phone': phone,
+      'phone': paymentInfoEntity.phone,
       'sum' : paymentInfoEntity.sum,
       'company_name' : paymentInfoEntity.companyName,
       'company_area' : paymentInfoEntity.area,
