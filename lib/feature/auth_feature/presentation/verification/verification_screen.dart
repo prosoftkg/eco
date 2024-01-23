@@ -28,6 +28,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
   String _code = '';
   var myBloc = getIt<AuthBloc>();
   var email;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,27 +120,27 @@ class _VerificationScreenState extends State<VerificationScreen> {
             },
           ),
           SizedBox(height: 230.h),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('${context.text.smsNot} ',
-                  style: AppTextStyles.clearSansMediumTextStyle16),
-              BlocBuilder<AuthBloc, AuthState>(
-                bloc: myBloc,
-                builder: (context, state) {
-                  if (state is LoadingAuthState) {
-                    return Center(child: progressWidget());
-                  }
-                  return InkWell(
-                    onTap: () {
-                      myBloc.add(SignInEvent(email: email));
-                    },
-                    child: Text(context.text.send_code_again,
-                        style: AppTextStyles.linkTextStyle),
-                  );
-                },
-              )
-            ],
+          BlocBuilder<AuthBloc, AuthState>(
+            bloc: myBloc,
+            builder: (context, state) {
+              if (state is LoadingAuthState) {
+                return Center(child: progressWidget());
+              }
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('${context.text.smsNot} ',
+                      style: AppTextStyles.clearSansMediumTextStyle16),
+                  InkWell(
+                        onTap: () {
+                          myBloc.add(SignInEvent(email: email));
+                        },
+                        child: Text(context.text.send_code_again,
+                            style: AppTextStyles.linkTextStyle),
+                      )
+                ],
+              );
+            },
           ),
         ],
       ),
