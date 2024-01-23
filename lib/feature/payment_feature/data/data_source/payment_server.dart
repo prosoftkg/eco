@@ -44,10 +44,13 @@ class PaymentDataSource implements IPaymentDataSource {
     var json = {
       'test_id': paymentInfoEntity.testId,
       'type': paymentInfoEntity.paymentType,
-      'name': fullName,
+      'company_director': fullName,
       'email': email,
       'phone': phone,
-      'sum' : paymentInfoEntity.sum
+      'sum' : paymentInfoEntity.sum,
+      'company_name' : paymentInfoEntity.companyName,
+      'company_area' : paymentInfoEntity.area,
+      'region' : paymentInfoEntity.region
     };
     print(json);
 
@@ -93,6 +96,49 @@ class PaymentDataSource implements IPaymentDataSource {
       'company_director': getCertificateInfoEntity.companyDirector,
       'region' : getCertificateInfoEntity.region,
       'category_id' : getCertificateInfoEntity.categoryId,
+      'company_area' : getCertificateInfoEntity.area,
+      'phone': getCertificateInfoEntity.phone,
+    };
+    print(json);
+
+    var response = await http
+        .post(uri, body: json, headers: {'Authorization': 'Bearer $authKey'});
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      print(response.statusCode);
+      print(response.body);
+      return true;
+    } else {
+      //throw exception and catch it in UI
+      print('error not found');
+      print(response.statusCode);
+      print(response.body);
+      throw ServerError(error: response.reasonPhrase!);
+    }
+  }
+
+  @override
+  Future<bool> getConsultation(GetCertificateInfoEntity getCertificateInfoEntity) async {
+    var uri = Uri(
+      scheme: scheme,
+      host: ip,
+      path: 'api/user/consultation-appoint',
+    );
+
+    final String? authKey = await storage.read(key: 'authKey');
+    print('server $authKey');
+
+    /*var json = {
+      'test_id': paymentInfoEntity.testId,
+      'type': paymentInfoEntity.paymentType,
+      'name': fullName,
+      'email': email,
+      'phone': phone
+    };*/
+
+    var json = {
+      'company_name' : getCertificateInfoEntity.companyName,
+      'company_director': getCertificateInfoEntity.companyDirector,
+      'region' : getCertificateInfoEntity.region,
       'company_area' : getCertificateInfoEntity.area,
       'phone': getCertificateInfoEntity.phone,
     };

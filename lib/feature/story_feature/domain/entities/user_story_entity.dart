@@ -24,60 +24,6 @@ class UserHistoryEntity extends Equatable {
     test, consultation, application, ];
 }
 
-class Application extends Equatable {
-  Application({
-    required this.id,
-    required this.userId,
-    required this.score,
-    required this.auditScore,
-    required this.paymentStatus,
-    required this.auditorId,
-    required this.auditDate,
-    required this.paymentDate,
-    required this.categoryId,
-    required this.userEmail,
-    required this.userPhone,
-    required this.userRegion,
-    required this.userCompany,
-  });
-
-  final int? id;
-  final int? userId;
-  final int? score;
-  final dynamic auditScore;
-  final int? paymentStatus;
-  final dynamic auditorId;
-  final dynamic auditDate;
-  final dynamic paymentDate;
-  final int? categoryId;
-  final String? userEmail;
-  final String? userPhone;
-  final String? userRegion;
-  final String? userCompany;
-
-  factory Application.fromJson(Map<String, dynamic> json){
-    return Application(
-      id: json["id"],
-      userId: json["user_id"],
-      score: json["score"],
-      auditScore: json["audit_score"],
-      paymentStatus: json["payment_status"],
-      auditorId: json["auditor_id"],
-      auditDate: json["audit_date"],
-      paymentDate: json["payment_date"],
-      categoryId: json["category_id"],
-      userEmail: json["userEmail"],
-      userPhone: json["userPhone"],
-      userRegion: json["userRegion"],
-      userCompany: json["userCompany"],
-    );
-  }
-
-  @override
-  List<Object?> get props => [
-    id, userId, score, auditScore, paymentStatus, auditorId, auditDate, paymentDate, categoryId, userEmail, userPhone, userRegion, userCompany, ];
-}
-
 class TestUser extends Equatable {
   TestUser({
     required this.id,
@@ -89,6 +35,14 @@ class TestUser extends Equatable {
     required this.auditDate,
     required this.paymentDate,
     required this.categoryId,
+    required this.region,
+    required this.companyDirector,
+    required this.companyName,
+    required this.companyArea,
+    required this.phone,
+    required this.companyEmail,
+    required this.createDate,
+    required this.auditStatus,
     required this.userEmail,
     required this.userPhone,
     required this.userRegion,
@@ -104,6 +58,14 @@ class TestUser extends Equatable {
   final dynamic auditDate;
   final dynamic paymentDate;
   final int? categoryId;
+  final String? region;
+  final String? companyDirector;
+  final String? companyName;
+  final int? companyArea;
+  final String? phone;
+  final String? companyEmail;
+  final DateTime? createDate;
+  final int? auditStatus;
   final String? userEmail;
   final String? userPhone;
   final String? userRegion;
@@ -120,6 +82,14 @@ class TestUser extends Equatable {
       auditDate: json["audit_date"],
       paymentDate: json["payment_date"],
       categoryId: json["category_id"],
+      region: json["region"],
+      companyDirector: json["company_director"],
+      companyName: json["company_name"],
+      companyArea: json["company_area"],
+      phone: json["phone"],
+      companyEmail: json["company_email"],
+      createDate: DateTime.tryParse(json["create_date"] ?? ""),
+      auditStatus: json["audit_status"],
       userEmail: json["userEmail"],
       userPhone: json["userPhone"],
       userRegion: json["userRegion"],
@@ -129,7 +99,85 @@ class TestUser extends Equatable {
 
   @override
   List<Object?> get props => [
-    id, userId, score, auditScore, paymentStatus, auditorId, auditDate, paymentDate, categoryId, userEmail, userPhone, userRegion, userCompany, ];
+    id, userId, score, auditScore, paymentStatus, auditorId, auditDate, paymentDate, categoryId, region, companyDirector, companyName, companyArea, phone, companyEmail, createDate, auditStatus, userEmail, userPhone, userRegion, userCompany, ];
+}
+
+class Application extends Equatable {
+  Application({
+    required this.id,
+    required this.userId,
+    required this.score,
+    required this.auditScore,
+    required this.paymentStatus,
+    required this.auditorId,
+    required this.auditDate,
+    required this.paymentDate,
+    required this.categoryId,
+    required this.region,
+    required this.companyDirector,
+    required this.companyName,
+    required this.companyArea,
+    required this.phone,
+    required this.companyEmail,
+    required this.createDate,
+    required this.auditStatus,
+    required this.userEmail,
+    required this.userPhone,
+    required this.userRegion,
+    required this.userCompany,
+  });
+
+  final int? id;
+  final int? userId;
+  final int? score;
+  final dynamic auditScore;
+  final int? paymentStatus;
+  final dynamic auditorId;
+  final dynamic auditDate;
+  final dynamic paymentDate;
+  final int? categoryId;
+  final String? region;
+  final String? companyDirector;
+  final String? companyName;
+  final int? companyArea;
+  final String? phone;
+  final String? companyEmail;
+  final DateTime? createDate;
+  final int? auditStatus;
+  final String? userEmail;
+  final String? userPhone;
+  final String? userRegion;
+  final String? userCompany;
+
+  factory Application.fromJson(Map<String, dynamic> json){
+    return Application(
+      id: json["id"],
+      userId: json["user_id"],
+      score: json["score"],
+      auditScore: json["audit_score"],
+      paymentStatus: json["payment_status"],
+      auditorId: json["auditor_id"],
+      auditDate: json["audit_date"],
+      paymentDate: json["payment_date"],
+      categoryId: json["category_id"],
+      region: json["region"],
+      companyDirector: json["company_director"],
+      companyName: json["company_name"],
+      companyArea: json["company_area"],
+      phone: json["phone"],
+      companyEmail: json["company_email"],
+      createDate: DateTime.tryParse(json["create_date"] ?? ""),
+      auditStatus: json["audit_status"],
+      userEmail: json["userEmail"],
+      userPhone: json["userPhone"],
+      userRegion: json["userRegion"],
+      userCompany: json["userCompany"],
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    id, userId, score, auditScore, paymentStatus, auditorId, auditDate, paymentDate, categoryId, region, companyDirector, companyName, companyArea, phone, companyEmail, createDate, auditStatus, userEmail, userPhone, userRegion, userCompany, ];
 }
 
 class Consultation extends Equatable {
@@ -140,11 +188,13 @@ class Consultation extends Equatable {
     required this.auditorId,
     required this.paymentStatus,
     required this.auditDate,
-    required this.userEmail,
-    required this.userPhone,
-    required this.userRegion,
-    required this.userCompany,
-    required this.userDirector,
+    required this.companyDirector,
+    required this.companyArea,
+    required this.email,
+    required this.region,
+    required this.phone,
+    required this.companyName,
+    required this.createDate,
   });
 
   final int? id;
@@ -153,11 +203,13 @@ class Consultation extends Equatable {
   final dynamic auditorId;
   final int? paymentStatus;
   final dynamic auditDate;
-  final String? userEmail;
-  final String? userPhone;
-  final String? userRegion;
-  final String? userCompany;
-  final String? userDirector;
+  final String? companyDirector;
+  final int? companyArea;
+  final String? email;
+  final String? region;
+  final String? phone;
+  final String? companyName;
+  final DateTime? createDate;
 
   factory Consultation.fromJson(Map<String, dynamic> json){
     return Consultation(
@@ -167,15 +219,17 @@ class Consultation extends Equatable {
       auditorId: json["auditor_id"],
       paymentStatus: json["payment_status"],
       auditDate: json["audit_date"],
-      userEmail: json["userEmail"],
-      userPhone: json["userPhone"],
-      userRegion: json["userRegion"],
-      userCompany: json["userCompany"],
-      userDirector: json["userDirector"],
+      companyDirector: json["company_director"],
+      companyArea: json["company_area"],
+      email: json["email"],
+      region: json["region"],
+      phone: json["phone"],
+      companyName: json["company_name"],
+      createDate: DateTime.tryParse(json["create_date"] ?? ""),
     );
   }
 
   @override
   List<Object?> get props => [
-    id, userId, testId, auditorId, paymentStatus, auditDate, userEmail, userPhone, userRegion, userCompany, userDirector, ];
+    id, userId, testId, auditorId, paymentStatus, auditDate, companyDirector, companyArea, email, region, phone, companyName, createDate, ];
 }

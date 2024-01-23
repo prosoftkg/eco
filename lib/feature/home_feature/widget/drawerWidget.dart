@@ -1,7 +1,6 @@
 import 'package:eco_kg/core/utils/utils.dart';
 import 'package:eco_kg/feature/about_project_feature/presentation/about_project.dart';
 import 'package:eco_kg/feature/audit_test_consult_feature/presentation/audit_consultation/audit_consultation_screen.dart';
-import 'package:eco_kg/feature/doc_feature/presentation/doc/select_document/select_doc.dart';
 import 'package:eco_kg/feature/home_feature/domain/entities/userEnum.dart';
 import 'package:eco_kg/feature/terms_of_use_feature/presentation/terms_of_use.dart';
 import 'package:flutter/material.dart';
@@ -252,14 +251,14 @@ class _DrawerBuildState extends State<DrawerBuild> {
           case DrawerSelect.exit: {
 
             var dialog = CustomAlertDialog(
-                title: "Выход",
-                message: "Вы действительно хотите выйти?",
+                title: context.text.logout_from_app,
+                message: context.text.logout_from_app_message,
                 onPostivePressed: () async{
                   await storage.delete(key: 'authKey');
                   AutoRouter.of(context).replaceAll([const SignInRoute()]);
                 },
-                positiveBtnText: 'Да',
-                negativeBtnText: 'Нет', onNegativePressed: (){});
+                positiveBtnText: context.text.yes,
+                negativeBtnText: context.text.no, onNegativePressed: (){});
             showDialog(
                 context: context,
                 builder: (BuildContext context) => dialog);

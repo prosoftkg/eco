@@ -7,4 +7,5 @@ import '../../../../core/error_journal/error_journal.dart';
 abstract interface class PaymentRepository{
   Future<Either<Failure,PaymentEntity>> payment(PaymentInfoEntity paymentInfoEntity);
   Future<Either<Failure,bool>> getCertificate(GetCertificateInfoEntity getCertificateInfoEntity);
+  Future<Either<Failure,bool>> getConsultation(GetCertificateInfoEntity getCertificateInfoEntity);
 }

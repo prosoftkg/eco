@@ -16,3 +16,10 @@ class UserStoryEvent extends StoryEvent{
   @override
   List<Object> get props=>[];
 }
+
+class DowloadUserStoryEvent extends StoryEvent{
+  final String test_id;
+  const DowloadUserStoryEvent({required this.test_id});
+  @override
+  List<Object> get props=>[test_id];
+}

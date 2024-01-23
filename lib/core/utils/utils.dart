@@ -41,7 +41,10 @@ String getTypeList(List<CatListElement> typeList){
 
 String sumConsult(String categoryId,String companyArea){
   int catIdTemp=int.parse(categoryId);
+  print(categoryId+' categoruId');
+  print(companyArea+' companyArea');
   if(catIdTemp < 3 && companyArea=='1'){
+    print('first');
     return '8900';
   }else if(catIdTemp < 3 && companyArea=='2'){
     return '17800';

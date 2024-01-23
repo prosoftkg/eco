@@ -10,10 +10,9 @@ class GetDataFromGetCertificateInitial extends GetDataFromGetCertificateState {
 }
 
 class LoadedGetDataFromGetCertificateState extends GetDataFromGetCertificateState{
-  final String sum;
-  final String testId;
-  const LoadedGetDataFromGetCertificateState({required this.sum,required this.testId});
+  final PaymentInfoEntity paymentInfoEntity;
+  const LoadedGetDataFromGetCertificateState({required this.paymentInfoEntity});
   @override
-  List<Object> get props=>[sum];
+  List<Object> get props=>[paymentInfoEntity];
 }
 

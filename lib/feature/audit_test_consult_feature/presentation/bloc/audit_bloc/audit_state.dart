@@ -22,7 +22,7 @@ class LoadedAuditTestListState extends AuditState{
 }
 
 class LoadedAuditConsultListState extends AuditState{
-  final List<AuditTest> auditConsultList;
+  final List<AuditConsult> auditConsultList;
   const LoadedAuditConsultListState({required this.auditConsultList});
   @override
   List<Object> get props=>[auditConsultList];
