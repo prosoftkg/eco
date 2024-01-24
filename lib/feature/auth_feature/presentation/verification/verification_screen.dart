@@ -34,10 +34,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
             onTap: () {
               AutoRouter.of(context).pop();
             },
-            child: appBarLeading(context)
-        ),
+            child: appBarLeading(context)),
         leadingWidth: 100.w,
-
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 30).r,
@@ -58,10 +56,9 @@ class _VerificationScreenState extends State<VerificationScreen> {
             keyboardType: TextInputType.number,
             underlineColor: AppColors.color009D9B,
             length: 4,
-            cursorColor:
-            AppColors.color009D9B,
+            cursorColor: AppColors.color009D9B,
             underlineUnfocusedColor: AppColors.colorE8ECF4,
-            colorAfter: AppColors.color009D9B,
+            //colorAfter: AppColors.color009D9B,
             margin: const EdgeInsets.all(12).r,
             onCompleted: (String value) {
               setState(() {
@@ -83,31 +80,37 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 return Center(child: progressWidget());
               }
               if (state is SuccessfullyCheckCodeState) {
-                BlocProvider.of<UserDataBloc>(context)
-                    .add(ChangeUserDataEvent(userDataForEdit: UserDataForEdit(
+                BlocProvider.of<UserDataBloc>(context).add(ChangeUserDataEvent(
+                    userDataForEdit: UserDataForEdit(
                   name: UserData.name ?? '',
                   phone: UserData.phone ?? '',
                 )));
                 AutoRouter.of(context).replaceAll([const HomeRoute()]);
               }
-              if(state is ErrorAuthState){
+              if (state is ErrorAuthState) {
                 return Column(
                   children: [
-                    InkWell(onTap: () {
-                  if (_code.length == 4)
-                    BlocProvider.of<AuthBloc>(context)
-                        .add(CheckConfirmationCodeEvent(code: _code!));
-                }, child: button(text: context.text.apply)),
+                    InkWell(
+                        onTap: () {
+                          if (_code.length == 4)
+                            BlocProvider.of<AuthBloc>(context)
+                                .add(CheckConfirmationCodeEvent(code: _code!));
+                        },
+                        child: button(text: context.text.apply)),
                     SizedBox(height: 20.h),
-                    Center(child: Text(state.error.toString()),),
+                    Center(
+                      child: Text(state.error.toString()),
+                    ),
                   ],
                 );
               }
-              return InkWell(onTap: () {
-                if (_code.length == 4)
-                  BlocProvider.of<AuthBloc>(context)
-                      .add(CheckConfirmationCodeEvent(code: _code!));
-              }, child: button(text: context.text.apply));
+              return InkWell(
+                  onTap: () {
+                    if (_code.length == 4)
+                      BlocProvider.of<AuthBloc>(context)
+                          .add(CheckConfirmationCodeEvent(code: _code!));
+                  },
+                  child: button(text: context.text.apply));
             },
           ),
           SizedBox(height: 230.h),
