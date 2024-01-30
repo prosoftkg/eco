@@ -63,8 +63,8 @@ class UserCabinetScreen extends StatelessWidget {
     }
     return InkWell(onTap:(){
 
-      AutoRouter.of(context).replaceAll([SignInRoute()]);
-              // deleteBloc.add(DeleteProfileEvent());
+      // AutoRouter.of(context).replaceAll([SignInRoute()]);
+              deleteBloc.add(DeleteProfileEvent());
             },child: buttonWithIcon(context.text.delete_profile,'trash.png'));
   },
 )
@@ -77,7 +77,7 @@ class UserCabinetScreen extends StatelessWidget {
     return SizedBox(
       child: Row(
         children: [
-          SizedBox(width: 110.w,child: Text(leading,style: AppTextStyles.clearSansMediumS14C82F500)),
+          SizedBox(width: 110.w,child: Text(leading,style: AppTextStyles.clearSansMediumS14C82F500,textScaleFactor: ScreenUtil().textScaleFactor)),
           Flexible(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

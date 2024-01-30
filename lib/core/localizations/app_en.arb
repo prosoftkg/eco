@@ -90,5 +90,8 @@
   "passing_test": "Taking Test",
   "test_for": "Test",
   "finish" : "Finish",
-  "next" : "Next"
+  "next" : "Next",
+  "error" : "Error",
+  "error_text" : "Something went wrong.",
+  "close" : "Close"
 }

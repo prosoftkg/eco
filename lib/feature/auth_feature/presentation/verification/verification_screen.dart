@@ -65,7 +65,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
             AppColors.color009D9B,
             underlineUnfocusedColor: AppColors.colorE8ECF4,
             colorAfter: AppColors.color009D9B,
-            margin: const EdgeInsets.all(12).r,
+            // margin: const EdgeInsets.all(5).r,
             onCompleted: (String value) {
               setState(() {
                 _code = value;
@@ -105,7 +105,9 @@ class _VerificationScreenState extends State<VerificationScreen> {
                             .add(CheckConfirmationCodeEvent(code: _code!));
                     }, child: button(text: context.text.apply)),
                     SizedBox(height: 20.h),
-                    Center(child: Text(state.error.toString()),),
+                    Center(child: Text(state.error.toString(),style: TextStyle(
+                      color: Colors.red
+                    ),),),
                   ],
                 );
               }

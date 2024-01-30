@@ -1,12 +1,9 @@
 import 'dart:io';
-
 import 'package:eco_kg/feature/widgets/progressWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter_plus/webview_flutter_plus.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'bloc/payment_bloc.dart';
 import 'package:auto_route/auto_route.dart';
-
 import 'blocGetData/get_data_from_payment_bloc.dart';
 
 class PaymentScreen extends StatefulWidget {

@@ -42,7 +42,7 @@ class AuditDataSource implements IAuditDataSource {
       print('error not found');
       print(response.statusCode);
       print(response.body);
-      throw Exception(response.reasonPhrase);
+      throw ServerError(error: response.reasonPhrase!);
     }
   }
 
@@ -73,7 +73,7 @@ class AuditDataSource implements IAuditDataSource {
       print('error not found');
       print(response.statusCode);
       print(response.body);
-      throw Exception(response.reasonPhrase);
+      throw ServerError(error: response.reasonPhrase!);
     }
   }
 
@@ -104,7 +104,7 @@ class AuditDataSource implements IAuditDataSource {
       print('error not found');
       print(response.statusCode);
       print(response.body);
-      throw Exception(response.reasonPhrase);
+      throw ServerError(error: response.reasonPhrase!);
     }
   }
 
@@ -135,7 +135,7 @@ class AuditDataSource implements IAuditDataSource {
       print('error not found');
       print(response.statusCode);
       print(response.body);
-      throw Exception(response.reasonPhrase);
+      throw ServerError(error: response.reasonPhrase!);
     }
   }
 
@@ -166,7 +166,7 @@ class AuditDataSource implements IAuditDataSource {
       print('error not found');
       print(response.statusCode);
       print(response.body);
-      throw Exception(response.reasonPhrase);
+      throw ServerError(error: response.reasonPhrase!);
     }
   }
 
