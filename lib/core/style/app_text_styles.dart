@@ -5,7 +5,9 @@ import 'app_colors.dart';
 
 class AppTextStyles {
   static  TextStyle clearSansMediumTextStyle16 =
-  TextStyle(color: AppColors.colorBlack, fontSize: ScreenUtil().setSp(16), fontWeight: FontWeight.w500,fontFamily: 'ClearSansMedium',);
+  TextStyle(color: AppColors.colorBlack, fontSize: ScreenUtil().setSp(16), fontWeight: FontWeight.w500,fontFamily: 'ClearSansMedium');
+  static  TextStyle testTestStyle =
+  TextStyle(color: AppColors.colorBlack, fontSize: ScreenUtil().setSp(14), fontWeight: FontWeight.w500,fontFamily: 'ClearSansMedium');
   static  TextStyle clearSansMediumS13W500CBlack =
   TextStyle(color: AppColors.colorBlack, fontSize: ScreenUtil().setSp(13), fontWeight: FontWeight.w500,fontFamily: 'ClearSansMedium');
   static  TextStyle clearSansS13W400CBlack =

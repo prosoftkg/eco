@@ -42,7 +42,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       });
                     },
                     initialUrl: url,
-                    navigationDelegate: (NavigationRequest request) {
+                    /*navigationDelegate: (NavigationRequest request) {
                       pageCounter++;
                       print(pageCounter);
                       if (pageCounter == 1 && Platform.isAndroid) {
@@ -54,7 +54,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         return NavigationDecision.prevent;
                       }
                       return NavigationDecision.navigate;
-                    },
+                    },*/
                   ),
                   if(webProgress<1)
                     Container(

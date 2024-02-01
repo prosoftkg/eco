@@ -11,3 +11,9 @@ class LoadGetConsultationEvent extends GetConsultationEvent{
   List<Object> get props=>[getCertificateInfoEntity];
 }
 
+class LoadNextGetConsultationEvent extends GetConsultationEvent{
+  const LoadNextGetConsultationEvent();
+  @override
+  List<Object> get props=>[];
+}
+

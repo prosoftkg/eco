@@ -5,6 +5,7 @@ import '../../../core/auto_route/auto_route.dart';
 import '../../../core/servise_locator/servise_locator.dart';
 import '../../../core/style/app_colors.dart';
 import '../../../core/style/app_text_styles.dart';
+import '../../../core/utils/errorInfo.dart';
 import '../../auth_feature/presentation/widgets/appBarLeadintBack.dart';
 import '../../test_feature/domain/entities/testIngoForBegin.dart';
 import '../../test_feature/presentation/bloc/test_bloc.dart';
@@ -166,9 +167,7 @@ class AuditScreen extends StatelessWidget {
                 ),);
             }
             if (state is ErrorTestState) {
-              return Center(
-                child: Text(state.error.toString()),
-              );
+              return errorWidget(context);
             }
             return InkWell(
                     onTap: (){

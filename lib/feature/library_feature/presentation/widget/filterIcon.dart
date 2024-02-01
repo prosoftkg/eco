@@ -9,6 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/style/app_colors.dart';
 import '../../../../core/style/app_text_styles.dart';
+import '../../../../core/utils/errorInfo.dart';
 import '../../../auth_feature/presentation/widgets/checkContainer.dart';
 import '../../../auth_feature/presentation/widgets/unCheck.dart';
 import '../../domain/entities/param_entity.dart';
@@ -427,9 +428,7 @@ Widget filter(BuildContext context, String search) {
                               );
                             }
                             if (state is ErrorFilterState) {
-                              print(state.error);
-                              return Center(
-                                  child: Text(state.error.toString()));
+                              return errorWidget(context);
                             }
                             return Container();
                           },

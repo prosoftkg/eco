@@ -17,6 +17,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../auth_feature/presentation/widgets/button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../consultation_feature/presentation/consultation_screen.dart';
+import '../../../test_feature/domain/entities/company_info_entity.dart';
 import '../../../widgets/progressWidget.dart';
 import 'bloc/get_certificate_bloc.dart';
 
@@ -39,6 +40,12 @@ class _InfoFormCertificateForPaymentState
   TextEditingController regionController = TextEditingController();
 
   TextEditingController phoneController = TextEditingController();
+
+  TextEditingController textEditingController = TextEditingController();
+  
+  int? typeBusiness;
+  int? staffAmount;
+  int? businessDuration;
 
   int? testNo;
   String? selectedCompanyArea;
@@ -85,7 +92,109 @@ class _InfoFormCertificateForPaymentState
               child: appBarLeading(context)),
           leadingWidth: 100.w,
         ),
-        body: Padding(
+        body: BlocBuilder<GetCertificateBloc, GetCertificateState>(
+          bloc: myBloc,
+          builder: (context, state) {
+            if (state is LoadingGetCertificateState) {
+              return Center(child: progressWidget());
+            }
+            if (state is LoadedGetCertificateState) {
+              PaymentInfoEntity paymentInfo = PaymentInfoEntity(
+                  testId: '0',
+                  paymentType: '1',
+                  sum: sumCertificate(testNo.toString(), companyAreaId),
+                  categoryId: testNo.toString(),
+                  companyName: companyNameController.text,
+                  companyDirector: fullNameController.text,
+                  region: regionController.text,
+                  phone: phoneController.text,
+                  area: companyAreaId);
+              BlocProvider.of<GetDataFromGetCertificateBloc>(context).add(
+                  LoadGetDataFromGetCertificate(
+                      paymentInfoEntity: paymentInfo));
+              AutoRouter.of(context)
+                  .replace(PaymentGetCertificateRoute());
+              return Center(child: progressWidget());
+              // Navigator.of(context).push(MaterialPageRoute(builder:(context)=>GetCertificatScreen(testId: '0',sum: sumConsult(testNo.toString(), companyAreaId),)));
+            }
+            if(state is LoadNextGetCertificateState){
+              return Padding(
+                padding: const EdgeInsets.only(
+                    left: 16.0, right: 16.0, top: 32, bottom: 124)
+                    .r,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      children: [
+                        Form(
+                          key: _formKey,
+                          child: Column(
+                            children: [
+                              SizedBox(height: 40.h),
+                              businessTypeFieldTemplate((CompanyInfo().getBusinessTypeList(testNo!))),
+                              SizedBox(height: 16.h),
+                              staffAmounFieldTemplate(CompanyInfo().getStaffAmountList()),
+                              SizedBox(height: 16.h),
+                              businessDurationFieldTemplate(CompanyInfo().getBusinessDurationList()),
+                              SizedBox(height: 16.h),
+                              textEditingFieldTemplate(hintText: 'Доп. инфо о компании'),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    InkWell(
+                            onTap: () {
+                              if (_formKey.currentState!.validate()) {
+                                UserData.name = fullNameController.text;
+                                UserData.companyName = companyNameController.text;
+                                UserData.phone = phoneController.text;
+                                UserData.region = regionController.text;
+                                companyAreaId = testNo! < 3
+                                    ? (UserData.areaCompanyFirst
+                                    .indexOf(selectedCompanyArea!) +
+                                    1)
+                                    .toString()
+                                    : (UserData.areaCompanySecond
+                                    .indexOf(selectedCompanyArea!) +
+                                    4)
+                                    .toString();
+                                myBloc.add(LoadGetCertificateEvent(
+                                    getCertificateInfoEntity:
+                                    GetCertificateInfoEntity(
+                                      categoryId: testNo.toString(),
+                                      area: companyAreaId,
+                                      companyDirector: fullNameController.text,
+                                      companyName: companyNameController.text,
+                                      paymentType: '1',
+                                      phone: phoneController.text,
+                                      region: regionController.text,
+                                      testId: '0',
+                                        businessDuration: businessDuration.toString(),
+                                        businessType: typeBusiness.toString(),staffAmount: staffAmount.toString(),
+                                        textCompany: textEditingController.text
+                                    )));
+                                /*var tempTestInfo = TestInfoForBegin(
+                            companyName: companyNameController.text,
+                            companyDirector:
+                            fullNameController.text,
+                            categoryId: testInfo!.testNo.toString(),
+                            region: regionController.text,
+                            phone: phoneController.text,
+                            testType: 'userType',
+                            areaCompany: testInfo!.testNo < 3 ? (UserData.areaCompanyFirst.indexOf(selectedLocation!)+1).toString() : (UserData.areaCompanySecond.indexOf(selectedLocation!)+4).toString());*/
+                                /*BlocProvider.of<TestBloc>(context).add(
+                            BeginTestEvent(
+                                testInfoForBegin: tempTestInfo));*/
+                              }
+                            },
+                            child: button(text: 'Получить'))
+                  ],
+                ),
+              );
+            }
+    return Padding(
           padding: const EdgeInsets.only(
                   left: 16.0, right: 16.0, top: 32, bottom: 124)
               .r,
@@ -120,31 +229,7 @@ class _InfoFormCertificateForPaymentState
                   ),
                 ],
               ),
-              BlocBuilder<GetCertificateBloc, GetCertificateState>(
-                bloc: myBloc,
-                builder: (context, state) {
-                  if (state is LoadingGetCertificateState) {
-                    return Center(child: progressWidget());
-                  }
-                  if (state is LoadedGetCertificateState) {
-                    PaymentInfoEntity paymentInfo = PaymentInfoEntity(
-                        testId: '0',
-                        paymentType: '1',
-                        sum: sumCertificate(testNo.toString(), companyAreaId),
-                        categoryId: testNo.toString(),
-                        companyName: companyNameController.text,
-                        companyDirector: fullNameController.text,
-                        region: regionController.text,
-                        phone: phoneController.text,
-                        area: companyAreaId);
-                    BlocProvider.of<GetDataFromGetCertificateBloc>(context).add(
-                        LoadGetDataFromGetCertificate(
-                            paymentInfoEntity: paymentInfo));
-                    AutoRouter.of(context)
-                        .replace(PaymentGetCertificateRoute());
-                    // Navigator.of(context).push(MaterialPageRoute(builder:(context)=>GetCertificatScreen(testId: '0',sum: sumConsult(testNo.toString(), companyAreaId),)));
-                  }
-                  return InkWell(
+              InkWell(
                       onTap: () {
                         if (_formKey.currentState!.validate()) {
                           UserData.name = fullNameController.text;
@@ -160,18 +245,7 @@ class _InfoFormCertificateForPaymentState
                                           .indexOf(selectedCompanyArea!) +
                                       4)
                                   .toString();
-                          myBloc.add(LoadGetCertificateEvent(
-                              getCertificateInfoEntity:
-                                  GetCertificateInfoEntity(
-                            categoryId: testNo.toString(),
-                            area: companyAreaId,
-                            companyDirector: fullNameController.text,
-                            companyName: companyNameController.text,
-                            paymentType: '1',
-                            phone: phoneController.text,
-                            region: regionController.text,
-                            testId: '0',
-                          )));
+                          myBloc.add(LoadNextGetCertificateEvent());
                           /*var tempTestInfo = TestInfoForBegin(
                             companyName: companyNameController.text,
                             companyDirector:
@@ -186,12 +260,12 @@ class _InfoFormCertificateForPaymentState
                                 testInfoForBegin: tempTestInfo));*/
                         }
                       },
-                      child: button(text: 'Получить'));
-                },
-              ),
+                      child: button(text: context.text.next))
             ],
           ),
-        ));
+        );
+  },
+));
   }
 
   companyFieldTemplate({required String hintText}) {
@@ -334,6 +408,113 @@ class _InfoFormCertificateForPaymentState
       ),
       validator: (regionForValidate) =>
           regionForValidate!.length > 0 ? null : 'Введите регион',
+    );
+  }
+
+  businessTypeFieldTemplate(Map<int,String> dropDownList) {
+    return DropdownButtonFormField<int>(
+      style: AppTextStyles.clearSansS16W400CBlack,
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: AppColors.colorF7F7F7,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 15).r,
+        border: OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(12).r,
+        ),
+        hintText: 'Тип предприятия',
+        hintStyle: AppTextStyles.hintStyle,
+      ),
+      dropdownColor: AppColors.colorWhite,
+      value: typeBusiness,
+      items: dropDownList.entries
+          .map((MapEntry<int, String> entry) => DropdownMenuItem<int>(
+        value: entry.key,
+        child: Text(entry.value),
+      ))
+          .toList(),
+      onChanged: (value) {
+        typeBusiness = value!;
+      },
+      validator: (area) => area==null ? 'Выберите тип предприятия' : null,
+    );
+  }
+
+  staffAmounFieldTemplate(Map<int,String> dropDownList) {
+    return DropdownButtonFormField<int>(
+      style: AppTextStyles.clearSansS16W400CBlack,
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: AppColors.colorF7F7F7,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 15).r,
+        border: OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(12).r,
+        ),
+        hintText: 'Количество наемных работников',
+        hintStyle: AppTextStyles.hintStyle,
+      ),
+      dropdownColor: AppColors.colorWhite,
+      value: staffAmount,
+      items: dropDownList.entries
+          .map((MapEntry<int, String> entry) => DropdownMenuItem<int>(
+        value: entry.key,
+        child: Text(entry.value),
+      ))
+          .toList(),
+      onChanged: (value) {
+        staffAmount = value!;
+      },
+      validator: (area) => area==null ? 'Выберите количество наемных работников' : null,
+    );
+  }
+
+  businessDurationFieldTemplate(Map<int,String> dropDownList) {
+    return DropdownButtonFormField<int>(
+      style: AppTextStyles.clearSansS16W400CBlack,
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: AppColors.colorF7F7F7,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 15).r,
+        border: OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(12).r,
+        ),
+        hintText: 'Как давно работает бизнес?',
+        hintStyle: AppTextStyles.hintStyle,
+      ),
+      dropdownColor: AppColors.colorWhite,
+      value: businessDuration,
+      items: dropDownList.entries
+          .map((MapEntry<int, String> entry) => DropdownMenuItem<int>(
+        value: entry.key,
+        child: Text(entry.value),
+      ))
+          .toList(),
+      onChanged: (value) {
+        businessDuration = value!;
+      },
+      validator: (area) => area==null ? 'Выберите время работы бизнеса' : null,
+    );
+  }
+
+  textEditingFieldTemplate({required String hintText}) {
+    return TextFormField(
+      maxLines: null,
+      controller: textEditingController,
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: AppColors.colorF7F7F7,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 15).r,
+        border: OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        hintText: hintText,
+        hintStyle: AppTextStyles.hintStyle,
+      ),
+      /*validator: (regionForValidate) =>
+      regionForValidate!.length > 0 ? null : 'Введите ',*/
     );
   }
 }

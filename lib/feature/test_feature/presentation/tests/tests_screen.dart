@@ -91,6 +91,7 @@ class _TestsScreenState extends State<TestsScreen> {
             mId = state.testEntity.mid.toString();
             currentPage = state.testEntity.number;
             company_area=state.companyArea;
+            print(currentPage);
           }
           if (state is LoadedNextTestState) {
             if (stateLan.lanCode != 'ru') {
@@ -109,19 +110,21 @@ class _TestsScreenState extends State<TestsScreen> {
           }
           if(state is LoadedResultTestState){
             AutoRouter.of(context).replace(const FinishTestRoute());
+            return Center(child: progressWidget());
           }
           if(state is LoadedFinishTestState){
             BlocProvider.of<TestBloc>(context)
                 .add(ResultTestEvent(finishTestEntity: state.finishTestEntity,testId: state.testId,tetsType: testType!,companyArea: company_area,categoryId: categoryId!));
+            return Center(child: progressWidget());
           }
-          if(state is ErrorTestState){
+          /*if(state is ErrorTestState){
             return Stack(
               children: [
                 Center(child: Text(state.error.toString())),
                 bottomBackgroungImage(context)
               ],
             );
-          }
+          }*/
           return Stack(
             children: [
               Padding(
@@ -141,7 +144,7 @@ class _TestsScreenState extends State<TestsScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 96,bottom: 210).r,
+                padding: const EdgeInsets.only(top: 96,bottom: 180).r,
                 child: ListView(
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   children: [
@@ -150,7 +153,7 @@ class _TestsScreenState extends State<TestsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(question!,
-                            style: AppTextStyles.clearSansMediumTextStyle16),
+                            style: AppTextStyles.testTestStyle),
                         SizedBox(height: 16.h),
                         for (var item in answers!)
                           RadioListTile(

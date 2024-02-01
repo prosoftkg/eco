@@ -31,11 +31,15 @@ class TestBloc extends Bloc<TestEvent, TestState> {
     on<FinishTestEvent>(_finishTest);
     on<TestInfoEvent>(_infoTest);
     on<ResultTestEvent>(_resultTest);
+    on<CompanyInfoEvent>(_companyInfo);
   }
 
   _infoTest(TestInfoEvent event,Emitter emit)async{
     emit(LoadingTestState());
     emit(LoadedInfoTestState(infoTest: event.testInfo));
+  }
+  _companyInfo(CompanyInfoEvent event,Emitter emit)async{
+    emit(LoadCompanyInfoState());
   }
 
   _globalAuditTest(GlobalAuditTestEvent event,Emitter emit)async{

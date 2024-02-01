@@ -35,7 +35,11 @@ class TestDataSource implements ITestDataSource {
       'category_id' : testInfoForBegin.categoryId,
       'region' : testInfoForBegin.region,
       'phone' : testInfoForBegin.phone,
-      'company_area' : testInfoForBegin.areaCompany
+      'company_area' : testInfoForBegin.areaCompany,
+      'business_type': testInfoForBegin.businessType,
+      'business_duration' : testInfoForBegin.businessDuration,
+      'staff_amount' : testInfoForBegin.staffAmount,
+      'extra_information' : testInfoForBegin.textCompany
     };
     print(json);
 
