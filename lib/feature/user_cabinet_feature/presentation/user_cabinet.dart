@@ -2,6 +2,7 @@ import 'package:eco_kg/core/auto_route/auto_route.dart';
 import 'package:eco_kg/core/servise_locator/servise_locator.dart';
 import 'package:eco_kg/core/style/app_colors.dart';
 import 'package:eco_kg/core/style/app_text_styles.dart';
+import 'package:eco_kg/core/utils/errorInfo.dart';
 import 'package:eco_kg/core/utils/utils.dart';
 import 'package:eco_kg/feature/home_feature/domain/entities/userEnum.dart';
 import 'package:eco_kg/feature/splash_feature/presentation/widget/button_with_icon.dart';
@@ -60,6 +61,18 @@ class UserCabinetScreen extends StatelessWidget {
     }
     if(state is SuccessfullyDeleteProfileState){
       AutoRouter.of(context).replaceAll([SignInRoute()]);
+    }
+    if(state is ErrorUserCabinetState){
+      return Column(
+        children: [
+          errorWidget(context),
+    InkWell(onTap:(){
+
+    // AutoRouter.of(context).replaceAll([SignInRoute()]);
+    deleteBloc.add(DeleteProfileEvent());
+    },child: buttonWithIcon(context.text.delete_profile,'trash.png'))
+        ],
+      );
     }
     return InkWell(onTap:(){
 
