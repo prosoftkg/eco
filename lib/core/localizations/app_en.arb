@@ -29,7 +29,7 @@
   "password_changed": "Password changed!",
   "password_changed_subtitle": "Your password has been successfully changed.",
   "return_to_auth": "Return to Authorization page",
-  "home": "Home",
+  "home": "Tests",
   "applicant": "Applicant",
   "auditor": "Auditor",
   "basic": "Basic",
@@ -68,6 +68,10 @@
   "test2" : "Tourism enterprises",
   "test3" : "Catering enterprises",
   "test4" : "Combined test",
+  "test1Sub": "Hotel/ Inn/ Guesthouse/ Hostel/ Boarding house/ Sanatorium",
+  "test2Sub": "Hotel/ Inn/ Guesthouse/ Hostel",
+  "test3Sub": "Restaurant/ Cafe/ Cafeteria/ Coffee shop",
+  "test4Sub": "Hotel/ Inn + Restaurant/ Guesthouse + Cafe/ Hostel + Mini cafe",
   "filter" : "Filter",
   "button_filter" : "Apply filter",
   "yes": "Yes",
@@ -90,5 +94,8 @@
   "passing_test": "Taking Test",
   "test_for": "Test",
   "finish" : "Finish",
-  "next" : "Next"
+  "next" : "Next",
+  "error" : "Error",
+  "error_text" : "Something went wrong.",
+  "close" : "Close"
 }

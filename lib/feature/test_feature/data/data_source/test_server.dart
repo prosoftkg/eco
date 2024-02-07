@@ -6,6 +6,7 @@ import 'package:eco_kg/core/constants/api_constants.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../../core/error_journal/error_journal.dart';
 import '../../domain/entities/finishTestEntity.dart';
 import '../../domain/entities/testIngoForBegin.dart';
 import '../../domain/entities/testIngoForNext.dart';
@@ -34,7 +35,11 @@ class TestDataSource implements ITestDataSource {
       'category_id' : testInfoForBegin.categoryId,
       'region' : testInfoForBegin.region,
       'phone' : testInfoForBegin.phone,
-      'company_area' : testInfoForBegin.areaCompany
+      'company_area' : testInfoForBegin.areaCompany,
+      'business_type': testInfoForBegin.businessType,
+      'business_duration' : testInfoForBegin.businessDuration,
+      'staff_amount' : testInfoForBegin.staffAmount,
+      'extra_information' : testInfoForBegin.textCompany
     };
     print(json);
 
@@ -48,7 +53,7 @@ class TestDataSource implements ITestDataSource {
       print('error not found');
       print(response.statusCode);
       print(response.body);
-      throw Exception(response.reasonPhrase);
+      throw ServerError(error: response.reasonPhrase!);
     }
   }
 
@@ -77,7 +82,7 @@ class TestDataSource implements ITestDataSource {
       print('error not found');
       print(response.statusCode);
       print(response.body);
-      throw Exception(response.reasonPhrase);
+      throw ServerError(error: response.reasonPhrase!);
     }
   }
 
@@ -128,7 +133,7 @@ class TestDataSource implements ITestDataSource {
       print('error not found');
       print(response.statusCode);
       print(response.body);
-      throw Exception(response.reasonPhrase);
+      throw ServerError(error: response.reasonPhrase!);
     }
   }
 
@@ -168,7 +173,7 @@ class TestDataSource implements ITestDataSource {
       print('error not found');
       print(response.statusCode);
       print(response.body);
-      throw Exception(response.reasonPhrase);
+      throw ServerError(error: response.reasonPhrase!);
     }
   }
 }

@@ -15,12 +15,17 @@ class GetConsultationBloc extends Bloc<GetConsultationEvent, GetConsultationStat
   final GetConsultationUseCase getConsultationUseCase;
   GetConsultationBloc({required this.getConsultationUseCase}) : super(GetConsultationInitial()) {
     on<LoadGetConsultationEvent>(_getConsultation);
+    on<LoadNextGetConsultationEvent>(_getNextConsultation);
   }
+
   _getConsultation(LoadGetConsultationEvent event,Emitter emit)async{
     emit(LoadingGetConsultationState());
     final either=await getConsultationUseCase.call(event.getCertificateInfoEntity);
     either.fold((error) => emit(ErrorGetConsultationState(error: error)), (getConsultation){
       emit(LoadedGetConsultationState());
     });
+  }
+  _getNextConsultation(LoadNextGetConsultationEvent event,Emitter emit){
+      emit(LoadNextGetConsultationState());
   }
 }

@@ -11,3 +11,9 @@ class LoadGetCertificateEvent extends GetCertificateEvent{
   List<Object> get props=>[getCertificateInfoEntity];
 }
 
+class LoadNextGetCertificateEvent extends GetCertificateEvent{
+  const LoadNextGetCertificateEvent();
+  @override
+  List<Object> get props=>[];
+}
+

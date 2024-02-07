@@ -6,6 +6,7 @@ import 'package:eco_kg/core/utils/utils.dart';
 import 'package:eco_kg/feature/widgets/progressWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/utils/errorInfo.dart';
 import '../../../auth_feature/presentation/widgets/appBarLeadintBack.dart';
 import '../../../splash_feature/presentation/bloc/language_bloc.dart';
 import '../widget/filterIcon.dart';
@@ -380,10 +381,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                     });*/
                   }
                   if (state is ErrorLibraryState) {
-                    print(state.error);
-                    return Center(
-                      child: Text(state.error.toString()),
-                    );
+                    return errorWidget(context);
                   }
                   return Container();
                 },

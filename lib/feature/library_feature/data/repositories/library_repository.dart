@@ -22,7 +22,7 @@ class LibraryRepositoryImpl implements LibraryRepository{
       final library=await libraryDataSourse.postLibrary(filterList);
       return Right(library);
     }on Failure catch(e){
-      throw Left(ServerError(error: e));
+      return Left(ServerError(error: e));
     }
   }
 
@@ -35,7 +35,7 @@ class LibraryRepositoryImpl implements LibraryRepository{
       final param=await libraryDataSourse.getParam(lanCode);
       return Right(param);
     }on Failure catch(e){
-      throw Left(ServerError(error: e));
+      return Left(ServerError(error: e));
     }
   }
 
@@ -48,7 +48,7 @@ class LibraryRepositoryImpl implements LibraryRepository{
       final param=await libraryDataSourse.readHistorySearch();
       return Right(param);
     }on Failure catch(e){
-      throw Left(ServerError(error: e));
+      return Left(ServerError(error: e));
     }
   }
 
@@ -61,7 +61,7 @@ class LibraryRepositoryImpl implements LibraryRepository{
       final param=await libraryDataSourse.removeHistorySearch(removeHistorySearch);
       return Right(param);
     }on Failure catch(e){
-      throw Left(ServerError(error: e));
+      return Left(ServerError(error: e));
     }
   }
 }

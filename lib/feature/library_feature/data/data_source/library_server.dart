@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:eco_kg/core/constants/api_constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:eco_kg/feature/library_feature/domain/entities/library_entity.dart';
+import '../../../../core/error_journal/error_journal.dart';
 import '../../domain/entities/param_entity.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -67,7 +68,7 @@ class LibraryDataSourse implements ILibraryDataSourse {
       print('error not found');
       print(response.statusCode);
       print(response.body);
-      throw Exception(response.reasonPhrase);
+      throw ServerError(error: response.reasonPhrase!);
     }
   }
 
@@ -91,7 +92,7 @@ class LibraryDataSourse implements ILibraryDataSourse {
       print('error not found');
       print(response.statusCode);
       print(response.body);
-      throw Exception(response.reasonPhrase);
+      throw ServerError(error: response.reasonPhrase!);
     }
   }
 

@@ -14,12 +14,17 @@ class GetCertificateBloc extends Bloc<GetCertificateEvent, GetCertificateState> 
   final GetCertificateUseCase getCertificateUseCase;
   GetCertificateBloc({required this.getCertificateUseCase}) : super(GetCertificateInitial()) {
     on<LoadGetCertificateEvent>(_getCertificate);
+    on<LoadNextGetCertificateEvent>(_getNextCertificate);
   }
   _getCertificate(LoadGetCertificateEvent event,Emitter emit)async{
     emit(LoadingGetCertificateState());
     final either=await getCertificateUseCase.call(event.getCertificateInfoEntity);
     either.fold((error) => emit(ErrorGetCertificateState(error: error)), (getCertificate){
-      emit(LoadedGetCertificateState());
+      emit(const LoadedGetCertificateState());
     });
+  }
+
+  _getNextCertificate(LoadNextGetCertificateEvent event,Emitter emit){
+    emit(const LoadNextGetCertificateState());
   }
 }

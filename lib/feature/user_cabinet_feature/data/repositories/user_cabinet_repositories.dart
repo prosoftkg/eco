@@ -21,7 +21,7 @@ class UserCabinetRepositoryImpl implements UserCabinetRepository{
       final editUser=await userCabinetDataSource.editUserData(userDataForEdit);
       return Right(editUser);
     }on Failure catch(e){
-      throw Left(ServerError(error: e));
+      return Left(ServerError(error: e));
     }
   }
 
@@ -35,7 +35,7 @@ class UserCabinetRepositoryImpl implements UserCabinetRepository{
       final deleteProfile=await userCabinetDataSource.deleteProfile();
       return Right(deleteProfile);
     }on Failure catch(e){
-      throw Left(ServerError(error: e));
+      return Left(ServerError(error: e));
     }
   }
 

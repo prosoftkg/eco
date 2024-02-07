@@ -21,6 +21,12 @@ class LoadedGetCertificateState extends GetCertificateState{
   List<Object> get props=>[];
 }
 
+class LoadNextGetCertificateState extends GetCertificateState{
+  const LoadNextGetCertificateState();
+  @override
+  List<Object> get props=>[];
+}
+
 class ErrorGetCertificateState extends GetCertificateState{
   final Object error;
   const ErrorGetCertificateState({required this.error});

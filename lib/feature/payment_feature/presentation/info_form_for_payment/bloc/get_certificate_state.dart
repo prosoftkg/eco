@@ -15,6 +15,12 @@ class LoadingGetConsultationState extends GetConsultationState{
   List<Object> get props=>[];
 }
 
+class LoadNextGetConsultationState extends GetConsultationState{
+  const LoadNextGetConsultationState();
+  @override
+  List<Object> get props=>[];
+}
+
 class LoadedGetConsultationState extends GetConsultationState{
   const LoadedGetConsultationState();
   @override
