@@ -45,8 +45,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 initialUrl: url,
                 navigationDelegate: (NavigationRequest request) {
                   pageCounter++;
-                  print('--------- pageCounter $pageCounter');
-                  if (pageCounter == 4) {
+                  print(pageCounter);
+                  if (pageCounter == 1 && Platform.isAndroid) {
+                    AutoRouter.of(context).pop();
+                    return NavigationDecision.prevent;
+                  }
+                  if (pageCounter == 4 && Platform.isIOS) {
                     AutoRouter.of(context).pop();
                     return NavigationDecision.prevent;
                   }
