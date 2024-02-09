@@ -63,7 +63,7 @@ class ResultScreen extends StatelessWidget {
                         Text(
                           /*testType == 'auditTest'
                               ? 'Балл заявителя: ${finishTestEntity!.score!}'
-                              : */'Ваш балл: ${finishTestEntity!.score!}',
+                              : */'${context.text.yourScore} ${finishTestEntity!.score!}',
                           style: AppTextStyles.clearSansMediumS22W500CBlack,
                         ),
                       ],
@@ -77,8 +77,8 @@ class ResultScreen extends StatelessWidget {
                       children: [
                         Text(
                             testType == 'auditTest'
-                                ? 'Почта заявителя с результатами теста:'
-                                : 'Ваша почта с результатами теста:',
+                                ? context.text.applicantEmailWithTestResults
+                                : context.text.yourEmailWithTestResults,
                             style: AppTextStyles.clearSansS12C82F400,
                             textAlign: TextAlign.center),
                         Text(email,
@@ -139,7 +139,7 @@ class ResultScreen extends StatelessWidget {
           if(testTypeTemp != 'auditTest')
           InkWell(
             child:
-                buttonWithIcon('Получить консультацию', 'message-search.png'),
+                buttonWithIcon(context.text.get_consultation, 'message-search.png'),
             onTap: () {
               PaymentInfoEntity paymentInfo = PaymentInfoEntity(
                   testId: testId!,
@@ -161,7 +161,7 @@ class ResultScreen extends StatelessWidget {
           SizedBox(height: 32.h),
           InkWell(
             child: button(text: testTypeTemp == 'auditTest'
-                ? 'Вернуться' : 'Пройти тест повторно'),
+                ? context.text.goBack : context.text.retakeTest),
             onTap: () {
               AutoRouter.of(context).pop();
             },
@@ -174,8 +174,8 @@ class ResultScreen extends StatelessWidget {
           InkWell(
             child: button(
                 text: testTypeTemp == 'auditTest'
-                    ? 'Вернуться'
-                    : 'Пройти сертификацию'),
+                    ? context.text.goBack
+                    : context.text.certification),
             onTap: () {
               testTypeTemp == 'auditTest'
                   ? AutoRouter.of(context).pop()

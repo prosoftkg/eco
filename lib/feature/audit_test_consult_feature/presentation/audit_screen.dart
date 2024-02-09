@@ -45,7 +45,7 @@ class AuditScreen extends StatelessWidget {
           for(var item in state.auditTestList)
           buildAuditTestItem(item,context,getIt<AcceptAuditTestBloc>(),getIt<TestBloc>())
         ],
-      ) : const Center(child: Text('No product'));
+      ) : Center(child: Text(context.text.nothingFound));
     }
     return const SizedBox();
   },
@@ -142,7 +142,7 @@ class AuditScreen extends StatelessWidget {
                     children: [
                       Image.asset('assets/icon/call.png',width: 18.w,height: 18.h),
                       SizedBox(width: 6.w),
-                      Text(auditTest.userPhone != '' ? auditTest.userPhone! : 'Нету',
+                      Text(auditTest.userPhone != '' ? auditTest.userPhone! : context.text.nothingFound,
                           style: AppTextStyles.clearSansS12W400CBlack),
                     ],
                   ),

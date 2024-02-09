@@ -70,8 +70,11 @@ class _MainTestScreenState extends State<MainTestScreen> {
     super.initState();
   }
 
+
   @override
   Widget build(BuildContext context) {
+    var areaFirstList=CompanyInfo(context: context).areaCompanyFirst();
+    var areaSecondList=CompanyInfo(context: context).areaCompanySecond();
     return Stack(
       children: [
         Scaffold(
@@ -128,13 +131,13 @@ class _MainTestScreenState extends State<MainTestScreen> {
                             child: Column(
                               children: [
                                 SizedBox(height: 40.h),
-                                businessTypeFieldTemplate((CompanyInfo().getBusinessTypeList(testInfo!.testNo))),
+                                businessTypeFieldTemplate((CompanyInfo(context: context).getBusinessTypeList(testInfo!.testNo))),
                                 SizedBox(height: 16.h),
-                                staffAmounFieldTemplate(CompanyInfo().getStaffAmountList()),
+                                staffAmounFieldTemplate(CompanyInfo(context: context).getStaffAmountList()),
                                 SizedBox(height: 16.h),
-                                businessDurationFieldTemplate(CompanyInfo().getBusinessDurationList()),
+                                businessDurationFieldTemplate(CompanyInfo(context: context).getBusinessDurationList()),
                                 SizedBox(height: 16.h),
-                                textEditingFieldTemplate(hintText: 'Доп. инфо о компании'),
+                                textEditingFieldTemplate(hintText: context.text.additionalCompanyInfo),
                               ],
                             ),
                           ),
@@ -156,7 +159,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
                                       region: regionController.text,
                                       phone: phoneController.text,
                                       testType: 'userType',
-                                      areaCompany: testInfo!.testNo < 3 ? (UserData.areaCompanyFirst.indexOf(selectedLocation!)+1).toString() : (UserData.areaCompanySecond.indexOf(selectedLocation!)+4).toString(),
+                                      areaCompany: testInfo!.testNo < 3 ? (areaFirstList.indexOf(selectedLocation!)+1).toString() : (areaSecondList.indexOf(selectedLocation!)+4).toString(),
                                     businessDuration: businessDuration.toString(),
                                     businessType: typeBusiness.toString(),staffAmount: staffAmount.toString(),
                                     textCompany: textEditingController.text
@@ -209,16 +212,16 @@ class _MainTestScreenState extends State<MainTestScreen> {
                             children: [
                               SizedBox(height: 40.h),
                               companyFieldTemplate(
-                                  hintText: 'Название предприятия'),
+                                  hintText: context.text.companyName),
                               SizedBox(height: 16.h),
                               nameFieldTemplate(
-                                  hintText: 'Руководитель компании ФИО'),
+                                  hintText: context.text.ceoName),
                               SizedBox(height: 16.h),
-                              regionFieldTemplate(hintText: 'Регион'),
+                              regionFieldTemplate(hintText: context.text.region),
                               SizedBox(height: 16.h),
                               phoneFieldTemplate(hintText: '996700123456'),
                               SizedBox(height: 16.h),
-                              dropDownFieldTemplate(testInfo!.testNo <3 ? UserData.areaCompanyFirst : UserData.areaCompanySecond)
+                              dropDownFieldTemplate(testInfo!.testNo <3 ? areaFirstList : areaSecondList)
                             ],
                           ),
                         ),
@@ -259,7 +262,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(12).r,
         ),
-        hintText: 'Площадь предприятия',
+        hintText: context.text.businessArea,
         hintStyle: AppTextStyles.hintStyle,
       ),
       dropdownColor: AppColors.colorWhite,
@@ -275,7 +278,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
           selectedLocation = value!;
         });
       },
-      validator: (area) => area==null ? 'Выберите площадь' : null,
+      validator: (area) => area==null ? context.text.selectArea : null,
     );
   }
 
@@ -295,7 +298,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
         hintStyle: AppTextStyles.hintStyle,
       ),
       validator: (company) =>
-      company!.length > 3 ? null : 'Введите название предприятия',
+      company!.length > 3 ? null : context.text.enterCompanyName,
     );
   }
 
@@ -310,7 +313,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(12).r,
         ),
-        hintText: 'Тип предприятия',
+        hintText: context.text.businessType,
         hintStyle: AppTextStyles.hintStyle,
       ),
       dropdownColor: AppColors.colorWhite,
@@ -326,7 +329,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
           typeBusiness = value!;
         });
       },
-      validator: (area) => area==null ? 'Выберите тип предприятия' : null,
+      validator: (area) => area==null ? context.text.selectBusinessType : null,
     );
   }
 
@@ -341,7 +344,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(12).r,
         ),
-        hintText: 'Количество наемных работников',
+        hintText: context.text.numberOfEmployees,
         hintStyle: AppTextStyles.hintStyle,
       ),
       dropdownColor: AppColors.colorWhite,
@@ -357,7 +360,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
           staffAmount = value!;
         });
       },
-      validator: (area) => area==null ? 'Выберите количество наемных работников' : null,
+      validator: (area) => area==null ? context.text.selectNumberOfEmployees : null,
     );
   }
 
@@ -372,7 +375,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(12).r,
         ),
-        hintText: 'Как давно работает бизнес?',
+        hintText: context.text.businessExperience,
         hintStyle: AppTextStyles.hintStyle,
       ),
       dropdownColor: AppColors.colorWhite,
@@ -388,13 +391,37 @@ class _MainTestScreenState extends State<MainTestScreen> {
           businessDuration = value!;
         });
       },
-      validator: (area) => area==null ? 'Выберите время работы бизнеса' : null,
+      validator: (area) => area==null ? context.text.selectBusinessExperience : null,
     );
   }
 
   textEditingFieldTemplate({required String hintText}) {
     return TextFormField(
-      maxLines: null,
+      onFieldSubmitted: (s){
+        /*if (_formKey.currentState!.validate()) {
+          UserData.name = fullNameController.text;
+          UserData.companyName =
+              companyNameController.text;
+          UserData.phone = phoneController.text;
+          UserData.region = regionController.text;
+          testInfoForBegin = TestInfoForBegin(
+              companyName: companyNameController.text,
+              companyDirector:
+              fullNameController.text,
+              categoryId: testInfo!.testNo.toString(),
+              region: regionController.text,
+              phone: phoneController.text,
+              testType: 'userType',
+              areaCompany: testInfo!.testNo < 3 ? (UserData.areaCompanyFirst.indexOf(selectedLocation!)+1).toString() : (UserData.areaCompanySecond.indexOf(selectedLocation!)+4).toString(),
+              businessDuration: businessDuration.toString(),
+              businessType: typeBusiness.toString(),staffAmount: staffAmount.toString(),
+              textCompany: textEditingController.text
+          );
+          BlocProvider.of<TestBloc>(context).add(
+              BeginTestEvent(testInfoForBegin: testInfoForBegin!));
+        }*/
+      },
+
       controller: textEditingController,
       decoration: InputDecoration(
         filled: true,
@@ -428,7 +455,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
         hintStyle: AppTextStyles.hintStyle,
       ),
       validator: (nameDirector) =>
-      nameDirector!.length > 0 ? null : 'Введите имя директора',
+      nameDirector!.length > 0 ? null : context.text.enterDirectorName,
     );
   }
 
@@ -467,7 +494,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
         hintStyle: AppTextStyles.hintStyle,
       ),
       validator: (regionForValidate) =>
-      regionForValidate!.length > 0 ? null : 'Введите регион',
+      regionForValidate!.length > 0 ? null : context.text.enterRegion,
     );
   }
 }

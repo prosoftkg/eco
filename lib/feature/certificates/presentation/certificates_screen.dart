@@ -59,8 +59,8 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
           for(var temp in userCertificate)
             Column(
               children: [
-                certificateItem('Сертификат маркировки ${temp.certificateType}','''• ECO KG: ${certificates[temp.certificateType]}
-• дата получения: ${temp.createDate!.day}/${temp.createDate!.month}/${temp.createDate!.year}''',getCertificate(temp.certificateType!),'${certificates[temp.certificateType]} ECO KG Certificate',context,temp.id.toString()),
+                certificateItem('${context.text.certificateOfMarking} ${temp.certificateType}','''• ECO KG: ${certificates[temp.certificateType]}
+• ${context.text.dateReceived} ${temp.createDate!.day}/${temp.createDate!.month}/${temp.createDate!.year}''',getCertificate(temp.certificateType!),'${certificates[temp.certificateType]} ECO KG Certificate',context,temp.id.toString()),
                 space(),
               ],
             ),

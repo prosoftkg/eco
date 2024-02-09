@@ -42,11 +42,11 @@ class UserCabinetScreen extends StatelessWidget {
                 builder: (context, state) {
     return Column(
                 children: [
-                  buildInfo(context.text.fullName,state.userData.name ?? 'Введите ФИО',context,true),
+                  buildInfo(context.text.fullName,state.userData.name ?? context.text.enterFullName,context,true),
                   space(),
                   buildInfo(context.text.email,UserData.email!,context),
                   space(),
-                  buildInfo(context.text.phone,state.userData.phone ?? 'Введите телефон',context,true),
+                  buildInfo(context.text.phone,state.userData.phone ?? context.text.enterPhoneNumber,context,true),
                 ],
               );
   },

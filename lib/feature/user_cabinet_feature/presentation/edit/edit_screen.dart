@@ -142,7 +142,7 @@ class _EditScreenState extends State<EditScreen> {
         hintText: 'Асанов Асан',
         hintStyle: AppTextStyles.hintStyle,
       ),
-      validator: (name) => name!.length > 0 ? null : 'Введите ФИО',
+      validator: (name) => name!.length > 0 ? null : context.text.enterFullName,
     );
   }
 
