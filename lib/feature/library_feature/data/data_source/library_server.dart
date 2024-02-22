@@ -32,7 +32,7 @@ class LibraryDataSourse implements ILibraryDataSourse {
     var uri = Uri(
       scheme: schemeLibrary,
       host: ipLibrary,
-      path: 'api/library/list',
+      path: 'web/api/library/list',
     );
 
     String? historySearch = await storage.read(key: 'historySearch');
@@ -79,7 +79,7 @@ class LibraryDataSourse implements ILibraryDataSourse {
       host: ipLibrary,*/
         scheme: 'https',
         host: 'pereto.prosoft.kg',
-      path: 'api/library/param-list',
+      path: 'web/api/library/param-list',
         queryParameters: {'language' : lanCode}
     );
 
