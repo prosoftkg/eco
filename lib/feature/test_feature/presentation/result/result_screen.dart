@@ -2,7 +2,6 @@ import 'package:eco_kg/core/auto_route/auto_route.dart';
 import 'package:eco_kg/core/style/app_text_styles.dart';
 import 'package:eco_kg/core/utils/user.dart';
 import 'package:eco_kg/feature/auth_feature/presentation/widgets/button.dart';
-import 'package:eco_kg/feature/consultation_feature/presentation/consultation_screen.dart';
 import 'package:eco_kg/feature/get_certificate/presentation/bloc/get_data_from_get_certificate_bloc.dart';
 import 'package:eco_kg/feature/payment_feature/domain/entities/paymentInfoEntity.dart';
 import 'package:eco_kg/feature/splash_feature/presentation/widget/button_with_icon.dart';
@@ -11,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/utils/utils.dart';
 import '../../../consultation_feature/presentation/bloc/get_data_from_get_consultation_bloc.dart';
-import '../../../get_certificate/presentation/get_certificate_screen.dart';
 import '../../../home_feature/widget/bottom_background_image.dart';
 import '../bloc/test_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -56,7 +54,7 @@ class ResultScreen extends StatelessWidget {
                     Column(
                       children: [
                         Image.asset(
-                            finishTestEntity!.score! > 57
+                            finishTestEntity!.mark!=''
                                 ? 'assets/img/result_success.png'
                                 : 'assets/img/result_bad.png',
                             height: 100.h,
@@ -65,7 +63,7 @@ class ResultScreen extends StatelessWidget {
                         Text(
                           /*testType == 'auditTest'
                               ? 'Балл заявителя: ${finishTestEntity!.score!}'
-                              : */'Ваш балл: ${finishTestEntity!.score!}',
+                              : */'${context.text.yourScore} ${finishTestEntity!.score!}',
                           style: AppTextStyles.clearSansMediumS22W500CBlack,
                         ),
                       ],
@@ -79,8 +77,8 @@ class ResultScreen extends StatelessWidget {
                       children: [
                         Text(
                             testType == 'auditTest'
-                                ? 'Почта заявителя с результатами теста:'
-                                : 'Ваша почта с результатами теста:',
+                                ? context.text.applicantEmailWithTestResults
+                                : context.text.yourEmailWithTestResults,
                             style: AppTextStyles.clearSansS12C82F400,
                             textAlign: TextAlign.center),
                         Text(email,
@@ -135,12 +133,13 @@ class ResultScreen extends StatelessWidget {
   }
 
   buttonNext(BuildContext context, String testTypeTemp) {
-    if (finishTestEntity!.score! < 57) {
+    if (finishTestEntity!.mark=='') {
       return Column(
         children: [
+          if(testTypeTemp != 'auditTest')
           InkWell(
             child:
-                buttonWithIcon('Получить консультацию', 'message-search.png'),
+                buttonWithIcon(context.text.get_consultation, 'message-search.png'),
             onTap: () {
               PaymentInfoEntity paymentInfo = PaymentInfoEntity(
                   testId: testId!,
@@ -161,7 +160,8 @@ class ResultScreen extends StatelessWidget {
           ),
           SizedBox(height: 32.h),
           InkWell(
-            child: button(text: 'Пройти тест повторно'),
+            child: button(text: testTypeTemp == 'auditTest'
+                ? context.text.goBack : context.text.retakeTest),
             onTap: () {
               AutoRouter.of(context).pop();
             },
@@ -174,8 +174,8 @@ class ResultScreen extends StatelessWidget {
           InkWell(
             child: button(
                 text: testTypeTemp == 'auditTest'
-                    ? 'Вернуться'
-                    : 'Пройти сертификацию'),
+                    ? context.text.goBack
+                    : context.text.certification),
             onTap: () {
               testTypeTemp == 'auditTest'
                   ? AutoRouter.of(context).pop()

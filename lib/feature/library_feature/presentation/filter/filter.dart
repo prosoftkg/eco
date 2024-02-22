@@ -6,6 +6,7 @@ import 'package:eco_kg/feature/widgets/progressWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/utils/errorInfo.dart';
 import '../../../splash_feature/presentation/bloc/language_bloc.dart';
 import '../../domain/entities/param_entity.dart';
 import 'bloc/filter_bloc.dart';
@@ -155,8 +156,7 @@ class _FilterScreenState extends State<FilterScreen> {
                     );
                   }
                   if(state is ErrorFilterState){
-                    print(state.error);
-                    return Center(child: Text(state.error.toString()));
+                    return errorWidget(context);
                   }
                   return Container();
                 },

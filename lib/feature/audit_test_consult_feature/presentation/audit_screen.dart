@@ -5,6 +5,7 @@ import '../../../core/auto_route/auto_route.dart';
 import '../../../core/servise_locator/servise_locator.dart';
 import '../../../core/style/app_colors.dart';
 import '../../../core/style/app_text_styles.dart';
+import '../../../core/utils/errorInfo.dart';
 import '../../auth_feature/presentation/widgets/appBarLeadintBack.dart';
 import '../../test_feature/domain/entities/testIngoForBegin.dart';
 import '../../test_feature/presentation/bloc/test_bloc.dart';
@@ -44,7 +45,7 @@ class AuditScreen extends StatelessWidget {
           for(var item in state.auditTestList)
           buildAuditTestItem(item,context,getIt<AcceptAuditTestBloc>(),getIt<TestBloc>())
         ],
-      ) : const Center(child: Text('No product'));
+      ) : Center(child: Text(context.text.nothingFound));
     }
     return const SizedBox();
   },
@@ -141,7 +142,7 @@ class AuditScreen extends StatelessWidget {
                     children: [
                       Image.asset('assets/icon/call.png',width: 18.w,height: 18.h),
                       SizedBox(width: 6.w),
-                      Text(auditTest.userPhone != '' ? auditTest.userPhone! : 'Нету',
+                      Text(auditTest.userPhone != '' ? auditTest.userPhone! : context.text.nothingFound,
                           style: AppTextStyles.clearSansS12W400CBlack),
                     ],
                   ),
@@ -166,9 +167,7 @@ class AuditScreen extends StatelessWidget {
                 ),);
             }
             if (state is ErrorTestState) {
-              return Center(
-                child: Text(state.error.toString()),
-              );
+              return errorWidget(context);
             }
             return InkWell(
                     onTap: (){
@@ -280,60 +279,65 @@ class AuditScreen extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.end,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(auditTest.userCompany!,
-                  style: AppTextStyles.clearSansMediumS14W500C009D9B),
-              SizedBox(height: 6.h),
-              SizedBox(
-                child: Row(
-                  children: [
-                    Image.asset('assets/icon/location.png',width: 18.w,height: 18.h),
-                    SizedBox(width: 6.h),
-                    Text(auditTest.userRegion!,
-                        style: AppTextStyles.clearSansS12C82F400),
-                  ],
-                ),
-              )
-            ],
-          ),
+          Text(auditTest.userCompany!,
+              style: AppTextStyles.clearSansMediumS14W500C009D9B),
+          SizedBox(height: 6.h),
           SizedBox(
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                InkWell(
-                  onTap: (){
-                    myBloc.add(
-                        OnTapAcceptEvent(auditTestId: auditTest.id.toString()));
-                  },
-                  child: Container(
-                    width: 82.w,
-                    height: 22.h,
-                    decoration: BoxDecoration(
-                        color: AppColors.color009D9B,
-                        borderRadius: BorderRadius.circular(6)
+                Flexible(
+                  child: SizedBox(
+                    child: Row(
+                      children: [
+                        Image.asset('assets/icon/location.png',width: 18.w,height: 18.h),
+                        SizedBox(width: 6.h),
+                        Expanded(
+                          child: Text(auditTest.userRegion!,
+                              style: AppTextStyles.clearSansS12C82F400),
+                        ),
+                      ],
                     ),
-                    child: Center(child: Text(context.text.apply,style: AppTextStyles.clearSansMediumS12W500CWhite)),
                   ),
                 ),
-                SizedBox(width: 12.w),
-                InkWell(
-                  onTap: (){
-                    myBloc.add(
-                        OnTapDenyEvent(auditTestId: auditTest.id.toString()));
-                  },
-                  child: Container(
-                    width: 82.w,
-                    height: 22.h,
-                    decoration: BoxDecoration(
-                        color: AppColors.colorFF0000,
-                        borderRadius: BorderRadius.circular(6)
-                    ),
-                    child: Center(child: Text(context.text.deny,style: AppTextStyles.clearSansMediumS12W500CWhite,)),
+                SizedBox(
+                  child: Row(
+                    children: [
+                      InkWell(
+                        onTap: (){
+                          myBloc.add(
+                              OnTapAcceptEvent(auditTestId: auditTest.id.toString()));
+                        },
+                        child: Container(
+                          width: 82.w,
+                          height: 22.h,
+                          decoration: BoxDecoration(
+                              color: AppColors.color009D9B,
+                              borderRadius: BorderRadius.circular(6)
+                          ),
+                          child: Center(child: Text(context.text.apply,style: AppTextStyles.clearSansMediumS12W500CWhite)),
+                        ),
+                      ),
+                      SizedBox(width: 12.w),
+                      InkWell(
+                        onTap: (){
+                          myBloc.add(
+                              OnTapDenyEvent(auditTestId: auditTest.id.toString()));
+                        },
+                        child: Container(
+                          width: 82.w,
+                          height: 22.h,
+                          decoration: BoxDecoration(
+                              color: AppColors.colorFF0000,
+                              borderRadius: BorderRadius.circular(6)
+                          ),
+                          child: Center(child: Text(context.text.deny,style: AppTextStyles.clearSansMediumS12W500CWhite,)),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

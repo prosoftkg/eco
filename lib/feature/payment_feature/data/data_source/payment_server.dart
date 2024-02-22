@@ -98,6 +98,10 @@ class PaymentDataSource implements IPaymentDataSource {
       'category_id' : getCertificateInfoEntity.categoryId,
       'company_area' : getCertificateInfoEntity.area,
       'phone': getCertificateInfoEntity.phone,
+      'business_type': getCertificateInfoEntity.businessType,
+      'business_duration' : getCertificateInfoEntity.businessDuration,
+      'staff_amount' : getCertificateInfoEntity.staffAmount,
+      'extra_information' : getCertificateInfoEntity.textCompany
     };
     print(json);
 
@@ -141,6 +145,10 @@ class PaymentDataSource implements IPaymentDataSource {
       'region' : getCertificateInfoEntity.region,
       'company_area' : getCertificateInfoEntity.area,
       'phone': getCertificateInfoEntity.phone,
+      'business_type': getCertificateInfoEntity.businessType,
+      'business_duration' : getCertificateInfoEntity.businessDuration,
+      'staff_amount' : getCertificateInfoEntity.staffAmount,
+      'extra_information' : getCertificateInfoEntity.textCompany
     };
     print(json);
 

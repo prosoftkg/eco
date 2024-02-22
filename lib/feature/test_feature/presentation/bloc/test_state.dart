@@ -21,6 +21,12 @@ class LoadedInfoTestState extends TestState{
   List<Object> get props=>[infoTest];
 }
 
+class LoadCompanyInfoState extends TestState{
+  const LoadCompanyInfoState();
+  @override
+  List<Object> get props=>[];
+}
+
 class LoadedTestState extends TestState{
   final String companyArea;
   final String categoryId;

@@ -26,7 +26,7 @@ class AuditRepositoryImpl implements AuditRepository{
       final auditTestList=await auditDataSource.auditTestList();
       return Right(auditTestList);
     }on Failure catch(e){
-      throw Left(ServerError(error: e));
+      return Left(ServerError(error: e));
     }
   }
 
@@ -40,7 +40,7 @@ class AuditRepositoryImpl implements AuditRepository{
       final auditConsultList=await auditDataSource.auditConsultList();
       return Right(auditConsultList);
     }on Failure catch(e){
-      throw Left(ServerError(error: e));
+      return Left(ServerError(error: e));
     }
   }
 
@@ -54,7 +54,7 @@ class AuditRepositoryImpl implements AuditRepository{
       final denyAuditTest=await auditDataSource.denyAuditTestList(testId);
       return Right(denyAuditTest);
     }on Failure catch(e){
-      throw Left(ServerError(error: e));
+      return Left(ServerError(error: e));
     }
   }
 
@@ -68,7 +68,7 @@ class AuditRepositoryImpl implements AuditRepository{
       final acceptAuditTest=await auditDataSource.acceptAuditTestList(testId);
       return Right(acceptAuditTest);
     }on Failure catch(e){
-      throw Left(ServerError(error: e));
+      return Left(ServerError(error: e));
     }
   }
 

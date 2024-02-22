@@ -22,7 +22,7 @@ class AuthRepositoryImpl implements AuthRepository{
       final truth = await authSourse.signIn(email);
       return Right(truth);
     } on Failure catch (e) {
-      throw Left(ServerError(error: e));
+      return Left(ServerError(error: e));
     }
   }
 
@@ -36,7 +36,7 @@ class AuthRepositoryImpl implements AuthRepository{
       final pwModel = await authSourse.readAuthKey();
       return Right(pwModel);
     } on Failure catch (e) {
-      throw Left(ServerError(error: e));
+      return Left(ServerError(error: e));
     }
   }
 
@@ -50,7 +50,7 @@ class AuthRepositoryImpl implements AuthRepository{
       final truth = await authSourse.checkConfirmationCode(code);
       return Right(truth);
     } on Failure catch (e) {
-      throw Left(ServerError(error: e));
+      return Left(ServerError(error: e));
     }
   }
 }

@@ -19,6 +19,12 @@ class BeginTestEvent extends TestEvent{
   List<Object> get props=>[testInfoForBegin];
 }
 
+class CompanyInfoEvent extends TestEvent{
+  const CompanyInfoEvent();
+  @override
+  List<Object> get props=>[];
+}
+
 class BeginAuditTestEvent extends TestEvent{
   final String testId;
   final String categoryId;

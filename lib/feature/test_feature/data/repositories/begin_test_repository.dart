@@ -26,7 +26,7 @@ class TestRepositoryImpl implements TestRepository{
       final library=await testDataSource.postBeginTest(testInfoForBegin);
       return Right(library);
     }on Failure catch(e){
-      throw Left(ServerError(error: e));
+      return Left(ServerError(error: e));
     }
   }
 
@@ -40,7 +40,7 @@ class TestRepositoryImpl implements TestRepository{
       final library=await testDataSource.postBeginAuditTest(testId);
       return Right(library);
     }on Failure catch(e){
-      throw Left(ServerError(error: e));
+      return Left(ServerError(error: e));
     }
   }
 
@@ -54,7 +54,7 @@ class TestRepositoryImpl implements TestRepository{
       final library=await testDataSource.postNextTest(testInfoForNext);
       return Right(library);
     }on Failure catch(e){
-      throw Left(ServerError(error: e));
+      return Left(ServerError(error: e));
     }
   }
 
@@ -68,7 +68,7 @@ class TestRepositoryImpl implements TestRepository{
       final library=await testDataSource.postNextTest(testInfoForNext);
       return Right(library);
     }on Failure catch(e){
-      throw Left(ServerError(error: e));
+      return Left(ServerError(error: e));
     }
   }
 
@@ -82,7 +82,7 @@ class TestRepositoryImpl implements TestRepository{
       final finishTest=await testDataSource.finishTest(testInfoForNext);
       return Right(finishTest);
     }on Failure catch(e){
-      throw Left(ServerError(error: e));
+      return Left(ServerError(error: e));
     }
   }
 
