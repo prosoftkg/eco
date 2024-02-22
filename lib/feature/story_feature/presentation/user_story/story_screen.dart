@@ -1,3 +1,4 @@
+import 'package:eco_kg/core/utils/errorInfo.dart';
 import 'package:eco_kg/core/utils/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:eco_kg/feature/story_feature/domain/entities/itemSelect.dart';
@@ -44,6 +45,9 @@ class StoryScreen extends StatelessWidget {
     if(state is LoadedUserStoryState){
       story=[...state.userHistoryEntity.test, ...state.userHistoryEntity.consultation, ...state.userHistoryEntity.application];
       story.sort((a, b) => (a.createDate ?? '').compareTo(b.createDate ?? ''));
+    }
+    if(state is ErrorStoryState){
+      return errorWidget(context);
     }
     return ListView(
         padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16).r,

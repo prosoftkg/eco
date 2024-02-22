@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import '../../../core/servise_locator/servise_locator.dart';
 import '../../../core/style/app_colors.dart';
 import '../../../core/style/app_text_styles.dart';
+import '../../../core/utils/errorInfo.dart';
 import '../../auth_feature/presentation/widgets/appBarLeadintBack.dart';
 import '../../story_feature/domain/entities/user_certificate_entity.dart';
 import '../../story_feature/presentation/bloc/story_bloc.dart';
@@ -52,6 +53,9 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
     if(state is LoadedUserCertificateState){
       userCertificate=state.userCertificate;
       userCertificate.sort((a, b) => (a.createDate!).compareTo(b.createDate!));
+    }
+    if(state is ErrorUserCertificateState){
+      return errorWidget(context);
     }
     return ListView(
         padding: EdgeInsets.symmetric(vertical: 32,horizontal: 16).r,

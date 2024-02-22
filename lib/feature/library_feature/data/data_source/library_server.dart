@@ -8,7 +8,6 @@ import '../../../../core/error_journal/error_journal.dart';
 import '../../domain/entities/param_entity.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-
 abstract interface class ILibraryDataSourse {
   Future<LibraryEntity> postLibrary(FilterList filterList);
   Future<ParamEntity> getParam(String lanCode);
@@ -32,7 +31,7 @@ class LibraryDataSourse implements ILibraryDataSourse {
     var uri = Uri(
       scheme: schemeLibrary,
       host: ipLibrary,
-      path: 'web/api/library/list',
+      path: 'api/library/list',
     );
 
     String? historySearch = await storage.read(key: 'historySearch');
@@ -79,7 +78,7 @@ class LibraryDataSourse implements ILibraryDataSourse {
       host: ipLibrary,*/
         scheme: 'https',
         host: 'pereto.prosoft.kg',
-      path: 'web/api/library/param-list',
+      path: 'api/library/param-list',
         queryParameters: {'language' : lanCode}
     );
 

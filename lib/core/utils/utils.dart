@@ -12,7 +12,7 @@ extension LocalizedText on BuildContext {
 String? validateEmail(String value) {
   RegExp regex = RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
   if(!regex.hasMatch(value)){
-    return 'Email';
+    return 'example@gmail.com';
   }
   return null;
 }
@@ -21,10 +21,10 @@ String? validateMobile(String value) {
   String pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
   RegExp regExp = RegExp(pattern);
   if (value.length == 0 || value.length < 12 || value.length > 12) {
-    return 'Phone';
+    return '99650055050';
   }
   else if (!regExp.hasMatch(value)) {
-    return 'Phone';
+    return '99650055050';
   }
   return null;
 }
