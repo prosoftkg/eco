@@ -162,7 +162,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
                                     ),
                                   );
                                 },
-                                child: button(text: 'Начать'),
+                                child: button(text: context.text.begin),
                               ),
                               SizedBox(height: 10.h),
                               Center(
@@ -193,7 +193,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
                                         testInfoForBegin: tempTestInfo));
                               }
                             },
-                            child: button(text: 'Начать'));
+                            child: button(text: context.text.begin));
                       },
                     )
                   ],

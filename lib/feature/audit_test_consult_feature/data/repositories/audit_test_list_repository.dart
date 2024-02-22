@@ -1,3 +1,4 @@
+import 'package:eco_kg/feature/audit_test_consult_feature/domain/entities/audit_consult_list_entity.dart';
 import 'package:eco_kg/feature/test_feature/domain/entities/beginTestEntity.dart';
 import 'package:eco_kg/feature/test_feature/domain/entities/nextQuestionEntity.dart';
 import 'package:eco_kg/feature/test_feature/domain/entities/testIngoForBegin.dart';
@@ -30,11 +31,11 @@ class AuditRepositoryImpl implements AuditRepository{
   }
 
   @override
-  Future<Either<Failure, List<AuditTest>>> auditConsultList() {
+  Future<Either<Failure, List<AuditConsult>>> auditConsultList() {
     return _auditConsultList();
   }
 
-  Future<Either<Failure,List<AuditTest>>> _auditConsultList() async{
+  Future<Either<Failure,List<AuditConsult>>> _auditConsultList() async{
     try{
       final auditConsultList=await auditDataSource.auditConsultList();
       return Right(auditConsultList);

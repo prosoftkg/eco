@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:eco_kg/feature/widgets/progressWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter_plus/webview_flutter_plus.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/payment_bloc.dart';
 import 'package:auto_route/auto_route.dart';
+
+import 'blocGetData/get_data_from_payment_bloc.dart';
 
 class PaymentScreen extends StatefulWidget {
 
@@ -21,13 +25,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<PaymentBloc, PaymentState>(
+      body: BlocBuilder<GetDataFromPaymentBloc, GetDataFromPaymentState>(
         builder: (context, state) {
-          if(state is LoadingPaymentState){
-            return Center(child: progressWidget());
-          }
-          if(state is LoadedPaymentState){
-            url=state.paymentEntity.paymentUrl;
+          if(state is LoadedGetData){
+            url=state.url;
           }
           return SafeArea(
             child: Stack(
@@ -47,7 +48,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     navigationDelegate: (NavigationRequest request) {
                       pageCounter++;
                       print(pageCounter);
-                      if (pageCounter == 1) {
+                      if (pageCounter == 1 && Platform.isAndroid) {
+                        AutoRouter.of(context).pop();
+                        return NavigationDecision.prevent;
+                      }
+                      if (pageCounter == 4 && Platform.isIOS) {
                         AutoRouter.of(context).pop();
                         return NavigationDecision.prevent;
                       }

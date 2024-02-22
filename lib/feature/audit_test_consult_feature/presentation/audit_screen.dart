@@ -42,11 +42,7 @@ class AuditScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 32).r,
         children: [
           for(var item in state.auditTestList)
-          Column(children:[
-            /*state.acceptList.contains(item.id!.toString()) ?
-            buildAcceptedItem(item.participant!,item.userEmail!,item.region!,item.phone!):*/
-            buildAuditTestItem(item,context,getIt<AcceptAuditTestBloc>(),getIt<TestBloc>()),
-          space()])
+          buildAuditTestItem(item,context,getIt<AcceptAuditTestBloc>(),getIt<TestBloc>())
         ],
       ) : const Center(child: Text('No product'));
     }
@@ -60,7 +56,7 @@ class AuditScreen extends StatelessWidget {
   }
   buildAuditTestItem(AuditTest auditTest,BuildContext context,AcceptAuditTestBloc myBloc,TestBloc testBloc){
     return BlocBuilder<AcceptAuditTestBloc, AcceptAuditTestState>(
-      bloc: myBloc..add(CheckAcceptEvent(auditTestId: auditTest.id.toString())),
+      bloc: myBloc..add(CheckAcceptEvent(auditId: auditTest.auditorId.toString())),
       builder: (context, state) {
         if (state is LoadingAcceptAuditTestState) {
     return Container(
@@ -204,7 +200,7 @@ class AuditScreen extends StatelessWidget {
                         children: [
                           Image.asset('assets/icon/card-edit.png', height: 24.h, width: 24.w),
                           SizedBox(width: 10.w),
-                          Text('Начать тест',style: AppTextStyles.buttonTextStyle)
+                          Text(context.text.begin_test,style: AppTextStyles.buttonTextStyle)
                         ],
                       ),
                     ),
@@ -321,7 +317,7 @@ class AuditScreen extends StatelessWidget {
                         color: AppColors.color009D9B,
                         borderRadius: BorderRadius.circular(6)
                     ),
-                    child: Center(child: Text('Принять',style: AppTextStyles.clearSansMediumS12W500CWhite)),
+                    child: Center(child: Text(context.text.apply,style: AppTextStyles.clearSansMediumS12W500CWhite)),
                   ),
                 ),
                 SizedBox(width: 12.w),
@@ -337,7 +333,7 @@ class AuditScreen extends StatelessWidget {
                         color: AppColors.colorFF0000,
                         borderRadius: BorderRadius.circular(6)
                     ),
-                    child: Center(child: Text('Отклонить',style: AppTextStyles.clearSansMediumS12W500CWhite,)),
+                    child: Center(child: Text(context.text.deny,style: AppTextStyles.clearSansMediumS12W500CWhite,)),
                   ),
                 ),
               ],

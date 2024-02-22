@@ -1,12 +1,12 @@
 part of 'get_certificate_bloc.dart';
 
-abstract class GetCertificateEvent extends Equatable {
-  const GetCertificateEvent();
+abstract class GetConsultationEvent extends Equatable {
+  const GetConsultationEvent();
 }
 
-class LoadGetCertificateEvent extends GetCertificateEvent{
+class LoadGetConsultationEvent extends GetConsultationEvent{
   final GetCertificateInfoEntity getCertificateInfoEntity;
-  const LoadGetCertificateEvent({required this.getCertificateInfoEntity});
+  const LoadGetConsultationEvent({required this.getCertificateInfoEntity});
   @override
   List<Object> get props=>[getCertificateInfoEntity];
 }

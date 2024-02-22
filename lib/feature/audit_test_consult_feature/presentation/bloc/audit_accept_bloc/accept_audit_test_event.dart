@@ -20,8 +20,8 @@ class OnTapDenyEvent extends AcceptAuditTestEvent{
 
 
 class CheckAcceptEvent extends AcceptAuditTestEvent{
-  final String auditTestId;
-  const CheckAcceptEvent({required this.auditTestId});
+  final String auditId;
+  const CheckAcceptEvent({required this.auditId});
   @override
-  List<Object> get props=>[auditTestId];
+  List<Object> get props=>[auditId];
 }

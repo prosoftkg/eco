@@ -39,6 +39,19 @@ class StoryRepositoryImpl implements StoryRepository{
     }
   }
 
+  Future<Either<Failure, String>> downloadUserStory(String testId) {
+    return _downloadUserStory(testId);
+  }
+
+  Future<Either<Failure,String>> _downloadUserStory(String testId) async{
+    try{
+      final download=await storyDataSource.downloadUserStory(testId);
+      return Right(download);
+    }on Failure catch(e){
+      return Left(ServerError(error: e));
+    }
+  }
+
   Future<Either<Failure, List<UserCertificate>>> userCertificate() {
     return _userCertificate();
   }

@@ -8,6 +8,7 @@ import 'package:number_paginator/number_paginator.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/auto_route/auto_route.dart';
 import '../../../../core/style/app_text_styles.dart';
+import '../../../../core/utils/alertDialog.dart';
 import '../../../auth_feature/presentation/widgets/appBarLeadintBack.dart';
 import '../../../home_feature/widget/bottom_background_image.dart';
 import '../../../splash_feature/presentation/bloc/language_bloc.dart';
@@ -37,6 +38,7 @@ class _TestsScreenState extends State<TestsScreen> {
   String? mId = '';
   String? testType='';
   var lan = '';
+  Set<String> id_arr={};
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,18 +49,18 @@ class _TestsScreenState extends State<TestsScreen> {
         ),
         leading: InkWell(
             onTap: () {
-              /*var dialog = CustomAlertDialog(
-                  title: "Выход из теста",
-                  message: "Вы действительно хотите выйти из теста?",
+              var dialog = CustomAlertDialog(
+                  title: context.text.logout_from_test,
+                  message: context.text.logout_from_test_message,
                   onPostivePressed: () {
-                    AutoRouter.of(context).pop();
+                    AutoRouter.of(context).replaceAll([HomeRoute()]);
                   },
-                  positiveBtnText: 'Да',
-                  negativeBtnText: 'Нет', onNegativePressed: (){});
+                  positiveBtnText: context.text.yes,
+                  negativeBtnText: context.text.no, onNegativePressed: (){});
               showDialog(
                   context: context,
-                  builder: (BuildContext context) => dialog);*/
-              AutoRouter.of(context).pop();
+                  builder: (BuildContext context) => dialog);
+              // AutoRouter.of(context).pop();
             },
             child: appBarLeading(context)),
         leadingWidth: 100.w,
@@ -75,13 +77,14 @@ class _TestsScreenState extends State<TestsScreen> {
             if (stateLan.lanCode != 'ru') {
               lan = stateLan.lanCode;
             }
+            id_arr.add(state.testEntity.mid.toString());
             numberofPages = int.parse(state.testEntity.count!);
             answers = state.testEntity.answer;
             question = lan == ''
                 ? state.testEntity.question!
                 : lan == 'en'
-                ? state.testEntity.questionEn ?? ''
-                : state.testEntity.questionKy ?? '';
+                ? (state.testEntity.questionEn=='' ? state.testEntity.question! : state.testEntity.questionEn)
+                : (state.testEntity.questionKy=='' ? state.testEntity.question! : state.testEntity.questionKy);
             categoryId = state.categoryId;
             testType=state.testType;
             testId = state.testEntity.testId.toString();
@@ -93,11 +96,12 @@ class _TestsScreenState extends State<TestsScreen> {
             if (stateLan.lanCode != 'ru') {
               lan = stateLan.lanCode;
             }
+            id_arr.add(state.nextTestEntity.mid.toString());
             question = lan == ''
                 ? state.nextTestEntity.question!
                 : lan == 'en'
-                ? state.nextTestEntity.questionEn ?? ''
-                : state.nextTestEntity.questionKy ?? '';
+                ? (state.nextTestEntity.questionEn=='' ? state.nextTestEntity.question! : state.nextTestEntity.questionEn)
+                : (state.nextTestEntity.questionKy=='' ? state.nextTestEntity.question! : state.nextTestEntity.questionKy);
 
             answers = state.nextTestEntity.answer;
             mId = state.nextTestEntity.mid.toString();
@@ -154,8 +158,8 @@ class _TestsScreenState extends State<TestsScreen> {
                               title: Text(lan == ''
                                   ? item.title!
                                   : lan == 'en'
-                                  ? item.titleEn ?? ''
-                                  : item.titleKy ?? ''
+                                  ? item.titleEn ?? item.title!
+                                  : item.titleKy ?? item.title!
                                 ,
                                 style: AppTextStyles.clearSansS14CBlackF400,
                               ),
@@ -174,21 +178,23 @@ class _TestsScreenState extends State<TestsScreen> {
                 ),
               ),
               Positioned(
-                  bottom: 122.h,
+                  bottom: 90.h,
                   left: 16.h,
                   child: InkWell(
                     child: SizedBox(
                         width: MediaQuery.of(context).size.width - 32,
-                        child: currentPage==numberofPages?button(text: 'Завершить'):button(text: 'Далее')),
+                        child: currentPage==numberofPages?button(text: context.text.finish):button(text: context.text.next)),
                     onTap: () {
                       if (currentOptionId != '') {
+                        print(id_arr.toString() +' id_arr');
                         var tempTestInfo = TestInfoForNext(
                             test_id: testId!,
                             question_id: mId!,
                             answer_id: currentOptionId,
                             category_id: categoryId!,
                             number: currentPage.toString(),
-                          testType: testType!
+                          testType: testType!,
+                          id_arr: id_arr.toList()
                         );
                         currentOptionId='';
                         currentOption='';

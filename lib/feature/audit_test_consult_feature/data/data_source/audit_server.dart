@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:eco_kg/core/error_journal/error_journal.dart';
+import 'package:eco_kg/feature/audit_test_consult_feature/domain/entities/audit_consult_list_entity.dart';
 import 'package:injectable/injectable.dart';
 import 'package:eco_kg/core/constants/api_constants.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -46,7 +47,7 @@ class AuditDataSource implements IAuditDataSource {
   }
 
   @override
-  Future<List<AuditTest>> auditConsultList() async {
+  Future<List<AuditConsult>> auditConsultList() async {
     var uri = Uri(
       scheme: scheme,
       host: ip,
@@ -60,13 +61,13 @@ class AuditDataSource implements IAuditDataSource {
     if (response.statusCode == 200 || response.statusCode == 201) {
       print(response.statusCode);
       print(response.body);
-      List<AuditTest> auditTest = [];
+      List<AuditConsult> auditConsult = [];
       final jsonData = jsonDecode(response.body);
-      for (var auditTestItem in jsonData) {
-        auditTest.add(AuditTest.fromJson(auditTestItem));
+      for (var auditConsultItem in jsonData) {
+        auditConsult.add(AuditConsult.fromJson(auditConsultItem));
       }
       print('here');
-      return auditTest;
+      return auditConsult;
     } else {
       //throw exception and catch it in UI
       print('error not found');

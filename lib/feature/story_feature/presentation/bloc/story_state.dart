@@ -28,6 +28,13 @@ class LoadedUserStoryState extends StoryState{
   List<Object> get props=>[userHistoryEntity];
 }
 
+class DownloadedUserStoryState extends StoryState{
+  final String urlForDownload;
+  const DownloadedUserStoryState({required this.urlForDownload});
+  @override
+  List<Object> get props=>[urlForDownload];
+}
+
 class ErrorStoryState extends StoryState{
   final Object error;
   const ErrorStoryState({required this.error});

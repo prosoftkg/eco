@@ -97,14 +97,25 @@ class TestDataSource implements ITestDataSource {
 
     final String? authKey = await storage.read(key: 'authKey');
     print('server $authKey');
-
+    print('from server'+testInfoForNext.id_arr.toString());
     var json={
       'test_id' : testInfoForNext.test_id,
       'question_id' : testInfoForNext.question_id,
       'number' : testInfoForNext.number,
       'answer_id' : testInfoForNext.answer_id,
-      'category_id' : testInfoForNext.category_id
+      'category_id' : testInfoForNext.category_id,
+      'id_arr' : testInfoForNext.id_arr.toString().replaceAll('[', '').replaceAll(']', '').replaceAll(' ', '')
     };
+
+    /*Map<String, String> map = Map.fromIterable(
+        testInfoForNext.id_arr,
+        key: (k) => 'id_arr' ,
+        value: (v) => v);*/
+   /* for(var i in testInfoForNext.id_arr){
+      json.addAll({'id_arr' : i}.entries);
+    }*/
+    /*print(map);
+    json.addAll(map);*/
     print(json);
 
     var response = await http.post(uri,body: json,headers: {'Authorization': 'Bearer $authKey'});
@@ -122,10 +133,16 @@ class TestDataSource implements ITestDataSource {
   }
 
   Future<FinishTestEntity> finishTest(TestInfoForNext testInfoForNext) async {
+    String? path;
+    if(testInfoForNext.testType=='userTest'){
+      path='api/test/next-question';
+    }else{
+      path='api/test/auditor-next-question';
+    }
     var uri = Uri(
       scheme: scheme,
       host: ip,
-      path: 'api/test/next-question',
+      path: path,
     );
 
     final String? authKey = await storage.read(key: 'authKey');
@@ -136,7 +153,8 @@ class TestDataSource implements ITestDataSource {
       'question_id' : testInfoForNext.question_id,
       'number' : testInfoForNext.number,
       'answer_id' : testInfoForNext.answer_id,
-      'category_id' : testInfoForNext.category_id
+      'category_id' : testInfoForNext.category_id,
+      'id_arr' : testInfoForNext.id_arr.toString().replaceAll('[', '').replaceAll(']', '').replaceAll(' ', '')
     };
     print(json);
 

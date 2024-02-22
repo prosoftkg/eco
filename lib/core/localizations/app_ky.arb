@@ -69,6 +69,26 @@
     "test3" : "Коомдук тамактануу ишканалары",
     "test4" : "Комбинацияланган тест",
     "filter" : "Фильтр",
-    "button_filter" : "Фильтрди колдонуу"
-
+    "button_filter" : "Фильтрди колдонуу",
+    "yes" : "Ооба",
+    "no" : "Жок",
+    "logout_from_app" : "Чыгуу",
+    "logout_from_app_message": "Чыгууну каалайсызбы?",
+    "logout_from_test" : "Тесттен чыгуу",
+    "logout_from_test_message": "Тесттен чыгууну каалайсызбы?",
+    "begin": "Баштоо",
+    "begin_test" : "Тестти баштоо",
+    "apply" : "Кабыл алуу",
+    "deny" : "Жок кылуу",
+    "download": "Жүктөө",
+    "conducting_audit" : "Аудит жүргүзүү",
+    "conducting_consultation": "Консультация өткөрүү",
+    "getting_advice": "Консультация алуу",
+    "express_consultation": "телефон аркылуу экспресс-консультация (20 мин.)",
+    "paid_online": "онлайн төлөнду",
+    "application_certification": "Сертификацияга арыз",
+    "passing_test" : "Тестти аткаруу",
+    "test_for": "Тест",
+    "finish": "Бутуруу",
+    "next": "Кийинки"
 }

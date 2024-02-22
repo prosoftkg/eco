@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
-class UserCertificate extends Equatable {
-  UserCertificate({
+class AuditConsult extends Equatable {
+  AuditConsult({
     required this.id,
     required this.userId,
     required this.score,
@@ -23,15 +23,14 @@ class UserCertificate extends Equatable {
     required this.userPhone,
     required this.userRegion,
     required this.userCompany,
-    required this.certificateType,
   });
 
   final int? id;
   final int? userId;
   final int? score;
-  final int? auditScore;
+  final dynamic auditScore;
   final int? paymentStatus;
-  final int? auditorId;
+  final dynamic auditorId;
   final DateTime? auditDate;
   final dynamic paymentDate;
   final int? categoryId;
@@ -47,10 +46,9 @@ class UserCertificate extends Equatable {
   final String? userPhone;
   final String? userRegion;
   final String? userCompany;
-  final String? certificateType;
 
-  factory UserCertificate.fromJson(Map<String, dynamic> json){
-    return UserCertificate(
+  factory AuditConsult.fromJson(Map<String, dynamic> json){
+    return AuditConsult(
       id: json["id"],
       userId: json["user_id"],
       score: json["score"],
@@ -68,15 +66,14 @@ class UserCertificate extends Equatable {
       companyEmail: json["company_email"],
       createDate: DateTime.tryParse(json["create_date"] ?? ""),
       auditStatus: json["audit_status"],
-      userEmail: json["userEmail"],
-      userPhone: json["userPhone"],
-      userRegion: json["userRegion"],
-      userCompany: json["userCompany"],
-      certificateType: json["certificateType"],
+      userEmail: json["email"],
+      userPhone: json["phone"],
+      userRegion: json["region"],
+      userCompany: json["company_name"],
     );
   }
 
   @override
   List<Object?> get props => [
-    id, userId, score, auditScore, paymentStatus, auditorId, auditDate, paymentDate, categoryId, region, companyDirector, companyName, companyArea, phone, companyEmail, createDate, auditStatus, userEmail, userPhone, userRegion, userCompany, certificateType, ];
+    id, userId, score, auditScore, paymentStatus, auditorId, auditDate, paymentDate, categoryId, region, companyDirector, companyName, companyArea, phone, companyEmail, createDate, auditStatus, userEmail, userPhone, userRegion, userCompany, ];
 }

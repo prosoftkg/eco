@@ -56,11 +56,11 @@ class Consultation extends Equatable {
       auditorId: json["auditor_id"],
       paymentStatus: json["payment_status"],
       auditDate: DateTime.tryParse(json["audit_date"] ?? ""),
-      userEmail: json["userEmail"],
-      userPhone: json["userPhone"],
-      userRegion: json["userRegion"],
-      userCompany: json["userCompany"],
-      userDirector: json["userDirector"],
+      userEmail: json["email"],
+      userPhone: json["phone"],
+      userRegion: json["region"],
+      userCompany: json["company_name"],
+      userDirector: json["company_director"],
     );
   }
 
@@ -111,10 +111,10 @@ class Test extends Equatable {
       auditDate: DateTime.tryParse(json["audit_date"] ?? ""),
       paymentDate: json["payment_date"],
       categoryId: json["category_id"],
-      userEmail: json["userEmail"],
-      userPhone: json["userPhone"],
-      userRegion: json["userRegion"],
-      userCompany: json["userCompany"],
+      userEmail: json["email"],
+      userPhone: json["phone"],
+      userRegion: json["region"],
+      userCompany: json["company_name"],
     );
   }
 

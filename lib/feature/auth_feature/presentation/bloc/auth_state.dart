@@ -15,8 +15,11 @@ class LoadingAuthState extends AuthState {
 }
 
 class SuccessfullySignInState extends AuthState {
+  final String email;
+
+  SuccessfullySignInState({required this.email});
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [email];
 }
 
 class SuccessfullyCheckCodeState extends AuthState {
@@ -25,6 +28,20 @@ class SuccessfullyCheckCodeState extends AuthState {
 }
 
 class SuccessfullySignUpState extends AuthState {
+  @override
+  List<Object?> get props => [];
+}
+
+class CheckedLanguage extends AuthState {
+  @override
+  final String lanCode;
+  CheckedLanguage({required this.lanCode});
+  @override
+  List<Object?> get props => [lanCode];
+}
+
+class NullLanguage extends AuthState {
+  NullLanguage();
   @override
   List<Object?> get props => [];
 }

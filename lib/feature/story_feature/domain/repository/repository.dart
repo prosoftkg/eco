@@ -7,5 +7,6 @@ import '../../../../core/error_journal/error_journal.dart';
 abstract interface class StoryRepository{
   Future<Either<Failure,AuditStoryEntity>> auditStory();
   Future<Either<Failure,UserHistoryEntity>> userStory();
+  Future<Either<Failure,String>> downloadUserStory(String testId);
   Future<Either<Failure,List<UserCertificate>>> userCertificate();
 }
