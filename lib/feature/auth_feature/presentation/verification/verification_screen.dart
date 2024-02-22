@@ -37,10 +37,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
             onTap: () {
               AutoRouter.of(context).pop();
             },
-            child: appBarLeading(context)
-        ),
+            child: appBarLeading(context)),
         leadingWidth: 100.w,
-
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 30).r,
@@ -61,10 +59,9 @@ class _VerificationScreenState extends State<VerificationScreen> {
             keyboardType: TextInputType.number,
             underlineColor: AppColors.color009D9B,
             length: 4,
-            cursorColor:
-            AppColors.color009D9B,
+            cursorColor: AppColors.color009D9B,
             underlineUnfocusedColor: AppColors.colorE8ECF4,
-            colorAfter: AppColors.color009D9B,
+            //colorAfter: AppColors.color009D9B,
             // margin: const EdgeInsets.all(5).r,
             onCompleted: (String value) {
               setState(() {
@@ -89,8 +86,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 email = state.email;
               }
               if (state is SuccessfullyCheckCodeState) {
-                BlocProvider.of<UserDataBloc>(context)
-                    .add(ChangeUserDataEvent(userDataForEdit: UserDataForEdit(
+                BlocProvider.of<UserDataBloc>(context).add(ChangeUserDataEvent(
+                    userDataForEdit: UserDataForEdit(
                   name: UserData.name ?? '',
                   phone: UserData.phone ?? '',
                 )));
@@ -99,23 +96,30 @@ class _VerificationScreenState extends State<VerificationScreen> {
               if (state is ErrorAuthState) {
                 return Column(
                   children: [
-                    InkWell(onTap: () {
-                      if (_code.length == 4)
-                        BlocProvider.of<AuthBloc>(context)
-                            .add(CheckConfirmationCodeEvent(code: _code!));
-                    }, child: button(text: context.text.apply)),
+                    InkWell(
+                        onTap: () {
+                          if (_code.length == 4)
+                            BlocProvider.of<AuthBloc>(context)
+                                .add(CheckConfirmationCodeEvent(code: _code!));
+                        },
+                        child: button(text: context.text.apply)),
                     SizedBox(height: 20.h),
-                    Center(child: Text(state.error.toString(),style: TextStyle(
-                      color: Colors.red
-                    ),),),
+                    Center(
+                      child: Text(
+                        state.error.toString(),
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ),
                   ],
                 );
               }
-              return InkWell(onTap: () {
-                if (_code.length == 4)
-                  BlocProvider.of<AuthBloc>(context)
-                      .add(CheckConfirmationCodeEvent(code: _code!));
-              }, child: button(text: context.text.apply));
+              return InkWell(
+                  onTap: () {
+                    if (_code.length == 4)
+                      BlocProvider.of<AuthBloc>(context)
+                          .add(CheckConfirmationCodeEvent(code: _code!));
+                  },
+                  child: button(text: context.text.apply));
             },
           ),
           SizedBox(height: 230.h),
@@ -131,12 +135,12 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   Text('${context.text.smsNot} ',
                       style: AppTextStyles.clearSansMediumTextStyle16),
                   InkWell(
-                        onTap: () {
-                          myBloc.add(SignInEvent(email: email));
-                        },
-                        child: Text(context.text.send_code_again,
-                            style: AppTextStyles.linkTextStyle),
-                      )
+                    onTap: () {
+                      myBloc.add(SignInEvent(email: email));
+                    },
+                    child: Text(context.text.send_code_again,
+                        style: AppTextStyles.linkTextStyle),
+                  )
                 ],
               );
             },
