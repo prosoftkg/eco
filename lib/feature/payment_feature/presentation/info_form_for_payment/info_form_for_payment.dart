@@ -65,7 +65,7 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
     phoneController.text = UserData.phone ?? '';
     super.initState();
   }
-
+  var companyAreaId;
   @override
   Widget build(BuildContext context) {
     List<String> categoryList = [
@@ -74,8 +74,11 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
       context.text.test3,
       context.text.test4
     ];
+
+    var areaFirstList=CompanyInfo(context: context).areaCompanyFirst();
+    var areaSecondList=CompanyInfo(context: context).areaCompanySecond();
     var myBloc = getIt<GetConsultationBloc>();
-    var companyAreaId;
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
@@ -130,16 +133,16 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
                             children: [
                               SizedBox(height: 40.h),
                               businessTypeFieldTemplate(
-                                  (CompanyInfo().getBusinessTypeList(testNo!))),
+                                  (CompanyInfo(context: context).getBusinessTypeList(testNo!))),
                               SizedBox(height: 16.h),
                               staffAmounFieldTemplate(
-                                  CompanyInfo().getStaffAmountList()),
+                                  CompanyInfo(context: context).getStaffAmountList()),
                               SizedBox(height: 16.h),
                               businessDurationFieldTemplate(
-                                  CompanyInfo().getBusinessDurationList()),
+                                  CompanyInfo(context: context).getBusinessDurationList()),
                               SizedBox(height: 16.h),
                               textEditingFieldTemplate(
-                                  hintText: 'Доп. инфо о компании'),
+                                  hintText: context.text.additionalCompanyInfo,blocTemp: myBloc),
                             ],
                           ),
                         ),
@@ -153,11 +156,11 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
                             UserData.phone = phoneController.text;
                             UserData.region = regionController.text;
                             companyAreaId = testNo! < 3
-                                ? (UserData.areaCompanyFirst
+                                ? (areaFirstList
                                             .indexOf(selectedCompanyArea!) +
                                         1)
                                     .toString()
-                                : (UserData.areaCompanySecond
+                                : (areaSecondList
                                             .indexOf(selectedCompanyArea!) +
                                         4)
                                     .toString();
@@ -194,7 +197,7 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
                                 testInfoForBegin: tempTestInfo));*/
                           }
                         },
-                        child: button(text: 'Получить'))
+                        child: button(text: context.text.getResults))
                   ],
                 ),
               );
@@ -217,19 +220,19 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
                             categoryDropDownTemplate(categoryList),
                             SizedBox(height: 16.h),
                             companyFieldTemplate(
-                                hintText: 'Название предприятия'),
+                                hintText: context.text.companyName),
                             SizedBox(height: 16.h),
                             nameFieldTemplate(
-                                hintText: 'Руководитель компании ФИО'),
+                                hintText: context.text.ceoName),
                             SizedBox(height: 16.h),
-                            regionFieldTemplate(hintText: 'Регион'),
+                            regionFieldTemplate(hintText: context.text.region),
                             SizedBox(height: 16.h),
                             phoneFieldTemplate(hintText: '996700123456'),
                             SizedBox(height: 16.h),
                             testNo != null
                                 ? dropDownFieldTemplate(testNo! < 3
-                                    ? UserData.areaCompanyFirst
-                                    : UserData.areaCompanySecond)
+                                    ? areaFirstList
+                                    : areaSecondList)
                                 : const SizedBox(),
                           ],
                         ),
@@ -244,11 +247,11 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
                           UserData.phone = phoneController.text;
                           UserData.region = regionController.text;
                           companyAreaId = testNo! < 3
-                              ? (UserData.areaCompanyFirst
+                              ? (areaFirstList
                                           .indexOf(selectedCompanyArea!) +
                                       1)
                                   .toString()
-                              : (UserData.areaCompanySecond
+                              : (areaSecondList
                                           .indexOf(selectedCompanyArea!) +
                                       4)
                                   .toString();
@@ -292,7 +295,7 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
         hintStyle: AppTextStyles.hintStyle,
       ),
       validator: (company) =>
-          company!.length > 3 ? null : 'Введите название предприятия',
+          company!.length > 3 ? null : context.text.enterCompanyName,
     );
   }
 
@@ -307,7 +310,7 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(12).r,
         ),
-        hintText: 'Площадь предприятия',
+        hintText: context.text.businessArea,
         hintStyle: AppTextStyles.hintStyle,
       ),
       dropdownColor: AppColors.colorWhite,
@@ -323,7 +326,7 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
           selectedCompanyArea = value!;
         });
       },
-      validator: (area) => area == null ? 'Выберите площадь' : null,
+      validator: (area) => area == null ? context.text.selectArea : null,
     );
   }
 
@@ -338,7 +341,7 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(12).r,
         ),
-        hintText: 'Выберите категорию',
+        hintText: context.text.selectCategory,
         hintStyle: AppTextStyles.hintStyle,
       ),
       dropdownColor: AppColors.colorWhite,
@@ -356,7 +359,7 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
           testNo = dropDownList.indexOf(value) + 1;
         });
       },
-      validator: (area) => area == null ? 'Выберите категорию' : null,
+      validator: (area) => area == null ? context.text.selectCategory : null,
     );
   }
 
@@ -376,7 +379,7 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
         hintStyle: AppTextStyles.hintStyle,
       ),
       validator: (nameDirector) =>
-          nameDirector!.length > 0 ? null : 'Введите имя директора',
+          nameDirector!.length > 0 ? null : context.text.enterDirectorName,
     );
   }
 
@@ -415,7 +418,7 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
         hintStyle: AppTextStyles.hintStyle,
       ),
       validator: (regionForValidate) =>
-          regionForValidate!.length > 0 ? null : 'Введите регион',
+          regionForValidate!.length > 0 ? null : context.text.enterRegion,
     );
   }
 
@@ -430,7 +433,7 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(12).r,
         ),
-        hintText: 'Тип предприятия',
+        hintText: context.text.businessType,
         hintStyle: AppTextStyles.hintStyle,
       ),
       dropdownColor: AppColors.colorWhite,
@@ -444,7 +447,7 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
       onChanged: (value) {
         typeBusiness = value!;
       },
-      validator: (area) => area == null ? 'Выберите тип предприятия' : null,
+      validator: (area) => area == null ? context.text.selectBusinessType : null,
     );
   }
 
@@ -459,7 +462,7 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(12).r,
         ),
-        hintText: 'Количество наемных работников',
+        hintText: context.text.numberOfEmployees,
         hintStyle: AppTextStyles.hintStyle,
       ),
       dropdownColor: AppColors.colorWhite,
@@ -474,7 +477,7 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
         staffAmount = value!;
       },
       validator: (area) =>
-          area == null ? 'Выберите количество наемных работников' : null,
+          area == null ? context.text.selectNumberOfEmployees : null,
     );
   }
 
@@ -489,7 +492,7 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(12).r,
         ),
-        hintText: 'Как давно работает бизнес?',
+        hintText: context.text.businessExperience,
         hintStyle: AppTextStyles.hintStyle,
       ),
       dropdownColor: AppColors.colorWhite,
@@ -504,13 +507,60 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
         businessDuration = value!;
       },
       validator: (area) =>
-          area == null ? 'Выберите время работы бизнеса' : null,
+          area == null ? context.text.selectBusinessExperience : null,
     );
   }
 
-  textEditingFieldTemplate({required String hintText}) {
+  textEditingFieldTemplate({required String hintText,required var blocTemp}) {
     return TextFormField(
-      maxLines: null,
+      onFieldSubmitted: (s){
+        /*if (_formKey.currentState!.validate()) {
+          UserData.name = fullNameController.text;
+          UserData.companyName = companyNameController.text;
+          UserData.phone = phoneController.text;
+          UserData.region = regionController.text;
+          companyAreaId = testNo! < 3
+              ? (UserData.areaCompanyFirst
+              .indexOf(selectedCompanyArea!) +
+              1)
+              .toString()
+              : (UserData.areaCompanySecond
+              .indexOf(selectedCompanyArea!) +
+              4)
+              .toString();
+          // Navigator.of(context).push(MaterialPageRoute(builder:(context)=>ConsultationScreen(testId: '0',sum: sumConsult(testNo.toString(), companyAreaId),)));
+          blocTemp.add(LoadGetConsultationEvent(
+              getCertificateInfoEntity:
+              GetCertificateInfoEntity(
+                  categoryId: testNo.toString(),
+                  area: companyAreaId,
+                  companyDirector:
+                  fullNameController.text,
+                  companyName: companyNameController.text,
+                  paymentType: '2',
+                  phone: phoneController.text,
+                  region: regionController.text,
+                  testId: '0',
+                  businessDuration:
+                  businessDuration.toString(),
+                  businessType: typeBusiness.toString(),
+                  staffAmount: staffAmount.toString(),
+                  textCompany:
+                  textEditingController.text)));
+          *//*var tempTestInfo = TestInfoForBegin(
+                            companyName: companyNameController.text,
+                            companyDirector:
+                            fullNameController.text,
+                            categoryId: testInfo!.testNo.toString(),
+                            region: regionController.text,
+                            phone: phoneController.text,
+                            testType: 'userType',
+                            areaCompany: testInfo!.testNo < 3 ? (UserData.areaCompanyFirst.indexOf(selectedLocation!)+1).toString() : (UserData.areaCompanySecond.indexOf(selectedLocation!)+4).toString());*//*
+          *//*BlocProvider.of<TestBloc>(context).add(
+                            BeginTestEvent(
+                                testInfoForBegin: tempTestInfo));*//*
+        }*/
+      },
       controller: textEditingController,
       decoration: InputDecoration(
         filled: true,

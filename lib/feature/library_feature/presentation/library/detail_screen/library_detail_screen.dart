@@ -136,8 +136,8 @@ class _LibraryDetailScreenState extends State<LibraryDetailScreen> {
                       ),
                     );
                   } else if (snapshot.hasError) {
-                    return const Text(
-                        'Ошибка загрузки изображения');
+                    return Text(
+                        context.text.imageLoadError);
                   } else {
                     return SizedBox(
                       width: 142,

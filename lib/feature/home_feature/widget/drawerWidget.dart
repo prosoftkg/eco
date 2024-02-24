@@ -275,9 +275,11 @@ class _DrawerBuildState extends State<DrawerBuild> {
             children: [
               Image.asset('assets/icon/$icon',width: 20.w,height: 20.h),
               SizedBox(width: 12.w),
-              Text(
-                menuName,
-                style: AppTextStyles.clearSansS16W400CBlack,
+              Expanded(
+                child: Text(
+                  menuName,
+                  style: AppTextStyles.clearSansS16W400CBlack,
+                ),
               )
             ],
           ),

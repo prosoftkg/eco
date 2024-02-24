@@ -70,6 +70,7 @@ class _InfoFormCertificateForPaymentState
     phoneController.text = UserData.phone ?? '';
     super.initState();
   }
+  var companyAreaId;
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +80,10 @@ class _InfoFormCertificateForPaymentState
       context.text.test3,
       context.text.test4
     ];
-    var companyAreaId;
+
+    var areaFirstList=CompanyInfo(context: context).areaCompanyFirst();
+    var areaSecondList=CompanyInfo(context: context).areaCompanySecond();
+
     var myBloc = getIt<GetCertificateBloc>();
     return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -132,13 +136,13 @@ class _InfoFormCertificateForPaymentState
                           child: Column(
                             children: [
                               SizedBox(height: 40.h),
-                              businessTypeFieldTemplate((CompanyInfo().getBusinessTypeList(testNo!))),
+                              businessTypeFieldTemplate((CompanyInfo(context: context).getBusinessTypeList(testNo!))),
                               SizedBox(height: 16.h),
-                              staffAmounFieldTemplate(CompanyInfo().getStaffAmountList()),
+                              staffAmounFieldTemplate(CompanyInfo(context: context).getStaffAmountList()),
                               SizedBox(height: 16.h),
-                              businessDurationFieldTemplate(CompanyInfo().getBusinessDurationList()),
+                              businessDurationFieldTemplate(CompanyInfo(context: context).getBusinessDurationList()),
                               SizedBox(height: 16.h),
-                              textEditingFieldTemplate(hintText: 'Доп. инфо о компании'),
+                              textEditingFieldTemplate(hintText: context.text.additionalCompanyInfo,blocTemp: myBloc),
                             ],
                           ),
                         ),
@@ -152,11 +156,11 @@ class _InfoFormCertificateForPaymentState
                                 UserData.phone = phoneController.text;
                                 UserData.region = regionController.text;
                                 companyAreaId = testNo! < 3
-                                    ? (UserData.areaCompanyFirst
+                                    ? (areaFirstList
                                     .indexOf(selectedCompanyArea!) +
                                     1)
                                     .toString()
-                                    : (UserData.areaCompanySecond
+                                    : (areaSecondList
                                     .indexOf(selectedCompanyArea!) +
                                     4)
                                     .toString();
@@ -189,7 +193,7 @@ class _InfoFormCertificateForPaymentState
                                 testInfoForBegin: tempTestInfo));*/
                               }
                             },
-                            child: button(text: 'Получить'))
+                            child: button(text: context.text.getResults))
                   ],
                 ),
               );
@@ -210,19 +214,19 @@ class _InfoFormCertificateForPaymentState
                         SizedBox(height: 40.h),
                         categoryDropDownTemplate(categoryList),
                         SizedBox(height: 16.h),
-                        companyFieldTemplate(hintText: 'Название предприятия'),
+                        companyFieldTemplate(hintText: context.text.companyName),
                         SizedBox(height: 16.h),
                         nameFieldTemplate(
-                            hintText: 'Руководитель компании ФИО'),
+                            hintText: context.text.ceoName),
                         SizedBox(height: 16.h),
-                        regionFieldTemplate(hintText: 'Регион'),
+                        regionFieldTemplate(hintText: context.text.region),
                         SizedBox(height: 16.h),
                         phoneFieldTemplate(hintText: '996700123456'),
                         SizedBox(height: 16.h),
                         testNo != null
                             ? dropDownFieldTemplate(testNo! < 3
-                                ? UserData.areaCompanyFirst
-                                : UserData.areaCompanySecond)
+                                ? areaFirstList
+                                : areaSecondList)
                             : SizedBox(),
                       ],
                     ),
@@ -237,11 +241,11 @@ class _InfoFormCertificateForPaymentState
                           UserData.phone = phoneController.text;
                           UserData.region = regionController.text;
                           companyAreaId = testNo! < 3
-                              ? (UserData.areaCompanyFirst
+                              ? (areaFirstList
                                           .indexOf(selectedCompanyArea!) +
                                       1)
                                   .toString()
-                              : (UserData.areaCompanySecond
+                              : (areaSecondList
                                           .indexOf(selectedCompanyArea!) +
                                       4)
                                   .toString();
@@ -284,7 +288,7 @@ class _InfoFormCertificateForPaymentState
         hintStyle: AppTextStyles.hintStyle,
       ),
       validator: (company) =>
-          company!.length > 3 ? null : 'Введите название предприятия',
+          company!.length > 3 ? null : context.text.enterCompanyName,
     );
   }
 
@@ -299,7 +303,7 @@ class _InfoFormCertificateForPaymentState
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(12).r,
         ),
-        hintText: 'Площадь предприятия',
+        hintText: context.text.businessArea,
         hintStyle: AppTextStyles.hintStyle,
       ),
       dropdownColor: AppColors.colorWhite,
@@ -315,7 +319,7 @@ class _InfoFormCertificateForPaymentState
           selectedCompanyArea = value!;
         });
       },
-      validator: (area) => area == null ? 'Выберите площадь' : null,
+      validator: (area) => area == null ? context.text.selectArea : null,
     );
   }
 
@@ -330,7 +334,7 @@ class _InfoFormCertificateForPaymentState
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(12).r,
         ),
-        hintText: 'Выберите категорию',
+        hintText: context.text.selectCategory,
         hintStyle: AppTextStyles.hintStyle,
       ),
       dropdownColor: AppColors.colorWhite,
@@ -348,7 +352,7 @@ class _InfoFormCertificateForPaymentState
           testNo = dropDownList.indexOf(value) + 1;
         });
       },
-      validator: (area) => area == null ? 'Выберите категорию' : null,
+      validator: (area) => area == null ? context.text.selectCategory : null,
     );
   }
 
@@ -368,7 +372,7 @@ class _InfoFormCertificateForPaymentState
         hintStyle: AppTextStyles.hintStyle,
       ),
       validator: (nameDirector) =>
-          nameDirector!.length > 0 ? null : 'Введите имя директора',
+          nameDirector!.length > 0 ? null : context.text.enterDirectorName,
     );
   }
 
@@ -407,7 +411,7 @@ class _InfoFormCertificateForPaymentState
         hintStyle: AppTextStyles.hintStyle,
       ),
       validator: (regionForValidate) =>
-          regionForValidate!.length > 0 ? null : 'Введите регион',
+          regionForValidate!.length > 0 ? null : context.text.enterRegion,
     );
   }
 
@@ -422,7 +426,7 @@ class _InfoFormCertificateForPaymentState
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(12).r,
         ),
-        hintText: 'Тип предприятия',
+        hintText: context.text.businessType,
         hintStyle: AppTextStyles.hintStyle,
       ),
       dropdownColor: AppColors.colorWhite,
@@ -436,7 +440,7 @@ class _InfoFormCertificateForPaymentState
       onChanged: (value) {
         typeBusiness = value!;
       },
-      validator: (area) => area==null ? 'Выберите тип предприятия' : null,
+      validator: (area) => area==null ? context.text.selectBusinessType : null,
     );
   }
 
@@ -451,7 +455,7 @@ class _InfoFormCertificateForPaymentState
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(12).r,
         ),
-        hintText: 'Количество наемных работников',
+        hintText: context.text.numberOfEmployees,
         hintStyle: AppTextStyles.hintStyle,
       ),
       dropdownColor: AppColors.colorWhite,
@@ -465,7 +469,7 @@ class _InfoFormCertificateForPaymentState
       onChanged: (value) {
         staffAmount = value!;
       },
-      validator: (area) => area==null ? 'Выберите количество наемных работников' : null,
+      validator: (area) => area==null ? context.text.selectNumberOfEmployees : null,
     );
   }
 
@@ -480,7 +484,7 @@ class _InfoFormCertificateForPaymentState
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(12).r,
         ),
-        hintText: 'Как давно работает бизнес?',
+        hintText: context.text.businessExperience,
         hintStyle: AppTextStyles.hintStyle,
       ),
       dropdownColor: AppColors.colorWhite,
@@ -494,13 +498,57 @@ class _InfoFormCertificateForPaymentState
       onChanged: (value) {
         businessDuration = value!;
       },
-      validator: (area) => area==null ? 'Выберите время работы бизнеса' : null,
+      validator: (area) => area==null ? context.text.selectBusinessExperience : null,
     );
   }
 
-  textEditingFieldTemplate({required String hintText}) {
+  textEditingFieldTemplate({required String hintText,required var blocTemp}) {
     return TextFormField(
-      maxLines: null,
+      onFieldSubmitted: (s){
+       /* if (_formKey.currentState!.validate()) {
+          UserData.name = fullNameController.text;
+          UserData.companyName = companyNameController.text;
+          UserData.phone = phoneController.text;
+          UserData.region = regionController.text;
+          companyAreaId = testNo! < 3
+              ? (UserData.areaCompanyFirst
+              .indexOf(selectedCompanyArea!) +
+              1)
+              .toString()
+              : (UserData.areaCompanySecond
+              .indexOf(selectedCompanyArea!) +
+              4)
+              .toString();
+          blocTemp.add(LoadGetCertificateEvent(
+              getCertificateInfoEntity:
+              GetCertificateInfoEntity(
+                  categoryId: testNo.toString(),
+                  area: companyAreaId,
+                  companyDirector: fullNameController.text,
+                  companyName: companyNameController.text,
+                  paymentType: '1',
+                  phone: phoneController.text,
+                  region: regionController.text,
+                  testId: '0',
+                  businessDuration: businessDuration.toString(),
+                  businessType: typeBusiness.toString(),staffAmount: staffAmount.toString(),
+                  textCompany: textEditingController.text
+              )));
+          *//*var tempTestInfo = TestInfoForBegin(
+                            companyName: companyNameController.text,
+                            companyDirector:
+                            fullNameController.text,
+                            categoryId: testInfo!.testNo.toString(),
+                            region: regionController.text,
+                            phone: phoneController.text,
+                            testType: 'userType',
+                            areaCompany: testInfo!.testNo < 3 ? (UserData.areaCompanyFirst.indexOf(selectedLocation!)+1).toString() : (UserData.areaCompanySecond.indexOf(selectedLocation!)+4).toString());*//*
+          *//*BlocProvider.of<TestBloc>(context).add(
+                            BeginTestEvent(
+                                testInfoForBegin: tempTestInfo));*//*
+        }*/
+      },
+
       controller: textEditingController,
       decoration: InputDecoration(
         filled: true,

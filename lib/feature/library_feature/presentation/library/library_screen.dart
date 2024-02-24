@@ -49,17 +49,9 @@ class _LibraryScreenState extends State<LibraryScreen> {
                 color: AppColors.colorF7F7F7,
               ),
               child: Row(children: [
-                InkWell(
-                  onTap: (){
-                    filterList.search=search.text;
-                    BlocProvider.of<LibraryBloc>(context)
-                        .add(GetLibraryEvent(filterList:filterList));
-                  },
-                    child: Image.asset('assets/icon/search.png',width: 20.w,height: 20.w)),
-                SizedBox(width: 12.w),
                 Flexible(
                   child: TextField(
-                    style: AppTextStyles.hintStyle,
+                    style: AppTextStyles.clearSansS16W400CBlack,
                     onTap: (){
                       BlocProvider.of<LibraryBloc>(context)
                           .add(SearchLibraryEvent(filterList:filterList));
@@ -67,18 +59,28 @@ class _LibraryScreenState extends State<LibraryScreen> {
                     controller: search,
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: 'Поиск',
+
+                      hintText: context.text.search,
                       hintStyle: AppTextStyles.hintStyle,
                     ),
                     focusNode: _focusNode,
                     onSubmitted: (value){
                       filterList.search=value;
-                      search.text='';
+                      // search.text='';
                       BlocProvider.of<LibraryBloc>(context)
                           .add(GetLibraryEvent(filterList:filterList));
                     },
                   ),
                 ),
+                SizedBox(width: 12.w),
+                InkWell(
+                    onTap: (){
+                      filterList.search=search.text;
+                      BlocProvider.of<LibraryBloc>(context)
+                          .add(GetLibraryEvent(filterList:filterList));
+                    },
+                    child: Image.asset('assets/icon/search.png',width: 20.w,height: 20.w)),
+
               ])),
           SizedBox(height: 32.h),
           BlocBuilder<LanguageBloc, LanguageState>(
@@ -163,8 +165,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                                   ),
                                                 );
                                               } else if (snapshot.hasError) {
-                                                return const Text(
-                                                    'Ошибка загрузки изображения');
+                                                return Text(
+                                                    context.text.imageLoadError);
                                               } else {
                                                 return SizedBox(
                                                   width: 142.w,
@@ -267,7 +269,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                             ],
                           ),
                       ],
-                    ) : Center(child: Text('No product'));
+                    ) : Center(child: Text(context.text.nothingFound));
 
                     /*GridView.builder(
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
@@ -316,8 +318,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                            Text('Последние поиски',style: AppTextStyles.clearSansMediumS14C82F500),
-                            InkWell(child: Text('Очистить все',style: AppTextStyles.clearSansMediumS14W500C009D9B,),onTap: (){
+                            Text(context.text.recentSearches,style: AppTextStyles.clearSansMediumS14C82F500),
+                            InkWell(child: Text(context.text.clearAll,style: AppTextStyles.clearSansMediumS14W500C009D9B,),onTap: (){
                               BlocProvider.of<LibraryBloc>(context)
                                   .add(RemoveHistoryLibraryEvent(filterList:filterList, remove: 'removeAll'));
                             },)

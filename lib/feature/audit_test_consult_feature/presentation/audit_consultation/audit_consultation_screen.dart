@@ -47,7 +47,7 @@ class AuditConsultationScreen extends StatelessWidget {
                     ])*/
               ],
             ) :
-                Center(child: Text('No product'));
+                Center(child: Text(context.text.nothingFound));
           }
           return const SizedBox();
         },
@@ -104,7 +104,7 @@ class AuditConsultationScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Flexible(
-                          child: Text(consult.userCompany ?? 'Нету',
+                          child: Text(consult.userCompany ?? context.text.nothingFound,
                               style: AppTextStyles.clearSansMediumS14W500C009D9B),
                         ),
                         Flexible(
@@ -130,7 +130,7 @@ class AuditConsultationScreen extends StatelessWidget {
                               children: [
                                 Image.asset('assets/icon/location.png',width: 18.w,height: 18.h),
                                 SizedBox(width: 6.w),
-                                Text(consult.userRegion ?? 'Нету',
+                                Text(consult.userRegion ?? context.text.nothingFound,
                                     style: AppTextStyles.clearSansS12C82F400),
                               ],
                             ),
@@ -142,7 +142,7 @@ class AuditConsultationScreen extends StatelessWidget {
                               children: [
                                 Image.asset('assets/icon/call.png',width: 18.w,height: 18.h),
                                 SizedBox(width: 6.w),
-                                Text(consult.userPhone ?? 'Нету',
+                                Text(consult.userPhone ?? context.text.nothingFound,
                                     style: AppTextStyles.clearSansS12W400CBlack),
                               ],
                             ),
@@ -230,7 +230,7 @@ class AuditConsultationScreen extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(consult.userCompany ?? 'Нету',
+                        Text(consult.userCompany ?? context.text.nothingFound,
                             style: AppTextStyles.clearSansMediumS14W500C009D9B),
                         SizedBox(height: 6.h),
                         SizedBox(
@@ -238,7 +238,7 @@ class AuditConsultationScreen extends StatelessWidget {
                             children: [
                               Image.asset('assets/icon/location.png',width: 18.w,height: 18.h),
                               SizedBox(width: 6.h),
-                              Text(consult.userRegion ?? 'Нету',
+                              Text(consult.userRegion ?? context.text.nothingFound,
                                   style: AppTextStyles.clearSansS12C82F400),
                             ],
                           ),

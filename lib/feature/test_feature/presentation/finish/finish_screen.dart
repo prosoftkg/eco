@@ -1,5 +1,6 @@
 import 'package:eco_kg/core/style/app_text_styles.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:eco_kg/core/utils/utils.dart';
 import 'package:eco_kg/feature/auth_feature/presentation/widgets/button.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/auto_route/auto_route.dart';
@@ -27,12 +28,12 @@ class FinishScreen extends StatelessWidget {
                   children: [
                     const SizedBox(),
                     Text(
-                        'На вашу почту отправлено письмо с результатами теста самодиагностики.',
+                        context.text.emailSentWithTestResults,
                         style: AppTextStyles.clearSansS16cl82,
                         textAlign: TextAlign.center),
                     const SizedBox(),
                     InkWell(
-                      child: button(text: 'Завершить'),
+                      child: button(text: context.text.finish),
                       onTap: () {
                         AutoRouter.of(context).replace(const ResultTestRoute());
                       },

@@ -21,7 +21,7 @@ class StoryDataSource implements IStoryDataSource {
     var uri = Uri(
       scheme: scheme,
       host: ip,
-      path: 'api/user/history',
+      path: 'web/api/user/history',
     );
 
     final String? authKey = await storage.read(key: 'authKey');
@@ -45,7 +45,7 @@ class StoryDataSource implements IStoryDataSource {
     var uri = Uri(
       scheme: scheme,
       host: ip,
-      path: 'api/user/user-history',
+      path: 'web/api/user/user-history',
     );
 
     final String? authKey = await storage.read(key: 'authKey');
@@ -68,7 +68,7 @@ class StoryDataSource implements IStoryDataSource {
     var uri = Uri(
       scheme: scheme,
       host: ip,
-      path: 'api/test/generate-pdf',
+      path: 'web/api/test/generate-pdf',
     );
 
     final String? authKey = await storage.read(key: 'authKey');
@@ -108,7 +108,7 @@ class StoryDataSource implements IStoryDataSource {
     var uri = Uri(
       scheme: scheme,
       host: ip,
-      path: 'api/user/cert-list',
+      path: 'web/api/user/cert-list',
     );
 
     final String? authKey = await storage.read(key: 'authKey');

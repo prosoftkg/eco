@@ -12,7 +12,7 @@ class UserData {
   static String? phone;
   static String? companyName;
   static String? region;
-  static const List<String> areaCompanyFirst=[
+  /*static const List<String> areaCompanyFirst=[
     'До 200 кв.м',
     'От 200 до 400 кв.м',
     'От 400 кв.м и выше'
@@ -21,7 +21,7 @@ class UserData {
     'До 400 кв.м',
     'От 400 до 800 кв.м',
     'От 800 кв.м и выше'
-  ];
+  ];*/
   static const storage = FlutterSecureStorage();
 
   static Future<void> userDataChange(UserDataForChange userDataForChange) async {

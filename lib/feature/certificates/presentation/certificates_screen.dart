@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import '../../../core/servise_locator/servise_locator.dart';
 import '../../../core/style/app_colors.dart';
 import '../../../core/style/app_text_styles.dart';
+import '../../../core/utils/errorInfo.dart';
 import '../../auth_feature/presentation/widgets/appBarLeadintBack.dart';
 import '../../story_feature/domain/entities/user_certificate_entity.dart';
 import '../../story_feature/presentation/bloc/story_bloc.dart';
@@ -53,14 +54,17 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
       userCertificate=state.userCertificate;
       userCertificate.sort((a, b) => (a.createDate!).compareTo(b.createDate!));
     }
+    if(state is ErrorUserCertificateState){
+      return errorWidget(context);
+    }
     return ListView(
         padding: EdgeInsets.symmetric(vertical: 32,horizontal: 16).r,
         children: [
           for(var temp in userCertificate)
             Column(
               children: [
-                certificateItem('Сертификат маркировки ${temp.certificateType}','''• ECO KG: ${certificates[temp.certificateType]}
-• дата получения: ${temp.createDate!.day}/${temp.createDate!.month}/${temp.createDate!.year}''',getCertificate(temp.certificateType!),'${certificates[temp.certificateType]} ECO KG Certificate',context,temp.id.toString()),
+                certificateItem('${context.text.certificateOfMarking} ${temp.certificateType}','''• ECO KG: ${certificates[temp.certificateType]}
+• ${context.text.dateReceived} ${temp.createDate!.day}/${temp.createDate!.month}/${temp.createDate!.year}''',getCertificate(temp.certificateType!),'${certificates[temp.certificateType]} ECO KG Certificate',context,temp.id.toString()),
                 space(),
               ],
             ),
