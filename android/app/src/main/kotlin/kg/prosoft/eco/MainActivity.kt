@@ -1,4 +1,4 @@
-package com.example.eco_kg
+package kg.prosoft.eco
 
 import io.flutter.embedding.android.FlutterActivity
 
