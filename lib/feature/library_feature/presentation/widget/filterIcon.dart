@@ -195,6 +195,10 @@ Widget filter(BuildContext context, String search) {
                                                                     .circular(
                                                                         10)
                                                                 .r,
+                                                        border: Border.all(
+                                                            color: AppColors
+                                                                .color009D9B,
+                                                            width: 1.w),
                                                         color: AppColors
                                                             .color009D9B,
                                                       ),

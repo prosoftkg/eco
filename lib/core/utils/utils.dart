@@ -1,3 +1,5 @@
+import 'package:eco_kg/core/constants/api_constants.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -17,14 +19,21 @@ String? validateEmail(String value) {
   return null;
 }
 
+var maskFormatter = new MaskTextInputFormatter(
+    mask: '# (###) ##-##-##',
+    filter: { "#": RegExp(r'[0-9]') },
+    type: MaskAutoCompletionType.lazy
+);
+
 String? validateMobile(String value) {
   String pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
   RegExp regExp = RegExp(pattern);
-  if (value.length == 0 || value.length < 12 || value.length > 12) {
-    return '99650055050';
+  String temp=value.replaceAll(' ', '').replaceAll('-','').replaceAll('(', '').replaceAll(')', '');
+  if (value.length == 0 || temp.length < 10 || temp.length > 10) {
+    return phoneTemp;
   }
-  else if (!regExp.hasMatch(value)) {
-    return '99650055050';
+  else if (!regExp.hasMatch(temp)) {
+    return phoneTemp;
   }
   return null;
 }

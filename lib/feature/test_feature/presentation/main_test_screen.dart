@@ -1,4 +1,5 @@
 import 'package:eco_kg/core/auto_route/auto_route.dart';
+import 'package:eco_kg/core/constants/api_constants.dart';
 import 'package:eco_kg/core/servise_locator/servise_locator.dart';
 import 'package:eco_kg/core/style/app_text_styles.dart';
 import 'package:auto_route/auto_route.dart';
@@ -219,7 +220,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
                               SizedBox(height: 16.h),
                               regionFieldTemplate(hintText: context.text.region),
                               SizedBox(height: 16.h),
-                              phoneFieldTemplate(hintText: '996700123456'),
+                              phoneFieldTemplate(hintText: phoneTemp),
                               SizedBox(height: 16.h),
                               dropDownFieldTemplate(testInfo!.testNo <3 ? areaFirstList : areaSecondList)
                             ],
@@ -286,6 +287,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
     return TextFormField(
       controller: companyNameController,
       keyboardType: TextInputType.emailAddress,
+      textCapitalization: TextCapitalization.words,
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColors.colorF7F7F7,
@@ -397,6 +399,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
 
   textEditingFieldTemplate({required String hintText}) {
     return TextFormField(
+      textCapitalization: TextCapitalization.sentences,
       onFieldSubmitted: (s){
         /*if (_formKey.currentState!.validate()) {
           UserData.name = fullNameController.text;
@@ -443,6 +446,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
     return TextFormField(
       controller: fullNameController,
       keyboardType: TextInputType.emailAddress,
+      textCapitalization: TextCapitalization.words,
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColors.colorF7F7F7,
@@ -463,6 +467,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
     return TextFormField(
       controller: phoneController,
       keyboardType: TextInputType.phone,
+      inputFormatters: [maskFormatter],
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColors.colorF7F7F7,
@@ -482,6 +487,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
     return TextFormField(
       controller: regionController,
       keyboardType: TextInputType.emailAddress,
+      textCapitalization: TextCapitalization.words,
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColors.colorF7F7F7,

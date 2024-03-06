@@ -52,21 +52,21 @@ class HomeScreen extends StatelessWidget {
           ),
           body: Stack(children: [
             bottomBackgroungImage(context),
-
             ListView.separated(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 50).r,
               itemCount: testList.length,
               itemBuilder: (context, index) {
                 return InkWell(
+                  enableFeedback: true,
                   onTap: (){
                     BlocProvider.of<TestBloc>(context).add(TestInfoEvent(testInfo: testList[index]));
                     AutoRouter.of(context).push(const ScreenTestRoute());
                   },
-                  child: Container(
-                    padding: const EdgeInsets.all(16),
+                  child: Ink(
+                    padding: const EdgeInsets.all(16).r,
                     decoration: BoxDecoration(
                       color: AppColors.colorWhite,
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(12).r,
                       boxShadow: [
                         BoxShadow(
                           blurRadius: 28,
@@ -112,7 +112,7 @@ class HomeScreen extends StatelessWidget {
                 );
               },
               separatorBuilder: (BuildContext context, int index) {
-                return const SizedBox(height: 32);
+                return SizedBox(height: 32.h);
               },
             ),
           ])),

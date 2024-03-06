@@ -1,3 +1,4 @@
+import 'package:eco_kg/core/constants/api_constants.dart';
 import 'package:eco_kg/feature/payment_feature/domain/entities/paymentInfoEntity.dart';
 import 'package:eco_kg/feature/payment_feature/presentation/info_form_for_payment/bloc/get_certificate_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -227,7 +228,7 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
                             SizedBox(height: 16.h),
                             regionFieldTemplate(hintText: context.text.region),
                             SizedBox(height: 16.h),
-                            phoneFieldTemplate(hintText: '996700123456'),
+                            phoneFieldTemplate(hintText: phoneTemp),
                             SizedBox(height: 16.h),
                             testNo != null
                                 ? dropDownFieldTemplate(testNo! < 3
@@ -283,6 +284,7 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
     return TextFormField(
       controller: companyNameController,
       keyboardType: TextInputType.emailAddress,
+      textCapitalization: TextCapitalization.words,
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColors.colorF7F7F7,
@@ -367,6 +369,7 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
     return TextFormField(
       controller: fullNameController,
       keyboardType: TextInputType.emailAddress,
+      textCapitalization: TextCapitalization.words,
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColors.colorF7F7F7,
@@ -387,6 +390,7 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
     return TextFormField(
       controller: phoneController,
       keyboardType: TextInputType.phone,
+      inputFormatters: [maskFormatter],
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColors.colorF7F7F7,
@@ -406,6 +410,7 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
     return TextFormField(
       controller: regionController,
       keyboardType: TextInputType.emailAddress,
+      textCapitalization: TextCapitalization.words,
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColors.colorF7F7F7,
@@ -562,6 +567,7 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
         }*/
       },
       controller: textEditingController,
+      textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColors.colorF7F7F7,

@@ -1,3 +1,4 @@
+import 'package:eco_kg/core/constants/api_constants.dart';
 import 'package:eco_kg/core/utils/user.dart';
 import 'package:eco_kg/core/utils/utils.dart';
 import 'package:eco_kg/feature/auth_feature/presentation/widgets/button.dart';
@@ -131,6 +132,7 @@ class _EditScreenState extends State<EditScreen> {
   emailFieldTemplate({required String hintText}) {
     return TextFormField(
       controller: name,
+      textCapitalization: TextCapitalization.words,
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColors.colorF7F7F7,
@@ -149,6 +151,8 @@ class _EditScreenState extends State<EditScreen> {
   phoneFieldTemplate({required String hintText}) {
     return TextFormField(
       controller: phone,
+      keyboardType: TextInputType.phone,
+      inputFormatters: [maskFormatter],
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColors.colorF7F7F7,
@@ -157,7 +161,7 @@ class _EditScreenState extends State<EditScreen> {
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(12),
         ),
-        hintText: '996500505050',
+        hintText: phoneTemp,
         hintStyle: AppTextStyles.hintStyle,
       ),
       validator: (phoneForValidate) => validateMobile(phoneForValidate!),

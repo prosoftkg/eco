@@ -23,7 +23,7 @@ class TestDataSource implements ITestDataSource {
     var uri = Uri(
       scheme: scheme,
       host: ip,
-      path: 'web/api/test/begin-test',
+      path: 'api/test/begin-test',
     );
 
     final String? authKey = await storage.read(key: 'authKey');
@@ -61,7 +61,7 @@ class TestDataSource implements ITestDataSource {
     var uri = Uri(
       scheme: scheme,
       host: ip,
-      path: 'web/api/test/auditor-check-test',
+      path: 'api/test/auditor-check-test',
     );
 
     final String? authKey = await storage.read(key: 'authKey');
@@ -89,9 +89,9 @@ class TestDataSource implements ITestDataSource {
   Future<NextQuestionEntity> postNextTest(TestInfoForNext testInfoForNext) async {
     String? path;
     if(testInfoForNext.testType=='userTest'){
-      path='web/api/test/next-question';
+      path='api/test/next-question';
     }else{
-      path='web/api/test/auditor-next-question';
+      path='api/test/auditor-next-question';
     }
     print(path);
     var uri = Uri(
@@ -140,9 +140,9 @@ class TestDataSource implements ITestDataSource {
   Future<FinishTestEntity> finishTest(TestInfoForNext testInfoForNext) async {
     String? path;
     if(testInfoForNext.testType=='userTest'){
-      path='web/api/test/next-question';
+      path='api/test/next-question';
     }else{
-      path='web/api/test/auditor-next-question';
+      path='api/test/auditor-next-question';
     }
     var uri = Uri(
       scheme: scheme,

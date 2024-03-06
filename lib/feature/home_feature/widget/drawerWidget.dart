@@ -166,7 +166,7 @@ class _DrawerBuildState extends State<DrawerBuild> {
                                             context.text.basic,
                                             style: AppTextStyles.clearSansMediumS14C82F500,
                                           ),
-                                          SizedBox(height: 16.h),
+                                          SizedBox(height: 6.h),
                                           buildMenu('user.png',context.text.user_cabinet,DrawerSelect.userCabinet,context),
                                           buildMenu('message-search.png',context.text.get_consultation,DrawerSelect.getConsultation,context),
                                           buildMenu('medal-star.png',context.text.get_certificate,DrawerSelect.getCertificate,context),
@@ -269,22 +269,20 @@ class _DrawerBuildState extends State<DrawerBuild> {
           }
         }
       },
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Image.asset('assets/icon/$icon',width: 20.w,height: 20.h),
-              SizedBox(width: 12.w),
-              Expanded(
-                child: Text(
-                  menuName,
-                  style: AppTextStyles.clearSansS16W400CBlack,
-                ),
-              )
-            ],
-          ),
-          SizedBox(height: 10.h)
-        ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 5.0).r,
+        child: Row(
+          children: [
+            Image.asset('assets/icon/$icon',width: 20.w,height: 20.h),
+            SizedBox(width: 12.w),
+            Expanded(
+              child: Text(
+                menuName,
+                style: AppTextStyles.clearSansS16W400CBlack,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

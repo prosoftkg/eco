@@ -21,7 +21,7 @@ class UserCabinetDataSource implements IUserCabinetDataSource {
     var uri = Uri(
       scheme: scheme,
       host: ip,
-      path: 'web/api/user/edit-account',
+      path: 'api/user/edit-account',
     );
 
     final String? authKey = await storage.read(key: 'authKey');
@@ -53,7 +53,7 @@ class UserCabinetDataSource implements IUserCabinetDataSource {
     var uri = Uri(
       scheme: scheme,
       host: ip,
-      path: 'web/api/user/delete-profile',
+      path: 'api/user/delete-profile',
     );
 
     final String? authKey = await storage.read(key: 'authKey');

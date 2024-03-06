@@ -24,7 +24,7 @@ class PaymentDataSource implements IPaymentDataSource {
     var uri = Uri(
       scheme: scheme,
       host: ip,
-      path: 'web/api/freedom/pay',
+      path: 'api/freedom/pay',
     );
 
     final String? authKey = await storage.read(key: 'authKey');
@@ -74,7 +74,7 @@ class PaymentDataSource implements IPaymentDataSource {
     var uri = Uri(
       scheme: scheme,
       host: ip,
-      path: 'web/api/test/get-cert',
+      path: 'api/test/get-cert',
     );
 
     final String? authKey = await storage.read(key: 'authKey');
@@ -125,7 +125,7 @@ class PaymentDataSource implements IPaymentDataSource {
     var uri = Uri(
       scheme: scheme,
       host: ip,
-      path: 'web/api/user/consultation-appoint',
+      path: 'api/user/consultation-appoint',
     );
 
     final String? authKey = await storage.read(key: 'authKey');

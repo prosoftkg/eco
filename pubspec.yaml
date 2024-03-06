@@ -42,6 +42,8 @@ dependencies:
   pdf: ^3.10.7
   url_launcher: ^6.2.3
   docx_template: ^0.4.0
+  mask_text_input_formatter: ^2.9.0
+  connectivity_plus: ^5.0.2
 
 dev_dependencies:
   flutter_test:

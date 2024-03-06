@@ -20,7 +20,7 @@ class AuditDataSource implements IAuditDataSource {
     var uri = Uri(
       scheme: scheme,
       host: ip,
-      path: 'web/api/test/list',
+      path: 'api/test/list',
     );
 
     final String? authKey = await storage.read(key: 'authKey');
@@ -51,7 +51,7 @@ class AuditDataSource implements IAuditDataSource {
     var uri = Uri(
       scheme: scheme,
       host: ip,
-      path: 'web/api/test/consult-list',
+      path: 'api/test/consult-list',
     );
 
     final String? authKey = await storage.read(key: 'authKey');
@@ -81,7 +81,7 @@ class AuditDataSource implements IAuditDataSource {
     var uri = Uri(
       scheme: scheme,
       host: ip,
-      path: 'web/api/test/deny-test',
+      path: 'api/test/deny-test',
     );
 
 
@@ -112,7 +112,7 @@ class AuditDataSource implements IAuditDataSource {
     var uri = Uri(
       scheme: scheme,
       host: ip,
-      path: 'web/api/test/accept-test',
+      path: 'api/test/accept-test',
     );
 
 
@@ -143,7 +143,7 @@ class AuditDataSource implements IAuditDataSource {
     var uri = Uri(
       scheme: scheme,
       host: ip,
-      path: 'web/api/test/deny-consultation',
+      path: 'api/test/deny-consultation',
     );
 
 
@@ -174,10 +174,10 @@ class AuditDataSource implements IAuditDataSource {
     var uri = Uri(
       scheme: scheme,
       host: ip,
-      path: 'web/api/user/consultation-confirm',
+      path: 'api/user/consultation-confirm',
     );
 
-    print('web/api/user/consultation-confirm');
+    print('api/user/consultation-confirm');
     final String? authKey = await storage.read(key: 'authKey');
     print('server $authKey');
 

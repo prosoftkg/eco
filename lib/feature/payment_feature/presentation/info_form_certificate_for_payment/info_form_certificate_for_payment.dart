@@ -1,3 +1,4 @@
+import 'package:eco_kg/core/constants/api_constants.dart';
 import 'package:eco_kg/feature/get_certificate/presentation/bloc/get_data_from_get_certificate_bloc.dart';
 import 'package:eco_kg/feature/get_certificate/presentation/get_certificate_screen.dart';
 import 'package:eco_kg/feature/payment_feature/domain/entities/getCertificateInfoEntity.dart';
@@ -221,7 +222,7 @@ class _InfoFormCertificateForPaymentState
                         SizedBox(height: 16.h),
                         regionFieldTemplate(hintText: context.text.region),
                         SizedBox(height: 16.h),
-                        phoneFieldTemplate(hintText: '996700123456'),
+                        phoneFieldTemplate(hintText: phoneTemp),
                         SizedBox(height: 16.h),
                         testNo != null
                             ? dropDownFieldTemplate(testNo! < 3
@@ -276,6 +277,7 @@ class _InfoFormCertificateForPaymentState
     return TextFormField(
       controller: companyNameController,
       keyboardType: TextInputType.emailAddress,
+      textCapitalization: TextCapitalization.words,
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColors.colorF7F7F7,
@@ -360,6 +362,7 @@ class _InfoFormCertificateForPaymentState
     return TextFormField(
       controller: fullNameController,
       keyboardType: TextInputType.emailAddress,
+      textCapitalization: TextCapitalization.words,
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColors.colorF7F7F7,
@@ -380,6 +383,7 @@ class _InfoFormCertificateForPaymentState
     return TextFormField(
       controller: phoneController,
       keyboardType: TextInputType.phone,
+      inputFormatters: [maskFormatter],
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColors.colorF7F7F7,
@@ -399,6 +403,7 @@ class _InfoFormCertificateForPaymentState
     return TextFormField(
       controller: regionController,
       keyboardType: TextInputType.emailAddress,
+      textCapitalization: TextCapitalization.words,
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColors.colorF7F7F7,
@@ -550,6 +555,7 @@ class _InfoFormCertificateForPaymentState
       },
 
       controller: textEditingController,
+      textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColors.colorF7F7F7,
