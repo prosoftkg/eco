@@ -46,7 +46,13 @@ class PaymentDataSource implements IPaymentDataSource {
       'type': paymentInfoEntity.paymentType,
       'company_director': paymentInfoEntity.companyDirector,
       'email': email,
-      'phone': paymentInfoEntity.phone,
+      'phone': '996${
+        paymentInfoEntity.phone
+            .replaceAll(' ', '')
+            .replaceAll('(', '')
+            .replaceAll(')', '')
+            .replaceAll('-', '').replaceFirst('0', '')
+      }',
       'sum' : paymentInfoEntity.sum,
       'company_name' : paymentInfoEntity.companyName,
       'company_area' : paymentInfoEntity.area,
