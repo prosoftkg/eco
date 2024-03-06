@@ -47,11 +47,11 @@ class PaymentDataSource implements IPaymentDataSource {
       'company_director': paymentInfoEntity.companyDirector,
       'email': email,
       'phone': '996${
-        paymentInfoEntity.phone
-            .replaceAll(' ', '')
-            .replaceAll('(', '')
-            .replaceAll(')', '')
-            .replaceAll('-', '').replaceFirst('0', '')
+          paymentInfoEntity.phone
+              .replaceAll(' ', '')
+              .replaceAll('(', '')
+              .replaceAll(')', '')
+              .replaceAll('-', '').replaceFirst('0', '')
       }',
       'sum' : paymentInfoEntity.sum,
       'company_name' : paymentInfoEntity.companyName,
@@ -103,7 +103,13 @@ class PaymentDataSource implements IPaymentDataSource {
       'region' : getCertificateInfoEntity.region,
       'category_id' : getCertificateInfoEntity.categoryId,
       'company_area' : getCertificateInfoEntity.area,
-      'phone': getCertificateInfoEntity.phone,
+      'phone': '996${
+          getCertificateInfoEntity.phone
+              .replaceAll(' ', '')
+              .replaceAll('(', '')
+              .replaceAll(')', '')
+              .replaceAll('-', '').replaceFirst('0', '')
+      }',
       'business_type': getCertificateInfoEntity.businessType,
       'business_duration' : getCertificateInfoEntity.businessDuration,
       'staff_amount' : getCertificateInfoEntity.staffAmount,
@@ -150,7 +156,13 @@ class PaymentDataSource implements IPaymentDataSource {
       'company_director': getCertificateInfoEntity.companyDirector,
       'region' : getCertificateInfoEntity.region,
       'company_area' : getCertificateInfoEntity.area,
-      'phone': getCertificateInfoEntity.phone,
+      'phone': '996${
+          getCertificateInfoEntity.phone
+              .replaceAll(' ', '')
+              .replaceAll('(', '')
+              .replaceAll(')', '')
+              .replaceAll('-', '').replaceFirst('0', '')
+      }',
       'business_type': getCertificateInfoEntity.businessType,
       'business_duration' : getCertificateInfoEntity.businessDuration,
       'staff_amount' : getCertificateInfoEntity.staffAmount,
