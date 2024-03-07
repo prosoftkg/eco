@@ -68,8 +68,9 @@ dev_dependencies:
   injectable_generator: ^2.4.0
   json_serializable: ^6.7.1
   flutter_screenutil: ^5.9.0
-  flutter_verification_code: ^1.1.7
   number_paginator: ^0.4.0
+  flutter_verification_code:
+    path: packages/flutter_verification_code-master
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

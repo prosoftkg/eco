@@ -50,31 +50,33 @@ class _VerificationScreenState extends State<VerificationScreen> {
           Text(context.text.verification_code_subtitle,
               style: AppTextStyles.clearSansMedium16cl82),
           SizedBox(height: 50.h),
-          VerificationCode(
-            underlineWidth: 1.2.w,
-            fullBorder: true,
-            fillColor: AppColors.colorE8ECF4,
-            itemSize: 60.sp,
-            textStyle: AppTextStyles.clearSansMedium22,
-            keyboardType: TextInputType.number,
-            underlineColor: AppColors.color009D9B,
-            length: 4,
-            cursorColor: AppColors.color009D9B,
-            underlineUnfocusedColor: AppColors.colorE8ECF4,
-            //colorAfter: AppColors.color009D9B,
-            // margin: const EdgeInsets.all(5).r,
-            onCompleted: (String value) {
-              setState(() {
-                _code = value;
-              });
-              print(_code);
-            },
-            onEditing: (bool value) {
-              setState(() {
-                _onEditing = value;
-              });
-              if (!_onEditing) FocusScope.of(context).unfocus();
-            },
+          Center(
+            child: VerificationCode(
+              underlineWidth: 1.2.w,
+              fullBorder: true,
+              fillColor: AppColors.colorE8ECF4,
+              itemSize: 60.sp,
+              textStyle: AppTextStyles.clearSansMedium22,
+              keyboardType: TextInputType.number,
+              underlineColor: AppColors.color009D9B,
+              length: 4,
+              cursorColor: AppColors.color009D9B,
+              underlineUnfocusedColor: AppColors.colorE8ECF4,
+              //colorAfter: AppColors.color009D9B,
+              // margin: const EdgeInsets.all(5).r,
+              onCompleted: (String value) {
+                setState(() {
+                  _code = value;
+                });
+                print(_code);
+              },
+              onEditing: (bool value) {
+                setState(() {
+                  _onEditing = value;
+                });
+                if (!_onEditing) FocusScope.of(context).unfocus();
+              },
+            ),
           ),
           SizedBox(height: 80.h),
           BlocBuilder<AuthBloc, AuthState>(
