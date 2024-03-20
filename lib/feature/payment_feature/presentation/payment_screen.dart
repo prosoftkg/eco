@@ -7,7 +7,6 @@ import 'package:auto_route/auto_route.dart';
 import 'blocGetData/get_data_from_payment_bloc.dart';
 
 class PaymentScreen extends StatefulWidget {
-
   PaymentScreen({super.key});
 
   @override
@@ -16,33 +15,32 @@ class PaymentScreen extends StatefulWidget {
 
 class _PaymentScreenState extends State<PaymentScreen> {
   WebViewPlusController? _controller;
-  int pageCounter=0;
+  int pageCounter = 0;
   String? url;
-  double webProgress=0;
+  double webProgress = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocBuilder<GetDataFromPaymentBloc, GetDataFromPaymentState>(
         builder: (context, state) {
-          if(state is LoadedGetData){
-            url=state.url;
+          if (state is LoadedGetData) {
+            url = state.url;
           }
           return SafeArea(
-            child: Stack(
-                children: [
-                  WebViewPlus(
-                    javascriptMode: JavascriptMode.unrestricted,
-                    gestureNavigationEnabled: true,
-                    onWebViewCreated: (controller) {
-                      _controller = controller;
-                    },
-                    onProgress: (progress){
-                      setState(() {
-                        this.webProgress=progress/100;
-                      });
-                    },
-                    initialUrl: url,
-                    /*navigationDelegate: (NavigationRequest request) {
+            child: Stack(children: [
+              WebViewPlus(
+                javascriptMode: JavascriptMode.unrestricted,
+                gestureNavigationEnabled: true,
+                onWebViewCreated: (controller) {
+                  _controller = controller;
+                },
+                onProgress: (progress) {
+                  setState(() {
+                    this.webProgress = progress / 100;
+                  });
+                },
+                initialUrl: url,
+                /*navigationDelegate: (NavigationRequest request) {
                       pageCounter++;
                       print(pageCounter);
                       if (pageCounter == 1 && Platform.isAndroid) {
@@ -55,16 +53,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       }
                       return NavigationDecision.navigate;
                     },*/
-                  ),
-                  if(webProgress<1)
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height,
-                      color: Colors.white,
-                      child: Center(child: progressWidget()),
-                    ),
-                ]
-            ),
+              ),
+              if (webProgress < 1)
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  color: Colors.white,
+                  child: Center(child: progressWidget()),
+                ),
+            ]),
           );
         },
       ),
