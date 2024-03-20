@@ -90,7 +90,7 @@ class _VerificationCodeState extends State<VerificationCode> {
   final List<FocusNode> _listFocusNode = <FocusNode>[];
   final List<FocusNode> _listFocusNodeKeyListener = <FocusNode>[];
   final List<TextEditingController> _listControllerText =
-      <TextEditingController>[];
+  <TextEditingController>[];
   final List<String> _code = [];
   int _currentIndex = 0;
 
@@ -162,20 +162,9 @@ class _VerificationCodeState extends State<VerificationCode> {
     );
 
     final fullDecoration = InputDecoration(
-      fillColor: widget.fillColor,
+      fillColor: Colors.white,
       filled: widget.fillColor != null ? true : false,
-      enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: widget.underlineUnfocusedColor ?? Colors.grey,
-          width: widget.underlineWidth ?? 1,
-        ),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: widget.underlineColor ?? Theme.of(context).primaryColor,
-          width: widget.underlineWidth ?? 1,
-        ),
-      ),
+      border: InputBorder.none,
       counterText: "",
       contentPadding: padding,
       errorMaxLines: 1,

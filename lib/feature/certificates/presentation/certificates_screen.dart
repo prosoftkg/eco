@@ -23,7 +23,7 @@ class CertificatesScreen extends StatefulWidget {
 
 class _CertificatesScreenState extends State<CertificatesScreen> {
   var certificates={
-    'Платина' : 'Platinium',
+    'Платина' : 'Platinum',
     'Золото' : 'Gold',
     'Серебро' : 'Silver',
     'Бронза' : 'Bronze',
@@ -63,8 +63,8 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
           for(var temp in userCertificate)
             Column(
               children: [
-                certificateItem('${context.text.certificateOfMarking} ${temp.certificateType}','''• ECO KG: ${certificates[temp.certificateType]}
-• ${context.text.dateReceived} ${temp.createDate!.day}/${temp.createDate!.month}/${temp.createDate!.year}''',getCertificate(temp.certificateType!),'${certificates[temp.certificateType]} ECO KG Certificate',context,temp.id.toString()),
+                certificateItem('${context.text.certificateOfMarking} ${certificates[temp.certificateType]}','''• ECO KG: ${certificates[temp.certificateType]}
+• ${context.text.dateReceived} ${temp.createDate!.day}/${temp.createDate!.month}/${temp.createDate!.year}''','${certificates[temp.certificateType]}','${certificates[temp.certificateType]} ECO KG Certificate',context,temp.id.toString()),
                 space(),
               ],
             ),
@@ -84,23 +84,10 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
     );
   }
 
-  getCertificate(String certType){
-    if(certType=='Золото') {
-      return 'Gold.png';
-    } else if(certType=='Серебро') {
-      return 'Silver.png';
-    } else if(certType=='Бронза') {
-      return 'Bronze.png';
-    } else if(certType=='Платина') {
-      return 'Platinum';
-    }else{
-      return '';
-    }
-  }
-
   space() {
     return SizedBox(height: 32.h);
   }
+
 
   certificateItem(String title, String subtitle, String certificate,String pdfTitle,BuildContext context,String testId){
     return Container(

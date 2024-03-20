@@ -74,7 +74,7 @@ class StoryDataSource implements IStoryDataSource {
     final String? authKey = await storage.read(key: 'authKey');
     final String? email = await storage.read(key: 'email');
     print('server $authKey');
-
+    print(uri);
     /*var json = {
       'test_id': paymentInfoEntity.testId,
       'type': paymentInfoEntity.paymentType,
