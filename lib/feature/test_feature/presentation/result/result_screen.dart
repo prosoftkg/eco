@@ -77,10 +77,11 @@ class ResultScreen extends StatelessWidget {
                       children: [
                         Text(
                             testType == 'auditTest'
-                                ? context.text.applicantEmailWithTestResults
+                                ? ''/*context.text.applicantEmailWithTestResults*/
                                 : context.text.yourEmailWithTestResults,
                             style: AppTextStyles.clearSansS12C82F400,
                             textAlign: TextAlign.center),
+                        if(testType!='auditTest')
                         Text(email,
                             style: AppTextStyles.clearSansS12C82F400,
                             textAlign: TextAlign.center),

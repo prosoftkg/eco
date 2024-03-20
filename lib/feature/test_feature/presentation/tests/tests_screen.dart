@@ -94,7 +94,7 @@ class _TestsScreenState extends State<TestsScreen> {
                 lan = stateLan.lanCode;
               }
               id_arr.add(state.testEntity.mid.toString());
-              numberofPages = int.parse(state.testEntity.count!);
+              numberofPages = state.testEntity.count!;
               answers = state.testEntity.answer;
               if(state.testEntity.questionKy!=null && state.testEntity.questionEn!=null){
                 question = lan == ''
