@@ -1,3 +1,4 @@
+import 'package:eco_kg/core/utils/user.dart';
 import 'package:eco_kg/core/utils/utils.dart';
 import 'package:eco_kg/feature/auth_feature/presentation/widgets/button.dart';
 import 'package:eco_kg/feature/library_feature/domain/entities/filterList_entity.dart';
@@ -34,7 +35,7 @@ Widget filter(BuildContext context, String search) {
                   shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(12))),
                   insetPadding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                       EdgeInsets.symmetric(horizontal: UserData.sizeScreen ? 16 : 80, vertical: UserData.sizeScreen ? 16 : 80),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0).r,
                     child: Container(

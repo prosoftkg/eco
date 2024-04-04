@@ -1,4 +1,5 @@
 import 'package:eco_kg/core/style/app_colors.dart';
+import 'package:eco_kg/core/utils/user.dart';
 import 'package:eco_kg/feature/library_feature/domain/entities/filterList_entity.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:eco_kg/core/style/app_text_styles.dart';
@@ -37,7 +38,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
             },
             child: appBarLeading(context)),
         actions: [filter(context,search.text)],
-        leadingWidth: 100.w,
+        leadingWidth: UserData.sizeScreen ? 100.w : 100,
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32).r,
@@ -79,7 +80,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                       BlocProvider.of<LibraryBloc>(context)
                           .add(GetLibraryEvent(filterList:filterList));
                     },
-                    child: Image.asset('assets/icon/search.png',width: 20.w,height: 20.w)),
+                    child: Image.asset('assets/icon/search.png',width: UserData.sizeScreen ? 20.w : 20,height: UserData.sizeScreen ? 20.w : 20)),
 
               ])),
           SizedBox(height: 32.h),

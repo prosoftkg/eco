@@ -38,7 +38,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
               AutoRouter.of(context).pop();
             },
             child: appBarLeading(context)),
-        leadingWidth: 100.w,
+        leadingWidth: UserData.sizeScreen ? 100.w : 100,
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 30).r,

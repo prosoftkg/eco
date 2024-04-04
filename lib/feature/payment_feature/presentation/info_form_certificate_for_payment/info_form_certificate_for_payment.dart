@@ -95,7 +95,7 @@ class _InfoFormCertificateForPaymentState
                 AutoRouter.of(context).pop();
               },
               child: appBarLeading(context)),
-          leadingWidth: 100.w,
+          leadingWidth: UserData.sizeScreen ? 100.w : 100,
         ),
         body: BlocBuilder<GetCertificateBloc, GetCertificateState>(
           bloc: myBloc,
@@ -124,8 +124,8 @@ class _InfoFormCertificateForPaymentState
             }
             if(state is LoadNextGetCertificateState){
               return Padding(
-                padding: const EdgeInsets.only(
-                    left: 16.0, right: 16.0, top: 32, bottom: 124)
+                padding: EdgeInsets.only(
+                    left: 16.0, right: 16.0, top: UserData.sizeHeight ? 32.h : 16, bottom: UserData.sizeHeight ? 124.h : 70)
                     .r,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -200,8 +200,8 @@ class _InfoFormCertificateForPaymentState
               );
             }
     return Padding(
-          padding: const EdgeInsets.only(
-                  left: 16.0, right: 16.0, top: 32, bottom: 124)
+          padding: EdgeInsets.only(
+                  left: 16.0, right: 16.0, top: UserData.sizeHeight ? 32.h : 16, bottom: UserData.sizeHeight ? 124.h : 70)
               .r,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -275,6 +275,7 @@ class _InfoFormCertificateForPaymentState
 
   companyFieldTemplate({required String hintText}) {
     return TextFormField(
+      style: AppTextStyles.controllerStyle,
       controller: companyNameController,
       keyboardType: TextInputType.emailAddress,
       textCapitalization: TextCapitalization.words,
@@ -360,6 +361,7 @@ class _InfoFormCertificateForPaymentState
 
   nameFieldTemplate({required String hintText}) {
     return TextFormField(
+      style: AppTextStyles.controllerStyle,
       controller: fullNameController,
       keyboardType: TextInputType.emailAddress,
       textCapitalization: TextCapitalization.words,
@@ -381,6 +383,7 @@ class _InfoFormCertificateForPaymentState
 
   phoneFieldTemplate({required String hintText}) {
     return TextFormField(
+      style: AppTextStyles.controllerStyle,
       controller: phoneController,
       keyboardType: TextInputType.phone,
       inputFormatters: [maskFormatter],
@@ -401,6 +404,7 @@ class _InfoFormCertificateForPaymentState
 
   regionFieldTemplate({required String hintText}) {
     return TextFormField(
+      style: AppTextStyles.controllerStyle,
       controller: regionController,
       keyboardType: TextInputType.emailAddress,
       textCapitalization: TextCapitalization.words,
@@ -509,6 +513,7 @@ class _InfoFormCertificateForPaymentState
 
   textEditingFieldTemplate({required String hintText,required var blocTemp}) {
     return TextFormField(
+      style: AppTextStyles.controllerStyle,
       onFieldSubmitted: (s){
        /* if (_formKey.currentState!.validate()) {
           UserData.name = fullNameController.text;

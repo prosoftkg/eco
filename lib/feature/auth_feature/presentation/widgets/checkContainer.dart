@@ -1,11 +1,12 @@
+import 'package:eco_kg/core/utils/user.dart';
 import 'package:flutter/cupertino.dart';
 import '../../../../core/style/app_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 Widget checkContainer(){
   return Container(
-  width: 20.w,
-  height: 20.h,
+  width: UserData.sizeScreen ? 20.w : 20,
+  height: UserData.sizeScreen ? 20.w : 20,
   decoration: BoxDecoration(
   color: AppColors
       .colorEAFEF1,

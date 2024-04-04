@@ -1,3 +1,4 @@
+import 'package:eco_kg/core/utils/user.dart';
 import 'package:eco_kg/core/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,7 +30,7 @@ class AuditScreen extends StatelessWidget {
               Navigator.of(context).pop();
             },
             child: appBarLeading(context)),
-        leadingWidth: 100.w,
+        leadingWidth: UserData.sizeScreen ? 100.w : 100,
       ),
       body: BlocBuilder<AuditBloc, AuditState>(
         bloc: BlocProvider.of<AuditBloc>(context)

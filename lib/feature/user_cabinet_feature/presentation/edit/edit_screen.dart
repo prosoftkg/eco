@@ -59,7 +59,7 @@ class _EditScreenState extends State<EditScreen> {
               AutoRouter.of(context).pop();
             },
             child: appBarLeading(context)),
-        leadingWidth: 100.h,
+        leadingWidth: UserData.sizeScreen ? 100.w : 100,
       ),
       body: Padding(
         padding:
@@ -131,6 +131,7 @@ class _EditScreenState extends State<EditScreen> {
 
   emailFieldTemplate({required String hintText}) {
     return TextFormField(
+      style: AppTextStyles.controllerStyle,
       controller: name,
       textCapitalization: TextCapitalization.words,
       decoration: InputDecoration(
@@ -150,6 +151,7 @@ class _EditScreenState extends State<EditScreen> {
 
   phoneFieldTemplate({required String hintText}) {
     return TextFormField(
+      style: AppTextStyles.controllerStyle,
       controller: phone,
       keyboardType: TextInputType.phone,
       inputFormatters: [maskFormatter],

@@ -1,4 +1,5 @@
 import 'package:eco_kg/core/auto_route/auto_route.dart';
+import 'package:eco_kg/core/utils/user.dart';
 import 'package:eco_kg/core/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
@@ -31,7 +32,7 @@ class _ForgotPaswordScreenState extends State<ForgotPaswordScreen> {
               AutoRouter.of(context).pop();
             },
             child: appBarLeading(context)),
-        leadingWidth: 100,
+        leadingWidth:  100,
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 30),

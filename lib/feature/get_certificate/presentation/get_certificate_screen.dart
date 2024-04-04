@@ -1,4 +1,5 @@
 import 'package:eco_kg/core/style/app_text_styles.dart';
+import 'package:eco_kg/core/utils/user.dart';
 import 'package:eco_kg/core/utils/utils.dart';
 import 'package:eco_kg/feature/auth_feature/presentation/widgets/button.dart';
 import 'package:eco_kg/feature/get_certificate/presentation/bloc/get_data_from_get_certificate_bloc.dart';
@@ -34,7 +35,7 @@ class GetCertificatScreen extends StatelessWidget {
               Navigator.of(context).pop();
             },
             child: appBarLeading(context)),
-        leadingWidth: 100,
+        leadingWidth: UserData.sizeScreen ? 100.w : 100,
       ),
       body: BlocBuilder<GetDataFromGetCertificateBloc, GetDataFromGetCertificateState>(
         builder: (context, state) {

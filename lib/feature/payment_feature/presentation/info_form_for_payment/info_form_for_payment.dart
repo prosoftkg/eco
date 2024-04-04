@@ -89,7 +89,7 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
                 AutoRouter.of(context).pop();
               },
               child: appBarLeading(context)),
-          leadingWidth: 100.w,
+          leadingWidth: UserData.sizeScreen ? 100.w : 100,
         ),
         body: BlocBuilder<GetConsultationBloc, GetConsultationState>(
           bloc: myBloc,
@@ -120,8 +120,8 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
 
             if (state is LoadNextGetConsultationState) {
               return Padding(
-                padding: const EdgeInsets.only(
-                        left: 16.0, right: 16.0, top: 32, bottom: 124)
+                padding: EdgeInsets.only(
+                        left: 16.0, right: 16.0, top: UserData.sizeHeight ? 32.h : 16, bottom: UserData.sizeHeight ? 124.h : 70)
                     .r,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -205,8 +205,8 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
             }
 
             return Padding(
-              padding: const EdgeInsets.only(
-                      left: 16.0, right: 16.0, top: 32, bottom: 124)
+              padding: EdgeInsets.only(
+                      left: 16.0, right: 16.0, top: UserData.sizeHeight ? 32.h : 16, bottom: UserData.sizeHeight ? 124.h : 70)
                   .r,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -282,6 +282,7 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
 
   companyFieldTemplate({required String hintText}) {
     return TextFormField(
+      style: AppTextStyles.controllerStyle,
       controller: companyNameController,
       keyboardType: TextInputType.emailAddress,
       textCapitalization: TextCapitalization.words,
@@ -367,6 +368,7 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
 
   nameFieldTemplate({required String hintText}) {
     return TextFormField(
+      style: AppTextStyles.controllerStyle,
       controller: fullNameController,
       keyboardType: TextInputType.emailAddress,
       textCapitalization: TextCapitalization.words,
@@ -388,6 +390,7 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
 
   phoneFieldTemplate({required String hintText}) {
     return TextFormField(
+      style: AppTextStyles.controllerStyle,
       controller: phoneController,
       keyboardType: TextInputType.phone,
       inputFormatters: [maskFormatter],
@@ -401,6 +404,7 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
         ),
         hintText: hintText,
         hintStyle: AppTextStyles.hintStyle,
+
       ),
       validator: (phoneForValidate) => validateMobile(phoneForValidate!),
     );
@@ -408,6 +412,7 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
 
   regionFieldTemplate({required String hintText}) {
     return TextFormField(
+      style: AppTextStyles.controllerStyle,
       controller: regionController,
       keyboardType: TextInputType.emailAddress,
       textCapitalization: TextCapitalization.words,
@@ -518,6 +523,7 @@ class _InfoFormForPaymentState extends State<InfoFormForPayment> {
 
   textEditingFieldTemplate({required String hintText,required var blocTemp}) {
     return TextFormField(
+      style: AppTextStyles.controllerStyle,
       onFieldSubmitted: (s){
         /*if (_formKey.currentState!.validate()) {
           UserData.name = fullNameController.text;

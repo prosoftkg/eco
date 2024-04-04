@@ -1,3 +1,4 @@
+import 'package:eco_kg/core/utils/user.dart';
 import 'package:eco_kg/core/utils/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:eco_kg/feature/story_feature/domain/entities/audit_story_entity.dart';
@@ -28,7 +29,7 @@ class AuditStoryScreen extends StatelessWidget {
               Navigator.of(context).pop();
             },
             child: appBarLeading(context)),
-        leadingWidth: 100.w,
+        leadingWidth: UserData.sizeScreen ? 100.w : 100,
       ),
       body: BlocBuilder<StoryBloc, StoryState>(
         bloc: auditStory,

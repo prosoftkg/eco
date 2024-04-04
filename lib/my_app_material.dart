@@ -1,4 +1,5 @@
 import 'package:eco_kg/core/servise_locator/servise_locator.dart';
+import 'package:eco_kg/core/utils/user.dart';
 import 'package:eco_kg/feature/certificates/presentation/bloc/user_certificate_bloc.dart';
 import 'package:eco_kg/feature/get_certificate/presentation/bloc/get_data_from_get_certificate_bloc.dart';
 import 'package:eco_kg/feature/library_feature/presentation/library/bloc/library_bloc.dart';
@@ -31,6 +32,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if(MediaQuery.of(context).size.width>=600) {
+      UserData.sizeScreen=false;
+    }
+    if(MediaQuery.of(context).size.height<=800) {
+      UserData.sizeHeight=false;
+    }
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,

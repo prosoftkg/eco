@@ -1,3 +1,4 @@
+import 'package:eco_kg/core/utils/user.dart';
 import 'package:eco_kg/core/utils/utils.dart';
 import 'package:eco_kg/feature/library_feature/domain/entities/library_entity.dart';
 import 'package:eco_kg/feature/widgets/progressWidget.dart';
@@ -30,7 +31,7 @@ class _LibraryDetailScreenState extends State<LibraryDetailScreen> {
               Navigator.of(context).pop();
             },
             child: appBarLeading(context)),
-        leadingWidth: 100.w,
+        leadingWidth: UserData.sizeScreen ? 100.w : 100,
       ),
       body: BlocBuilder<LanguageBloc, LanguageState>(
   builder: (context, stateLan) {

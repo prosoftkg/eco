@@ -30,7 +30,7 @@ class UserCabinetScreen extends StatelessWidget {
               AutoRouter.of(context).pop();
             },
             child: appBarLeading(context)),
-        leadingWidth: 100.w,
+        leadingWidth: UserData.sizeScreen ? 100.w : 100,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 62).r,
@@ -95,7 +95,7 @@ class UserCabinetScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Flexible(child: Container(child: Text(info))),
+                Flexible(child: Container(child: Text(info,style: AppTextStyles.clearSansMediumS14CBlackF500,))),
                 if(icon)
                   InkWell(onTap: (){
                     print('tap Edit');

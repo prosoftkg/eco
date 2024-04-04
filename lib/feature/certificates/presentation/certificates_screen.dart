@@ -1,3 +1,4 @@
+import 'package:eco_kg/core/utils/user.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:eco_kg/core/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +43,7 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
               Navigator.of(context).pop();
             },
             child: appBarLeading(context)),
-        leadingWidth: 100.w,
+        leadingWidth: UserData.sizeScreen ? 100.w : 100,
       ),
       body: BlocBuilder<UserCertificateBloc, UserCertificateState>(
         bloc: BlocProvider.of<UserCertificateBloc>(context)..add(LoadUserCertificateEvent()),
@@ -119,7 +120,7 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
                       style: AppTextStyles.clearSansLightS12CBlackF300),
                 ],
               ),
-              Image.asset('assets/icon/certificate${certificate}.png',width: 62.w,height: 65.h),
+              Image.asset('assets/icon/certificate${certificate}.png',width: UserData.sizeScreen ? 62.w : 62,height: UserData.sizeScreen ?  65.h : 65),
             ],
           ),
           SizedBox(height: 22.h),

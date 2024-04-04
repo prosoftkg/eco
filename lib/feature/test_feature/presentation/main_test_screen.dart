@@ -91,7 +91,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
                   AutoRouter.of(context).pop();
                 },
                 child: appBarLeading(context)),
-            leadingWidth: 100.w,
+            leadingWidth: UserData.sizeScreen ? 100.w : 100,
           ),
           body: BlocBuilder<TestBloc, TestState>(
             builder: (context, stateGlobal) {
@@ -107,7 +107,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
               if(stateGlobal is LoadCompanyInfoState){
                 return Padding(
                   padding:  EdgeInsets.only(
-                      left: 16.0.w, right: 16.0.w, top: 32.h, bottom: 124.h)
+                      left: 16.0.w, right: 16.0.w, top: UserData.sizeHeight ? 32.h : 16, bottom: UserData.sizeHeight ? 124.h : 70)
                       .r,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -187,7 +187,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
               }
               return Padding(
                 padding:  EdgeInsets.only(
-                    left: 16.0.w, right: 16.0.w, top: 32.h, bottom: 124.h)
+                    left: 16.0.w, right: 16.0.w, top: UserData.sizeHeight ? 32.h : 16, bottom: UserData.sizeHeight ? 124.h : 70)
                     .r,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -285,6 +285,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
 
   companyFieldTemplate({required String hintText}) {
     return TextFormField(
+      style: AppTextStyles.controllerStyle,
       controller: companyNameController,
       keyboardType: TextInputType.emailAddress,
       textCapitalization: TextCapitalization.words,
@@ -399,6 +400,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
 
   textEditingFieldTemplate({required String hintText}) {
     return TextFormField(
+      style: AppTextStyles.controllerStyle,
       textCapitalization: TextCapitalization.sentences,
       onFieldSubmitted: (s){
         /*if (_formKey.currentState!.validate()) {
@@ -444,6 +446,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
 
   nameFieldTemplate({required String hintText}) {
     return TextFormField(
+      style: AppTextStyles.controllerStyle,
       controller: fullNameController,
       keyboardType: TextInputType.emailAddress,
       textCapitalization: TextCapitalization.words,
@@ -465,6 +468,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
 
   phoneFieldTemplate({required String hintText}) {
     return TextFormField(
+      style: AppTextStyles.controllerStyle,
       controller: phoneController,
       keyboardType: TextInputType.phone,
       inputFormatters: [maskFormatter],
@@ -485,6 +489,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
 
   regionFieldTemplate({required String hintText}) {
     return TextFormField(
+      style: AppTextStyles.controllerStyle,
       controller: regionController,
       keyboardType: TextInputType.emailAddress,
       textCapitalization: TextCapitalization.words,

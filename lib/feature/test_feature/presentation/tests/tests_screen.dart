@@ -1,4 +1,5 @@
 import 'package:eco_kg/core/style/app_colors.dart';
+import 'package:eco_kg/core/utils/user.dart';
 import 'package:eco_kg/core/utils/utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eco_kg/feature/test_feature/domain/entities/testIngoForNext.dart';
@@ -79,7 +80,7 @@ class _TestsScreenState extends State<TestsScreen> {
                 // AutoRouter.of(context).pop();
               },
               child: appBarLeading(context)),
-          leadingWidth: 100.w,
+          leadingWidth: UserData.sizeScreen ? 100.w : 100,
         ),
         body: BlocBuilder<LanguageBloc, LanguageState>(
         builder: (context, stateLan) {

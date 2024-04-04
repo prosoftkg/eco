@@ -12,6 +12,8 @@ class UserData {
   static String? phone;
   static String? companyName;
   static String? region;
+  static bool sizeScreen=true;
+  static bool sizeHeight=true;
   /*static const List<String> areaCompanyFirst=[
     'До 200 кв.м',
     'От 200 до 400 кв.м',

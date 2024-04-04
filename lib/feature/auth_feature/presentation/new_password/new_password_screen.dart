@@ -1,4 +1,5 @@
 import 'package:eco_kg/core/auto_route/auto_route.dart';
+import 'package:eco_kg/core/utils/user.dart';
 import 'package:eco_kg/core/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
@@ -30,7 +31,7 @@ class _NewPaswordScreenState extends State<NewPaswordScreen> {
             },
             child: appBarLeading(context)
         ),
-        leadingWidth: 100,
+        leadingWidth:  100,
 
       ),
       body: ListView(

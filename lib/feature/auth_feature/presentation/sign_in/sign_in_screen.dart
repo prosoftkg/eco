@@ -1,4 +1,5 @@
 import 'package:eco_kg/core/auto_route/auto_route.dart';
+import 'package:eco_kg/core/utils/user.dart';
 import 'package:eco_kg/core/utils/utils.dart';
 import 'package:eco_kg/feature/widgets/progressWidget.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,7 @@ class SignInScreen extends StatelessWidget {
         padding:  EdgeInsets.symmetric(horizontal: 30.w),
         children: [
            SizedBox(height: 30.h),
-          Image.asset('assets/img/logo.png', height: 216.h, width: 216.w),
+          Image.asset('assets/img/logo.png', height: UserData.sizeScreen ? 216.h : 216, width: UserData.sizeScreen ?  216.w : 216),
            SizedBox(height: 20.h),
           Form(
             key: _formKey,
@@ -98,6 +99,7 @@ class SignInScreen extends StatelessWidget {
 
   emailFieldTemplate({required String hintText}) {
     return TextFormField(
+      style: AppTextStyles.controllerStyle,
       controller: email,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
