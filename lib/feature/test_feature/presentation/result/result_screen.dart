@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:eco_kg/core/auto_route/auto_route.dart';
 import 'package:eco_kg/core/style/app_text_styles.dart';
 import 'package:eco_kg/core/utils/user.dart';
@@ -8,12 +9,13 @@ import 'package:eco_kg/feature/splash_feature/presentation/widget/button_with_ic
 import 'package:eco_kg/feature/test_feature/domain/entities/finishTestEntity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../../../../core/utils/utils.dart';
 import '../../../consultation_feature/presentation/bloc/get_data_from_get_consultation_bloc.dart';
 import '../../../home_feature/widget/bottom_background_image.dart';
+import '../../../splash_feature/presentation/bloc/language_bloc.dart';
 import '../bloc/test_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:auto_route/auto_route.dart';
 
 class ResultScreen extends StatelessWidget {
   ResultScreen({super.key});
@@ -54,7 +56,7 @@ class ResultScreen extends StatelessWidget {
                     Column(
                       children: [
                         Image.asset(
-                            finishTestEntity!.mark!=''
+                            finishTestEntity!.mark != ''
                                 ? 'assets/img/result_success.png'
                                 : 'assets/img/result_bad.png',
                             height: 100.h,
@@ -63,28 +65,45 @@ class ResultScreen extends StatelessWidget {
                         Text(
                           /*testType == 'auditTest'
                               ? 'Балл заявителя: ${finishTestEntity!.score!}'
-                              : */'${context.text.yourScore} ${finishTestEntity!.score!}',
+                              : */
+                          '${context.text.yourScore} ${finishTestEntity!.score!}',
                           style: AppTextStyles.clearSansMediumS22W500CBlack,
                         ),
                       ],
                     ),
                     // SizedBox(height: 16.h),
-                    Text(finishTestEntity!.achievment!,
-                        style: AppTextStyles.clearSansS16cl82,
-                        textAlign: TextAlign.center),
+                    BlocBuilder<LanguageBloc, LanguageState>(
+                      builder: (context, state) {
+                        if (state.lanCode == 'ky') {
+                          return Text(
+                              'Диагностиканын натыйжасында сизге ${getMarkLan(state.lanCode)} маркировкасы ыйгарылды',
+                              style: AppTextStyles.clearSansS16cl82,
+                              textAlign: TextAlign.center);
+                        }
+                        if (state.lanCode == 'en') {
+                          return Text(
+                              'Based on the diagnostic results, you were assigned the ${getMarkLan(state.lanCode)} marking',
+                              style: AppTextStyles.clearSansS16cl82,
+                              textAlign: TextAlign.center);
+                        }
+                        return Text(finishTestEntity!.achievment!,
+                            style: AppTextStyles.clearSansS16cl82,
+                            textAlign: TextAlign.center);
+                      },
+                    ),
                     getCertificate(),
                     Column(
                       children: [
                         Text(
                             testType == 'auditTest'
-                                ? ''/*context.text.applicantEmailWithTestResults*/
+                                ? '' /*context.text.applicantEmailWithTestResults*/
                                 : context.text.yourEmailWithTestResults,
                             style: AppTextStyles.clearSansS12C82F400,
                             textAlign: TextAlign.center),
-                        if(testType!='auditTest')
-                        Text(email,
-                            style: AppTextStyles.clearSansS12C82F400,
-                            textAlign: TextAlign.center),
+                        if (testType != 'auditTest')
+                          Text(email,
+                              style: AppTextStyles.clearSansS12C82F400,
+                              textAlign: TextAlign.center),
                       ],
                     ),
                     buttonNext(context, testType!)
@@ -99,29 +118,43 @@ class ResultScreen extends StatelessWidget {
     );
   }
 
+  getMarkLan(String lan) {
+    if (finishTestEntity!.mark == 'Золото') {
+      return lan == 'ky' ? 'Алтын' : 'Gold';
+    } else if (finishTestEntity!.mark == 'Серебро') {
+      return lan == 'ky' ? 'Күмүш' : 'Silver';
+    } else if (finishTestEntity!.mark == 'Бронза') {
+      return lan == 'ky' ? 'Коло' : 'Bronze';
+    } else if (finishTestEntity!.mark == 'Платина') {
+      return lan == 'ky' ? 'Платина' : 'Platinum ';
+    } else {
+      return const SizedBox();
+    }
+  }
+
   getCertificate() {
-    if (finishTestEntity!.mark=='Золото') {
+    if (finishTestEntity!.mark == 'Золото') {
       return Column(
         children: [
           Image.asset('assets/icon/certificateGold.png',
               height: 100.h, width: 100.w),
         ],
       );
-    } else if (finishTestEntity!.mark=='Серебро') {
+    } else if (finishTestEntity!.mark == 'Серебро') {
       return Column(
         children: [
           Image.asset('assets/icon/certificateSilver.png',
               height: 100.h, width: 100.w),
         ],
       );
-    } else if (finishTestEntity!.mark=='Бронза') {
+    } else if (finishTestEntity!.mark == 'Бронза') {
       return Column(
         children: [
           Image.asset('assets/icon/certificateBronze.png',
               height: 100.h, width: 100.w),
         ],
       );
-    } else if (finishTestEntity!.mark=='Платина') {
+    } else if (finishTestEntity!.mark == 'Платина') {
       return Column(
         children: [
           Image.asset('assets/icon/certificatePlatinum.png',
@@ -134,35 +167,37 @@ class ResultScreen extends StatelessWidget {
   }
 
   buttonNext(BuildContext context, String testTypeTemp) {
-    if (finishTestEntity!.mark=='') {
+    if (finishTestEntity!.mark == '') {
       return Column(
         children: [
-          if(testTypeTemp != 'auditTest')
-          InkWell(
-            child:
-                buttonWithIcon(context.text.get_consultation, 'message-search.png'),
-            onTap: () {
-              PaymentInfoEntity paymentInfo = PaymentInfoEntity(
-                  testId: testId!,
-                  paymentType: '2',
-                  sum: sumConsult(categoryId.toString(), companyArea!),
-                  categoryId: categoryId!,
-                  companyName: UserData.companyName!,
-                  companyDirector: UserData.name!,
-                  region: UserData.region!,
-                  phone: UserData.phone!,
-                  area: companyArea!);
-              BlocProvider.of<GetDataFromGetConsultationBloc>(context).add(
-                  LoadGetDataFromGetConsultation(
-                      paymentInfoEntity: paymentInfo));
-              AutoRouter.of(context).replace(PaymentGetConsultationRoute());
-              // Navigator.of(context).push(MaterialPageRoute(builder:(context)=>ConsultationScreen(testId: testId!,sum: sumConsult(categoryId!,companyArea!))));
-            },
-          ),
+          if (testTypeTemp != 'auditTest')
+            InkWell(
+              child: buttonWithIcon(
+                  context.text.get_consultation, 'message-search.png'),
+              onTap: () {
+                PaymentInfoEntity paymentInfo = PaymentInfoEntity(
+                    testId: testId!,
+                    paymentType: '2',
+                    sum: sumConsult(categoryId.toString(), companyArea!),
+                    categoryId: categoryId!,
+                    companyName: UserData.companyName!,
+                    companyDirector: UserData.name!,
+                    region: UserData.region!,
+                    phone: UserData.phone!,
+                    area: companyArea!);
+                BlocProvider.of<GetDataFromGetConsultationBloc>(context).add(
+                    LoadGetDataFromGetConsultation(
+                        paymentInfoEntity: paymentInfo));
+                AutoRouter.of(context).replace(PaymentGetConsultationRoute());
+                // Navigator.of(context).push(MaterialPageRoute(builder:(context)=>ConsultationScreen(testId: testId!,sum: sumConsult(categoryId!,companyArea!))));
+              },
+            ),
           SizedBox(height: 32.h),
           InkWell(
-            child: button(text: testTypeTemp == 'auditTest'
-                ? context.text.goBack : context.text.retakeTest),
+            child: button(
+                text: testTypeTemp == 'auditTest'
+                    ? context.text.goBack
+                    : context.text.retakeTest),
             onTap: () {
               AutoRouter.of(context).pop();
             },
@@ -183,17 +218,18 @@ class ResultScreen extends StatelessWidget {
                   : BlocProvider.of<GetDataFromGetCertificateBloc>(context).add(
                       LoadGetDataFromGetCertificate(
                           paymentInfoEntity: PaymentInfoEntity(
-                          testId: testId!,
-                          paymentType: '1',
-                          sum: sumCertificate(categoryId.toString(), companyArea!),
-                          categoryId: categoryId!,
-                          companyName: UserData.companyName!,
-                          companyDirector: UserData.name!,
-                          region: UserData.region!,
-                          phone: UserData.phone!,
-                          area: companyArea!)));
-              if(testTypeTemp != 'auditTest')
-              AutoRouter.of(context).replace(PaymentGetCertificateRoute());
+                              testId: testId!,
+                              paymentType: '1',
+                              sum: sumCertificate(
+                                  categoryId.toString(), companyArea!),
+                              categoryId: categoryId!,
+                              companyName: UserData.companyName!,
+                              companyDirector: UserData.name!,
+                              region: UserData.region!,
+                              phone: UserData.phone!,
+                              area: companyArea!)));
+              if (testTypeTemp != 'auditTest')
+                AutoRouter.of(context).replace(PaymentGetCertificateRoute());
               // Navigator.of(context).push(MaterialPageRoute(builder:(context)=> GetCertificatScreen(testId: testId!,sum: sumCertificate(categoryId!,companyArea!))));
             },
           )

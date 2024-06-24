@@ -49,7 +49,7 @@ android {
         applicationId "kg.prosoft.eco"
         minSdkVersion 21
         targetSdkVersion flutter.targetSdkVersion
-        versionCode 4
+        versionCode 8
         versionName flutterVersionName
     }
 

@@ -1,19 +1,18 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:eco_kg/core/style/app_text_styles.dart';
 import 'package:eco_kg/core/utils/user.dart';
 import 'package:eco_kg/core/utils/utils.dart';
 import 'package:eco_kg/feature/auth_feature/presentation/widgets/button.dart';
-import 'package:eco_kg/feature/payment_feature/domain/entities/paymentInfoEntity.dart';
 import 'package:eco_kg/feature/payment_feature/presentation/blocGetData/get_data_from_payment_bloc.dart';
 import 'package:eco_kg/feature/widgets/progressWidget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../../../core/auto_route/auto_route.dart';
 import '../../../core/servise_locator/servise_locator.dart';
 import '../../auth_feature/presentation/widgets/appBarLeadintBack.dart';
 import '../../payment_feature/presentation/bloc/payment_bloc.dart';
-import 'package:auto_route/auto_route.dart';
-
 import 'bloc/get_data_from_get_consultation_bloc.dart';
 
 class ConsultationScreen extends StatelessWidget {
@@ -55,6 +54,7 @@ class ConsultationScreen extends StatelessWidget {
                           style: AppTextStyles.hintStyle),
                     ],
                   ),
+                  SizedBox(height: 40),
                   BlocBuilder<PaymentBloc, PaymentState>(
                     bloc: myBloc,
                     builder: (context, state) {
