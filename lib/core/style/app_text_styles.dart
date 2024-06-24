@@ -23,7 +23,7 @@ class AppTextStyles {
   static  TextStyle clearSansMedium22 =
   TextStyle(color: AppColors.colorBlack, fontSize: ScreenUtil().setSp(22), fontWeight: FontWeight.w700,fontFamily: 'ClearSansMedium');
   static  TextStyle clearSansMediumS22W500CBlack =
-  TextStyle(color: AppColors.colorBlack, fontSize: ScreenUtil().setSp(22), fontWeight: FontWeight.w500,fontFamily: 'ClearSansMedium');
+  TextStyle(color: AppColors.colorBlack, fontSize: ScreenUtil().setSp(20), fontWeight: FontWeight.w400,fontFamily: 'ClearSansMedium');
   static  TextStyle clearSansMediumTextStyle18 =
   TextStyle(color: AppColors.colorBlack, fontSize: ScreenUtil().setSp(18), fontWeight: FontWeight.w500,fontFamily: 'ClearSansMedium');
   static  TextStyle clearSansMediumTextStyle20 =

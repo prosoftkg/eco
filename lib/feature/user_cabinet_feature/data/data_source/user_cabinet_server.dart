@@ -64,6 +64,7 @@ class UserCabinetDataSource implements IUserCabinetDataSource {
     if (response.statusCode == 200 || response.statusCode == 201) {
       print(response.statusCode);
       print(response.body);
+      await storage.delete(key: 'authKey');
       return true;
     } else {
       //throw exception and catch it in UI

@@ -40,43 +40,45 @@ class ConsultationScreen extends StatelessWidget {
           }
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 62),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(context.text.paid_consultation,
-                        style: AppTextStyles.clearSansMediumS22W500CBlack),
-                    SizedBox(height: 22.h),
-                    Text(context.text.paid_consultation_text,
-                        style: AppTextStyles.hintStyle),
-                  ],
-                ),
-                BlocBuilder<PaymentBloc, PaymentState>(
-                  bloc: myBloc,
-                  builder: (context, state) {
-                    if (state is LoadingPaymentState) {
-                      return Center(child: progressWidget());
-                    }
-                    if (state is LoadedPaymentState) {
-                      print('tap');
-                      BlocProvider.of<GetDataFromPaymentBloc>(context).add(
-                          LoadGetData(url: state.paymentEntity.paymentUrl!));
-                      AutoRouter.of(context).replace(const PaymentRoute());
-                    }
-                    return InkWell(
-                        onTap: () {
-                          myBloc.add(LoadPaymentEvent(
-                              paymentInfoEntity:
-                                  paymentInfoEntity /*PaymentInfoEntity(
-                              testId: testId, paymentType: '2', sum: sum)*/
-                              ));
-                        },
-                        child: button(text: context.text.pay));
-                  },
-                ),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(context.text.paid_consultation,
+                          style: AppTextStyles.clearSansMediumS22W500CBlack),
+                      SizedBox(height: 22.h),
+                      Text(context.text.paid_consultation_text,
+                          style: AppTextStyles.hintStyle),
+                    ],
+                  ),
+                  BlocBuilder<PaymentBloc, PaymentState>(
+                    bloc: myBloc,
+                    builder: (context, state) {
+                      if (state is LoadingPaymentState) {
+                        return Center(child: progressWidget());
+                      }
+                      if (state is LoadedPaymentState) {
+                        print('tap');
+                        BlocProvider.of<GetDataFromPaymentBloc>(context).add(
+                            LoadGetData(url: state.paymentEntity.paymentUrl!));
+                        AutoRouter.of(context).replace(const PaymentRoute());
+                      }
+                      return InkWell(
+                          onTap: () {
+                            myBloc.add(LoadPaymentEvent(
+                                paymentInfoEntity:
+                                    paymentInfoEntity /*PaymentInfoEntity(
+                                testId: testId, paymentType: '2', sum: sum)*/
+                                ));
+                          },
+                          child: button(text: context.text.pay));
+                    },
+                  ),
+                ],
+              ),
             ),
           );
         },
