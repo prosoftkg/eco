@@ -44,40 +44,42 @@ class GetCertificatScreen extends StatelessWidget {
           }
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 62.h),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(context.text.pay_certificate,
-                        style: AppTextStyles.clearSansMediumS22W500CBlack),
-                    SizedBox(height: 22.h),
-                    Text(context.text.pay_certificate_text,
-                        style: AppTextStyles.hintStyle),
-                  ],
-                ),
-                BlocBuilder<PaymentBloc, PaymentState>(
-                  bloc: myBloc,
-                  builder: (context, state) {
-                    if (state is LoadingPaymentState) {
-                      return Center(child: progressWidget());
-                    }
-                    if (state is LoadedPaymentState) {
-                      BlocProvider.of<GetDataFromPaymentBloc>(context)
-                          .add(LoadGetData(url: state.paymentEntity.paymentUrl!));
-                      print('tap');
-                      AutoRouter.of(context).replace(const PaymentRoute());
-                    }
-                    return InkWell(onTap: () {
-                      myBloc
-                          .add(LoadPaymentEvent(
-                          paymentInfoEntity: paymentInfoEntity/*PaymentInfoEntity(
-                              testId: testId, paymentType: '1', sum: sum)*/));
-                    }, child: button(text: context.text.pay));
-                  },
-                )
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(context.text.pay_certificate,
+                          style: AppTextStyles.clearSansMediumS22W500CBlack),
+                      SizedBox(height: 22.h),
+                      Text(context.text.pay_certificate_text,
+                          style: AppTextStyles.hintStyle),
+                    ],
+                  ),
+                  BlocBuilder<PaymentBloc, PaymentState>(
+                    bloc: myBloc,
+                    builder: (context, state) {
+                      if (state is LoadingPaymentState) {
+                        return Center(child: progressWidget());
+                      }
+                      if (state is LoadedPaymentState) {
+                        BlocProvider.of<GetDataFromPaymentBloc>(context)
+                            .add(LoadGetData(url: state.paymentEntity.paymentUrl!));
+                        print('tap');
+                        AutoRouter.of(context).replace(const PaymentRoute());
+                      }
+                      return InkWell(onTap: () {
+                        myBloc
+                            .add(LoadPaymentEvent(
+                            paymentInfoEntity: paymentInfoEntity/*PaymentInfoEntity(
+                                testId: testId, paymentType: '1', sum: sum)*/));
+                      }, child: button(text: context.text.pay));
+                    },
+                  )
+                ],
+              ),
             ),
           );
         },
